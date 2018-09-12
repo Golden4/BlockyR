@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbfa0531315df542a7e8a6d3c1ac24b, type: 3}
+  m_Name: Database
+  m_EditorClassIdentifier: 
+  playersData:
+  - name: Bird
+    price: 100
+    playerPrefab: {fileID: 114848689077837618, guid: b0d94c359d7124644a0e7ea139c81407,
+      type: 2}
+  - name: Cat
+    price: 100
+    playerPrefab: {fileID: 114968217776465022, guid: bd28d60781a594d48b5f5d0e6d3f0747,
+      type: 2}
+  - name: Pig
+    price: 100
+    playerPrefab: {fileID: 114409454338205590, guid: f767dfe658e880249b32320062402c93,
+      type: 2}
+  - name: Boar
+    price: 100
+    playerPrefab: {fileID: 114137794673397822, guid: 8ea58ba1c45d49643981290c585a617e,
+      type: 2}
+  - name: Rabbit
+    price: 100
+    playerPrefab: {fileID: 114671492432035156, guid: 7ae0f77fdfffc604693ec9e05e99ee9e,
+      type: 2}
+  - name: Frog
+    price: 100
+    playerPrefab: {fileID: 114613796114214126, guid: f2e88da4480ee944d96e99136ec6484b,
+      type: 2}
+  - name: Chicken
+    price: 200
+    playerPrefab: {fileID: 114903587025273576, guid: 3de2341ef8478294c8af07e281599988,
+      type: 2}
