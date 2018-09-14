@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent (typeof(Rigidbody))]
 public class Player : MonoBehaviour {
@@ -90,8 +91,11 @@ public class Player : MonoBehaviour {
 			dirApply = true;
 			curDir = Direction.Down;
 		} else {
-			dirApply = false;
-			curDir = Direction.Right;
+
+			if (!dirApply && curDir != Direction.Right) {
+				curDir = Direction.Right;
+				print ("Dsdsadsa");
+			}
 		}
 
 	}
@@ -186,8 +190,10 @@ public class Player : MonoBehaviour {
 		targetScale = Vector3.one;
 		this.targetPos = targetPos; //= new Vector3 (curCoord.x, startHeight + curBlock.GetBlockHeight (), curCoord.y);
 		StartCoroutine (MoveCoroutine ());
+		dirApply = false;
 	}
 
+	int nextMoveDir;
 
 	void Move (Direction dir)
 	{
@@ -210,8 +216,10 @@ public class Player : MonoBehaviour {
 
 	void OnEndMove ()
 	{
-		speed = Mathf.Clamp (UIScreen.Ins.score / 100f * speedChangeMultiply + 4, 4, 12);
+		
+		speed = Mathf.Clamp ((float)Math.Sqrt ((double)(UIScreen.Ins.score / 100f * speedChangeMultiply)) + 4, 4, 12);
 		OnPlayerStepOnBlock ();
+		print (speed);
 	}
 
 	bool isSnaped;

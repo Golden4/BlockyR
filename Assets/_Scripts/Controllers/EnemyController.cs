@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour {
 			yield return null;
 		}
 
-		StartCoroutine (CheckAndSpawnEnemy ());
+		//StartCoroutine (CheckAndSpawnEnemy ());
 	}
 
 	IEnumerator CheckAndSpawnEnemy ()
