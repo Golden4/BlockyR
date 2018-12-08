@@ -60,8 +60,10 @@ public class Player : MonoBehaviour {
 		}
 
 		for (int i = 0; i < 4; i++)
-			if (MobileInputManager.GetKey ((Direction)i))
+			if (MobileInputManager.GetKey ((Direction)i)) {
+				
 				Move ((Direction)i);
+			}
 
 		CheckDirection ();
 
@@ -72,8 +74,8 @@ public class Player : MonoBehaviour {
 		if (Input.GetKey (KeyCode.S))
 			Move (Direction.Down);*/
 		//if (Input.GetKey (KeyCode.D))
-
-		Move (curDir);
+		if (!isSnaped)
+			Move (curDir);
 		
 		UIScreen.Ins.UpdateScore (curBlock.worldCoords.x);
 
@@ -91,13 +93,11 @@ public class Player : MonoBehaviour {
 			dirApply = true;
 			curDir = Direction.Down;
 		} else {
-
 			if (!dirApply && curDir != Direction.Right) {
 				curDir = Direction.Right;
 				print ("Dsdsadsa");
 			}
 		}
-
 	}
 
 	void FixedUpdate ()
@@ -190,6 +190,8 @@ public class Player : MonoBehaviour {
 		targetScale = Vector3.one;
 		this.targetPos = targetPos; //= new Vector3 (curCoord.x, startHeight + curBlock.GetBlockHeight (), curCoord.y);
 		StartCoroutine (MoveCoroutine ());
+
+		//if (curDir != Direction.Right && dirApply)
 		dirApply = false;
 	}
 
@@ -219,7 +221,7 @@ public class Player : MonoBehaviour {
 		
 		speed = Mathf.Clamp ((float)Math.Sqrt ((double)(UIScreen.Ins.score / 100f * speedChangeMultiply)) + 4, 4, 12);
 		OnPlayerStepOnBlock ();
-		print (speed);
+		//print (speed);
 	}
 
 	bool isSnaped;

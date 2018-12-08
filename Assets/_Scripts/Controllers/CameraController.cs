@@ -26,12 +26,14 @@ public class CameraController : MonoBehaviour {
 		if (target.isDead && !focusing) {
 			StartCoroutine (FocusToPlayer ());
 		}
-
+			
+		float smoothTime = 0.01f;
 		targetPos = new Vector3 (target.transform.position.x, 0, target.transform.position.z) + offset;
+
+		transform.position = Vector3.SmoothDamp (transform.position, targetPos, ref velocity, smoothTime);
 
 
 		//transform.position = Vector3.SmoothDamp (transform.position, new Vector3 (target.position.x, 0, target.position.z) + offset, ref velocity, Time.deltaTime * 20);
-		transform.position = targetPos;
 
 		/*if (distance <= target.position.x)
 			distance = target.position.x;
