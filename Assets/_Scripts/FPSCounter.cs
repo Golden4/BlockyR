@@ -19,7 +19,7 @@ public class FPSCounter : MonoBehaviour {
 		float fps = 1f / deltaTime;
 
 		string textt = string.Format ("{0:0.} fps", fps);
-
+		textt += AdController.Ins.ad.IsLoaded ().ToString ();
 		text.text = textt;
 
 	}

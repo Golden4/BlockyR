@@ -5,18 +5,12 @@ using GoogleMobileAds.Api;
 
 public class GameOverScreen : ScreenBase {
 
-
-	InterstitialAd ad;
-
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
-		ad = new InterstitialAd (AdController.Ins.AdID);
-		AdRequest request = new AdRequest.Builder ().Build ();
-		ad.LoadAd (request);
-		if (ad.IsLoaded ()) {
-			ad.Show ();
-		}
+
+		if (AdController.Ins != null)
+			AdController.Ins.ShowAD ();
 	}
 
 	public override void OnCleanUp ()
