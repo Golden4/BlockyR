@@ -5,6 +5,8 @@ using UnityEngine;
 public class Fire : MonoBehaviour {
 	public static Fire Ins;
 
+	public Sound fireSound;
+
 	public Player target;
 
 	public float distanceToPlayer {
@@ -33,6 +35,17 @@ public class Fire : MonoBehaviour {
 	void Start ()
 	{
 		target = Player.Ins;
+		Game.OnGameStarted += Game_OnGameStarted;
+	}
+
+	void Game_OnGameStarted ()
+	{
+		fireSound.PlayAtObject (gameObject);
+	}
+
+	void OnDestroy ()
+	{
+		Game.OnGameStarted -= Game_OnGameStarted;
 	}
 
 	void Update ()

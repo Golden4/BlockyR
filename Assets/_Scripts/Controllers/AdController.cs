@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
+using AppodealAds.Unity.Api;
+using AppodealAds.Unity.Common;
 
 public class AdController : MonoBehaviour {
 
@@ -10,26 +12,16 @@ public class AdController : MonoBehaviour {
 
 	public static AdController Ins;
 
-	public InterstitialAd ad;
-
 	void Start ()
 	{
 		Ins = this;
-		MobileAds.Initialize (AppID);
-
-		ad = new InterstitialAd (AdController.Ins.AdID);
-		ad.LoadAd (new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ());
+		Appodeal.initialize (AppID, Appodeal.REWARDED_VIDEO | Appodeal.NON_SKIPPABLE_VIDEO | Appodeal.INTERSTITIAL);
 	}
 
 	public void ShowAD ()
 	{
-		//if (ad.IsLoaded ()) {
-		ad.Show ();
-		//}
-	}
-
-	void Update ()
-	{
-		
+		if (Appodeal.isLoaded (Appodeal.INTERSTITIAL)) {
+			Appodeal.show (Appodeal.INTERSTITIAL);
+		}
 	}
 }

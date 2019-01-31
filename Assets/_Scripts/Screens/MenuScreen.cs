@@ -8,6 +8,11 @@ public class MenuScreen : ScreenBase {
 
 	public static event System.Action OnStartGame;
 
+	void Start ()
+	{
+		SceneController.Init ();
+	}
+
 	void Update ()
 	{
 		#if UNITY_EDITOR || UNITY_STANDALONE_WIN
@@ -28,6 +33,8 @@ public class MenuScreen : ScreenBase {
 	public void StartGame ()
 	{
 		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.UI);
+
+		SceneController.ShowGameTitle (false);
 
 		if (OnStartGame != null)
 			OnStartGame.Invoke ();

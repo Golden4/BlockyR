@@ -30,6 +30,7 @@ public class Player : MonoBehaviour {
 		targetScale = transform.localScale;
 		whiteMat = Resources.Load <Material> ("Materials/WhiteMaterial");
 		Game.OnGameStarted += OnGameStart;
+		gameObject.AddComponent <AudioListener> ();
 	}
 
 	void OnGameStart ()
@@ -87,17 +88,16 @@ public class Player : MonoBehaviour {
 			dirApply = true;
 			curDir = Direction.Left;
 		} else if (Input.GetKey (KeyCode.W)) {
-			dirApply = true;
-			curDir = Direction.Up;
-		} else if (Input.GetKey (KeyCode.S)) {
-			dirApply = true;
-			curDir = Direction.Down;
-		} else {
-			if (!dirApply && curDir != Direction.Right) {
-				curDir = Direction.Right;
-				print ("Dsdsadsa");
-			}
-		}
+				dirApply = true;
+				curDir = Direction.Up;
+			} else if (Input.GetKey (KeyCode.S)) {
+					dirApply = true;
+					curDir = Direction.Down;
+				} else {
+					if (!dirApply && curDir != Direction.Right) {
+						curDir = Direction.Right;
+					}
+				}
 	}
 
 	void FixedUpdate ()
@@ -248,13 +248,13 @@ public class Player : MonoBehaviour {
 				curBalk = curCollider [0].transform.GetComponent <Balk> ();
 				Snap (curBalk, dir);
 			} else if (curBalk.transform != curCollider [0].transform) {
-				curBalk = curCollider [0].transform.GetComponent <Balk> ();
-				Snap (curBalk, dir);
-			} else {
-				MoveBalk (dir);
-			}
+					curBalk = curCollider [0].transform.GetComponent <Balk> ();
+					Snap (curBalk, dir);
+				} else {
+					MoveBalk (dir);
+				}
 		} else if (isSnaped)
-			Unsnap (dir);
+				Unsnap (dir);
 	}
 
 	void Snap (Balk balk, Direction dir)
@@ -303,7 +303,7 @@ public class Player : MonoBehaviour {
 
 		curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
 
-		targetPos = curBalk.transform.position + Vector3.up * startHeight + Vector3.forward * snapedPos;
+		targetPos = curBalk.transform.position + Vector3.up * (startHeight + 0.4f) + Vector3.forward * snapedPos;
 	}
 
 	public Vector2I WorldPositionToBlockCoords (Vector3 pos)

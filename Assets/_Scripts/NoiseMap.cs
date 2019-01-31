@@ -76,13 +76,13 @@ public class NoiseMap : MonoBehaviour {
 				if (Random.Range (0, 15) > 0)
 					map [x, y] = 0;
 				else if (Random.Range (0, 5) > 0) {
-					map [x, y] = 2;
-				} else if (biomesMap [x, y] != 1) {
-					CreatePool (x, y, map);
-					//map [x, y] = 1;
-				} else {
-					map [x, y] = 0;
-				}
+						map [x, y] = 2;
+					} else if (biomesMap [x, y] != 1) {
+							CreatePool (x, y, map);
+							//map [x, y] = 1;
+						} else {
+							map [x, y] = 0;
+						}
 
 
 				/*	if (levelMap [x, y] == 1) {
@@ -94,7 +94,7 @@ public class NoiseMap : MonoBehaviour {
 				}*/
 
 
-				/*if ((xOffset + y > 21 && xOffset + y < 30) || (xOffset + y > 50 && xOffset + y < 60)) {
+				if ((xOffset + y > 21 && xOffset + y < 30) || (xOffset + y > 50 && xOffset + y < 60)) {
 					//if (xOffset + y > 20 + Random.Range (0, 2) && xOffset + y < 30 + Random.Range (0, 2)) {
 					map [x, y] = 1;
 					biomesMap [y, x] = 0;
@@ -102,7 +102,7 @@ public class NoiseMap : MonoBehaviour {
 					MovingObjectsManager.AddLineToGenerateBalks (xOffset + y);
 
 
-				}*/
+				}
 			}
 		}
 

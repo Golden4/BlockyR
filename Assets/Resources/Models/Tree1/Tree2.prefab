@@ -71,6 +71,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33333400721369242
 MeshFilter:
@@ -78,4 +79,4 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1595656410960210}
-  m_Mesh: {fileID: 4300002, guid: c9f3365c1d3be224bbca4c4fc2cf0b37, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 5ba58d3207a3a7a4ca3e14b22c300e9f, type: 2}

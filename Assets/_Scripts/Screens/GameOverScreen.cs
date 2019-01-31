@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
+using UnityEngine.UI;
 
 public class GameOverScreen : ScreenBase {
+
+	[SerializeField] Button continueAdBtn;
 
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
 
-		if (AdController.Ins != null)
-			AdController.Ins.ShowAD ();
+		continueAdBtn.onClick.RemoveAllListeners ();
+		continueAdBtn.onClick.AddListener (RespawnPlayer);
 	}
 
 	public override void OnCleanUp ()
@@ -27,7 +30,12 @@ public class GameOverScreen : ScreenBase {
 	public void RestartLevel ()
 	{
 		SceneController.RestartLevel ();
+	}
 
+	void RespawnPlayer ()
+	{
+		if (AdController.Ins != null)
+			AdController.Ins.ShowAD ();
 	}
 
 }
