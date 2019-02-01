@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GoogleMobileAds.Api;
 using UnityEngine.UI;
 
 public class GameOverScreen : ScreenBase {
