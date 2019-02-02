@@ -17,6 +17,7 @@ public class BlockTrap : BlockGrass {
 		this.obj = MonoBehaviour.Instantiate (biomeObjects [Random.Range (0, biomeObjects.Length)]);
 		obj.transform.SetParent (chunk.transform, false);
 		obj.transform.position = new Vector3 (worldCoords.x, .35f, worldCoords.y);
+		obj.isStatic = true;
 	}
 
 	public override bool CanDie ()

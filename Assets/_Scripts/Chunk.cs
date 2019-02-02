@@ -82,13 +82,13 @@ public class Chunk : MonoBehaviour {
 		if (biomeBlock == 0) {
 			blocksInChunk [x, y] = new BlockGrass (x, y, this, (Biome)biomesMap [x, y]);
 		} else if (biomeBlock == 1/* && biomesMap [x, y] != 1*/) {
-			blocksInChunk [x, y] = new BlockWater (x, y, this, (Biome)biomesMap [x, y]);
-		} else {
-			if ((Biome)Random.Range (0, 2) == Biome.Forest) {
-				blocksInChunk [x, y] = new BlockTrap (x, y, this, (Biome)biomesMap [x, y]);
-			} else
-				blocksInChunk [x, y] = new BlockObstacle (x, y, this, (Biome)biomesMap [x, y]);
-		}
+				blocksInChunk [x, y] = new BlockWater (x, y, this, (Biome)biomesMap [x, y]);
+			} else {
+				if ((Biome)Random.Range (0, 2) == Biome.Forest) {
+					blocksInChunk [x, y] = new BlockTrap (x, y, this, (Biome)biomesMap [x, y]);
+				} else
+					blocksInChunk [x, y] = new BlockObstacle (x, y, this, (Biome)biomesMap [x, y]);
+			}
 
 	}
 
@@ -139,7 +139,7 @@ public class Chunk : MonoBehaviour {
 		mesh.uv = data.uvs.ToArray ();
 		mesh.RecalculateBounds ();
 		mesh.RecalculateNormals ();
-		gameObject.AddComponent <MeshCollider> ();
+		//gameObject.AddComponent <MeshCollider> ();
 	}
 
 	public Block GetBlockLocalCoords (Vector2I localCoords)
