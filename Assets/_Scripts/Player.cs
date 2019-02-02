@@ -19,7 +19,7 @@ public class Player : MonoBehaviour {
 	[HideInInspector]
 	public bool isDead = false;
 
-	public static bool isWaiting = true;
+	public static bool isWaitingOnStart = true;
 	float waitingTime = .8f;
 
 	void Awake ()
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour {
 		Ins = this;
 		rb = GetComponent <Rigidbody> ();
 		rb.useGravity = false;
+		rb.isKinematic = true;
 		targetScale = transform.localScale;
 		whiteMat = Resources.Load <Material> ("Materials/WhiteMaterial");
 		Game.OnGameStarted += OnGameStart;
@@ -35,11 +36,11 @@ public class Player : MonoBehaviour {
 
 	void OnGameStart ()
 	{
-		isWaiting = true;
+		isWaitingOnStart = true;
 		ShowPlayerWarning (true);
 
 		Utility.Invoke (this, waitingTime, () => {
-			isWaiting = false;
+			isWaitingOnStart = false;
 			ShowPlayerWarning (false);
 		});
 
@@ -53,7 +54,7 @@ public class Player : MonoBehaviour {
 	void Update ()
 	{
 
-		if (isDead || !Game.isGameStarted || Game.isPause || isWaiting)
+		if (isDead || !Game.isGameStarted || Game.isPause || isWaitingOnStart)
 			return;
 
 		if (blocksAround [0] == null) {
@@ -75,7 +76,14 @@ public class Player : MonoBehaviour {
 		if (Input.GetKey (KeyCode.S))
 			Move (Direction.Down);*/
 		//if (Input.GetKey (KeyCode.D))
-		if (!isSnaped)
+
+		/*if (blocksAround [(int)curDir].GetType () == typeof(BlockBalk)) {
+			isWaitingBalk = true;
+		} else {
+			isWaitingBalk = false;
+		}*/
+
+		if (!isSnaped /*&& !isWaitingBalk*/)
 			Move (curDir);
 		
 		UIScreen.Ins.UpdateScore (curBlock.worldCoords.x);
@@ -196,6 +204,7 @@ public class Player : MonoBehaviour {
 	}
 
 	int nextMoveDir;
+	bool isWaitingBalk;
 
 	void Move (Direction dir)
 	{
@@ -236,7 +245,16 @@ public class Player : MonoBehaviour {
 			curBlock.OnPlayerContact ();
 
 			if (curBlock.CanDie ()) {
-				Die (curBlock.dieInfo ());
+				Type blockType = curBlock.GetType ();
+				DieInfo dieInfo;
+
+				if (blockType == typeof(BlockWater) || blockType == typeof(BlockBalk)) {
+					dieInfo = DieInfo.Water;
+				} else {
+					dieInfo = DieInfo.Trap;
+				}
+
+				Die (dieInfo);
 			}
 		}
 	}
@@ -319,8 +337,12 @@ public class Player : MonoBehaviour {
 	{
 		if (isDead)
 			return;
-
-		AudioManager.PlaySoundFromLibrary ("Dead");
+		
+		if (dieInfo.soundName == "") {
+			AudioManager.PlaySoundFromLibrary ("Dead");
+		} else {
+			AudioManager.PlaySoundFromLibrary (dieInfo.soundName);
+		}
 		
 		isDead = true;
 

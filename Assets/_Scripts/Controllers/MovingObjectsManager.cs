@@ -57,7 +57,8 @@ public class MovingObjectsManager : MonoBehaviour {
 	void GenerateBalkLine (int line)
 	{
 //		print (line);
-		BalksLine bl = SpawnBalksInLine (line, 5, 9, (Balk.BalkDirection)(line % 2), Random.Range (1.9f, 2.5f), Random.Range (.3f, 1f));
+		//1.1 0.8 0.5 0.2
+		BalksLine bl = SpawnBalksInLine (line, 5, 9, (Balk.BalkDirection)(line % 2), Random.Range (1.9f, 2.5f), 0.2f + Random.Range (0, 4) * 0.3f);
 		balks [line] = bl;
 	}
 

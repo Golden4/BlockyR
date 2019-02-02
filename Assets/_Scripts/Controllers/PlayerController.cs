@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		Environment.SetEnvironmentVariable ("MONO_REFLECTION_SERIALIZER", "yes");
 		SpawnPlayer (User.GetInfo.curPlayerIndex, Vector3.up * .5f);
+
 	}
 
 	void SpawnPlayer (int index, Vector3 pos)

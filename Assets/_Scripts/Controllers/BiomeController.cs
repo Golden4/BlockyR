@@ -25,9 +25,9 @@ public class BiomeController : MonoBehaviour {
 	}
 }
 
-public enum Biome
-{
+public enum Biome {
 	Forest = 0,
 	Desert = 1,
-	Snowy = 2
+	Snowy = 2,
+	DarkForest = 3
 }

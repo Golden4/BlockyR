@@ -8,9 +8,12 @@ public class MenuScreen : ScreenBase {
 
 	public static event System.Action OnStartGame;
 
+	public Text gameTitleText;
+
 	void Start ()
 	{
 		SceneController.Init ();
+		ShowGameTitle (true, true);
 	}
 
 	void Update ()
@@ -30,11 +33,44 @@ public class MenuScreen : ScreenBase {
 		#endif
 	}
 
+	public void ShowGameTitle (bool show, bool fade)
+	{
+		gameTitleText.enabled = true;
+
+		if (fade) {
+			if (show) {
+				gameTitleText.GetComponent <GUIAnim> ().MoveIn ();
+			} else {
+				gameTitleText.GetComponent <GUIAnim> ().MoveOut ();
+			}
+		}
+
+		if (!fade && !show) {
+			gameTitleText.enabled = false;
+			gameTitleText.GetComponent <GUIAnim> ().MoveOut ();
+		}
+
+	}
+
+	public override void OnActivate ()
+	{
+		base.OnActivate ();
+		ShowGameTitle (true, true);
+	}
+
+	public override void OnDeactivate ()
+	{
+		base.OnDeactivate ();
+
+		ShowGameTitle (false, false);
+
+	}
+
 	public void StartGame ()
 	{
 		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.UI);
 
-		SceneController.ShowGameTitle (false, true);
+		ShowGameTitle (false, true);
 
 		if (OnStartGame != null)
 			OnStartGame.Invoke ();

@@ -51,13 +51,11 @@ public class ShopScreen : ScreenBase {
 	{
 		UpdateItemState (curActiveItem);
 		scrollSnap.SnapToObj (User.GetInfo.curPlayerIndex, false);
-		SceneController.ShowGameTitle (false, false);
 	}
 
 	public override void OnDeactivate ()
 	{
 		base.OnDeactivate ();
-		SceneController.ShowGameTitle (true, false);
 	}
 
 	public override void OnCleanUp ()
@@ -82,6 +80,7 @@ public class ShopScreen : ScreenBase {
 			User.GetInfo.userData [index].bought = true;
 			UpdateItemState (index);
 			scrollSnap.SetItemState (index, User.GetInfo.userData [index].bought);
+			User.SaveUserInfoToFile ();
 		}
 	}
 

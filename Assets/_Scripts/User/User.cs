@@ -39,8 +39,9 @@ public static class User {
 		if (!coinsLoaded) {
 			coinsLoaded = true;
 
-			if (PlayerPrefs.HasKey (coinsKey))
+			if (PlayerPrefs.HasKey (coinsKey)) {
 				_coins = PlayerPrefs.GetInt (coinsKey);
+			}
 			
 		}
 	}
@@ -53,11 +54,11 @@ public static class User {
 
 	public static event Action<int,int> OnCoinChangedEvent;
 
-	static UserInfos dataUser;
+	static UserInfo dataUser;
 
 	static bool Loaded;
 
-	public static UserInfos GetInfo {
+	public static UserInfo GetInfo {
 		get {
 			if (dataUser == null && !Loaded) {
 				Loaded = true;
@@ -65,26 +66,31 @@ public static class User {
 					
 				} else {*/
 
-				dataUser = Resources.Load <UserInfos> ("Data/UserInfo");
+				LoadUserInfoFromFileOrCreateNew ();
+
+				//dataUser = Resources.Load <UserInfo> ("Data/UserInfo");
 
 /*					UserInfos ui = new UserInfos ();
 					ui.userData = new UserInfos.UserData[Database.Get.playersData.Length];
 
 					for (int i = 0; i < ui.userData.Length; i++) {
 						ui.userData [i] = new UserInfos.UserData ();
-					}*/
+					}
 
 				//SaveLoadHelper.SaveToFile<UserInfos> (dataUser);
-				//}
+				//}*/
 			}
 
 			return dataUser;
 		}
+
+
 	}
 
 	public static void SetPlayerIndex (int index)
 	{
 		GetInfo.curPlayerIndex = index;
+		SaveUserInfoToFile ();
 	}
 
 	public static bool BuyWithCoin (int coinAmount)
@@ -95,6 +101,40 @@ public static class User {
 		} else {
 			
 			return false;
+		}
+	}
+
+	public static void SaveUserInfoToFile ()
+	{
+		if (dataUser != null)
+			JsonSaver.SaveData ("UserInfo", dataUser);
+	}
+
+	public static void LoadUserInfoFromFileOrCreateNew ()
+	{
+		UserInfo data = JsonSaver.LoadData<UserInfo> ("UserInfo");
+
+		if (data == null) {
+			dataUser = new UserInfo ();
+			SaveUserInfoToFile ();
+
+		} else {
+			dataUser = data;
+
+			if (dataUser.userData.Length < Database.Get.playersData.Length) {
+
+				UserInfo.UserData[] dataTemp = new UserInfo.UserData [Database.Get.playersData.Length];
+
+				for (int i = 0; i < Database.Get.playersData.Length; i++) {
+					if (i < dataUser.userData.Length) {
+						dataTemp [i] = dataUser.userData [i];
+					} else
+						dataTemp [i] = new UserInfo.UserData ();
+				}
+				dataUser.userData = dataTemp;
+				SaveUserInfoToFile ();
+			}
+
 		}
 	}
 

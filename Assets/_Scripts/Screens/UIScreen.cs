@@ -69,7 +69,7 @@ public class UIScreen : ScreenBase {
 
 	void Update ()
 	{
-		if (Fire.Ins != null && !Player.isWaiting) {
+		if (Fire.Ins != null && !Player.isWaitingOnStart) {
 			ShowFireDistance (Fire.Ins.distanceToPlayer);
 		}
 

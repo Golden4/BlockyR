@@ -19,7 +19,8 @@ public class BlockGrass : Block {
 
 	public override void OnGenerateBlockMesh ()
 	{
-		if (Random.Range (0, 400) == 0) {
+		if (worldCoords.x > 5 && Random.Range (0, 400) == 0) {
+
 			coin = MonoBehaviour.Instantiate (coinPrefab);
 			coin.transform.SetParent (chunk.transform, false);
 			coin.transform.position = new Vector3 (worldCoords.x, .5f, worldCoords.y);

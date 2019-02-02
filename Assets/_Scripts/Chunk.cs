@@ -46,7 +46,7 @@ public class Chunk : MonoBehaviour {
 
 	void GenerateMap ()
 	{
-		biomesMap = NoiseMap.BiomesMap (size, size, chunkCoords.x * size, chunkCoords.y * size);
+		biomesMap = NoiseMap.BiomesMap (size, size, chunkCoords.x * size, chunkCoords.y * size, 4);
 		blocksMap = NoiseMap.BlocksMap (size, size, chunkCoords.x * size, chunkCoords.y * size, ref biomesMap);
 		//objectsMap = NoiseMap.ObjectsMap (size, size, chunkCoords.y * size, chunkCoords.x * size);
 
@@ -79,16 +79,23 @@ public class Chunk : MonoBehaviour {
 	{
 		int biomeBlock = blocksMap [y, x];
 
-		if (biomeBlock == 0) {
+		switch (biomeBlock) {
+		case 0:
 			blocksInChunk [x, y] = new BlockGrass (x, y, this, (Biome)biomesMap [x, y]);
-		} else if (biomeBlock == 1/* && biomesMap [x, y] != 1*/) {
-				blocksInChunk [x, y] = new BlockWater (x, y, this, (Biome)biomesMap [x, y]);
-			} else {
-				if ((Biome)Random.Range (0, 2) == Biome.Forest) {
-					blocksInChunk [x, y] = new BlockTrap (x, y, this, (Biome)biomesMap [x, y]);
-				} else
-					blocksInChunk [x, y] = new BlockObstacle (x, y, this, (Biome)biomesMap [x, y]);
-			}
+			break;
+		case 1:
+			blocksInChunk [x, y] = new BlockWater (x, y, this, (Biome)biomesMap [x, y]);
+			break;
+		case 4:
+			blocksInChunk [x, y] = new BlockBalk (x, y, this, (Biome)biomesMap [x, y]);
+			break;
+		default:
+			if ((Biome)Random.Range (0, 2) == Biome.Forest) {
+				blocksInChunk [x, y] = new BlockTrap (x, y, this, (Biome)biomesMap [x, y]);
+			} else
+				blocksInChunk [x, y] = new BlockObstacle (x, y, this, (Biome)biomesMap [x, y]);
+			break;
+		}
 
 	}
 

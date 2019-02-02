@@ -21,11 +21,6 @@ public class BlockWater : Block {
 		MakeFace (5, pos - Vector3.up * height, mesh);
 	}
 
-	public override DieInfo dieInfo ()
-	{
-		return DieInfo.Water;
-	}
-
 	public BlockWater (int x, int y, Chunk chunk, Biome biome) : base (x, y, chunk, biome)
 	{
 	}

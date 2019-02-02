@@ -11,7 +11,6 @@ public class ItemsInfo : ScriptableObject {
 		public string name;
 		public int price;
 		public Player playerPrefab;
-
 	}
 
 }

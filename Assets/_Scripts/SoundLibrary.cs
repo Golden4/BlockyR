@@ -27,7 +27,7 @@ public class SoundLibrary : MonoBehaviour {
 
 
 		} else {
-			Debug.LogError ("Sound Not Found!!" + soundName);
+			Debug.Log ("Sound Not Found!!" + soundName);
 			return null;
 		}
 

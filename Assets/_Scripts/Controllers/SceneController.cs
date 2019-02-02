@@ -10,8 +10,6 @@ public class SceneController : MonoBehaviour {
 
 	public Image image;
 
-	public Text gameTitleText;
-
 	static bool sceneLoading = false;
 
 	public static int nextSceneToLoad = 1;
@@ -23,29 +21,6 @@ public class SceneController : MonoBehaviour {
 			print ("Destroyed " + this);
 			Destroy (transform.parent.gameObject);
 			return;
-		}
-
-		ShowGameTitle (true, true);
-	}
-
-	public void Printt (string text)
-	{
-		Debug.Log (text + " " + Time.time);
-	}
-
-	public static void ShowGameTitle (bool show, bool fade)
-	{
-		if (fade) {
-
-			Ins.gameTitleText.gameObject.SetActive (true);
-
-			if (show) {
-				Ins.gameTitleText.GetComponent <GUIAnim> ().MoveIn ();
-			} else {
-				Ins.gameTitleText.GetComponent <GUIAnim> ().MoveOut ();
-			}
-		} else {
-			Ins.gameTitleText.gameObject.SetActive (false);
 		}
 	}
 
@@ -92,15 +67,12 @@ public class SceneController : MonoBehaviour {
 		Ins.image.raycastTarget = false;
 
 		sceneLoading = false;
-
-		ShowGameTitle (true, true);
 		yield return new WaitForSecondsRealtime (0.01f);
 		yield return FadeImage (Ins.image, false, .2f);
 	}
 
 	static IEnumerator FadeImage (Image image, bool fadeIn, float time)
 	{
-		print ("Dsada");
 		image.gameObject.SetActive (true);
 		float alpha = 0;
 

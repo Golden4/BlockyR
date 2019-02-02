@@ -20,11 +20,6 @@ public class Block {
 		return false;
 	}
 
-	public virtual DieInfo dieInfo ()
-	{
-		return DieInfo.Water;
-	}
-
 	public virtual void OnPlayerContact ()
 	{
 		
@@ -86,10 +81,10 @@ public class Block {
 		if (Random.Range (0, 3) == 0) {
 			mesh.triangles.AddRange (triangle);
 		} else if (Random.Range (0, 3) == 0) {
-			mesh.triangles2.AddRange (triangle);
-		} else {
-			mesh.triangles3.AddRange (triangle);
-		}
+				mesh.triangles2.AddRange (triangle);
+			} else {
+				mesh.triangles3.AddRange (triangle);
+			}
 
 		mesh.uvs.AddRange (CubeMeshData.faceUvs (this.textureCoords (dir).x, this.textureCoords (dir).y, 1f / World.Ins.textureSize));
 	}

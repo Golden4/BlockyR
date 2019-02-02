@@ -6,6 +6,7 @@ public class Fire : MonoBehaviour {
 	public static Fire Ins;
 
 	public Sound fireSound;
+	AudioSource source;
 
 	public Player target;
 
@@ -36,11 +37,13 @@ public class Fire : MonoBehaviour {
 	{
 		target = Player.Ins;
 		Game.OnGameStarted += Game_OnGameStarted;
+		source = GetComponent <AudioSource> ();
 	}
 
 	void Game_OnGameStarted ()
 	{
-		fireSound.PlayAtObject (gameObject);
+		source.clip = fireSound.clip;
+		source.Play ();
 	}
 
 	void OnDestroy ()

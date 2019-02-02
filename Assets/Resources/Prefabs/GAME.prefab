@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1757027831741782}
+  m_IsPrefabParent: 1
+--- !u!1 &1757027831741782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4374325218114998}
+  - component: {fileID: 114474957572145248}
+  - component: {fileID: 114300696678532648}
+  - component: {fileID: 114603998263628262}
+  - component: {fileID: 114018375437340108}
+  - component: {fileID: 114899332509401066}
+  m_Layer: 0
+  m_Name: GAME
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4374325218114998
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757027831741782}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114018375437340108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757027831741782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d507ce86a1d2f341ad6ac9886819e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114300696678532648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757027831741782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c061d386fe6042b4994dc67efd157127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curActiveChunkIndex: 0
+  textureSize: 4
+--- !u!114 &114474957572145248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757027831741782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491264603249a2a408e5bd7144f2fac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 800, y: 500}
+  scale: 0.05
+  noiseHeight: 0.475
+  seed: 100
+  material: {fileID: 2100000, guid: 139292dc5ca216e4681eac88ebe090d1, type: 2}
+--- !u!114 &114603998263628262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757027831741782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 731662f7e0172e245be17834d97a3dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPresets:
+  - biome: 0
+    prefabs:
+    - {fileID: 114959863983909516, guid: 529b8323beeafb04bb9a277ef965d51a, type: 2}
+  - biome: 1
+    prefabs:
+    - {fileID: 114959863983909516, guid: 529b8323beeafb04bb9a277ef965d51a, type: 2}
+  - biome: 2
+    prefabs:
+    - {fileID: 114959863983909516, guid: 529b8323beeafb04bb9a277ef965d51a, type: 2}
+  spawnedEnemies: []
+  blocksToSpawnEnemy: []
+--- !u!114 &114899332509401066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757027831741782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262a46469141fba4eae174f7dc459435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomesList:
+  - obstacles:
+    - {fileID: 1830013344054254, guid: 1652fa692d67f7949a4ef67d0df459d5, type: 2}
+    - {fileID: 1595656410960210, guid: 8cea3476c51211b4681dd7ab72bde08f, type: 2}
+    - {fileID: 1613588604813510, guid: 9e4ab7eb28cc6d242aea8c4497984d22, type: 2}
+  - obstacles:
+    - {fileID: 1527431725221464, guid: 0e8fdbd869b40b44881f5d1e00730635, type: 2}
+    - {fileID: 1094240702104172, guid: 2cba1a2c6d147b440af15abadbdead75, type: 2}
+  - obstacles:
+    - {fileID: 1663447654743932, guid: d305e613cb039fd46b92ca70bbdfe6b2, type: 2}
+    - {fileID: 1745438577926778, guid: 54b233e6472666742aa2b21b5feac7b2, type: 2}
+  - obstacles:
+    - {fileID: 1761480044275272, guid: e97863b4781466443be5191481acd5b3, type: 2}
+    - {fileID: 1745438577926778, guid: 54b233e6472666742aa2b21b5feac7b2, type: 2}

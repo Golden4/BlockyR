@@ -24,7 +24,6 @@ public class LoadingText : MonoBehaviour {
 		float alpha = 1;
 
 		Color color = text.color;
-
 		AsyncOperation ao = SceneManager.LoadSceneAsync (sceneIndex);
 		ao.allowSceneActivation = false;
 
