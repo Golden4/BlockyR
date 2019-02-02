@@ -18,7 +18,6 @@ public class GameOverScreen : ScreenBase {
 	public override void OnCleanUp ()
 	{
 		base.OnCleanUp ();
-
 	}
 
 	public override void OnDeactivate ()

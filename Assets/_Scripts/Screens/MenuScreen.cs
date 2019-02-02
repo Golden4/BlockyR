@@ -34,7 +34,7 @@ public class MenuScreen : ScreenBase {
 	{
 		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.UI);
 
-		SceneController.ShowGameTitle (false);
+		SceneController.ShowGameTitle (false, true);
 
 		if (OnStartGame != null)
 			OnStartGame.Invoke ();

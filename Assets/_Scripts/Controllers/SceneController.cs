@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class SceneController : MonoBehaviour {
-	static SceneController Ins;
+	public static SceneController Ins;
 
 	public Image image;
 
@@ -23,11 +24,29 @@ public class SceneController : MonoBehaviour {
 			Destroy (transform.parent.gameObject);
 			return;
 		}
+
+		ShowGameTitle (true, true);
 	}
 
-	public static void ShowGameTitle (bool show)
+	public void Printt (string text)
 	{
-		Ins.gameTitleText.GetComponent <Animator> ().SetBool ("Anim", show);
+		Debug.Log (text + " " + Time.time);
+	}
+
+	public static void ShowGameTitle (bool show, bool fade)
+	{
+		if (fade) {
+
+			Ins.gameTitleText.gameObject.SetActive (true);
+
+			if (show) {
+				Ins.gameTitleText.GetComponent <GUIAnim> ().MoveIn ();
+			} else {
+				Ins.gameTitleText.GetComponent <GUIAnim> ().MoveOut ();
+			}
+		} else {
+			Ins.gameTitleText.gameObject.SetActive (false);
+		}
 	}
 
 	public static void Init ()
@@ -74,10 +93,9 @@ public class SceneController : MonoBehaviour {
 
 		sceneLoading = false;
 
+		ShowGameTitle (true, true);
 		yield return new WaitForSecondsRealtime (0.01f);
 		yield return FadeImage (Ins.image, false, .2f);
-
-
 	}
 
 	static IEnumerator FadeImage (Image image, bool fadeIn, float time)

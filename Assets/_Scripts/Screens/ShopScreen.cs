@@ -51,6 +51,13 @@ public class ShopScreen : ScreenBase {
 	{
 		UpdateItemState (curActiveItem);
 		scrollSnap.SnapToObj (User.GetInfo.curPlayerIndex, false);
+		SceneController.ShowGameTitle (false, false);
+	}
+
+	public override void OnDeactivate ()
+	{
+		base.OnDeactivate ();
+		SceneController.ShowGameTitle (true, false);
 	}
 
 	public override void OnCleanUp ()
