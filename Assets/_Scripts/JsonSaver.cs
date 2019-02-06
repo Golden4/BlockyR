@@ -8,7 +8,7 @@ public class JsonSaver {
 	{
 		PlayerPrefs.SetString (key, JsonUtility.ToJson (obj));
 
-		Debug.Log ("Saved: " + JsonUtility.ToJson (obj));
+//		Debug.Log ("Saved: " + JsonUtility.ToJson (obj));
 	}
 
 	public static T LoadData<T> (string key) where T: class
@@ -18,7 +18,7 @@ public class JsonSaver {
 
 		if (PlayerPrefs.HasKey (key)) {
 			obj = JsonUtility.FromJson<T> (PlayerPrefs.GetString (key));
-			Debug.Log ("Loaded: " + PlayerPrefs.GetString (key));
+			//	Debug.Log ("Loaded: " + PlayerPrefs.GetString (key));
 		}
 
 

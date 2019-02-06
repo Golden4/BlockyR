@@ -191,7 +191,6 @@ public class Player : MonoBehaviour {
 
 	void StartMove (Direction dir, Vector3 targetPos)
 	{
-		AudioManager.PlaySoundFromLibrary ("Jump");
 		moveProgress = 0;
 		targetRotation = Quaternion.LookRotation (new Vector3 (CubeMeshData.offsets [(int)dir].x, 0, CubeMeshData.offsets [(int)dir].y)).eulerAngles;
 		transform.localScale = new Vector3 (1.1f, .8f, 1.1f);
@@ -210,9 +209,12 @@ public class Player : MonoBehaviour {
 	{
 		if (Time.time > lastMoveTime + (1f / speed) + .01f) {
 
+
 			CheckBlocksAndCollidersAround (dir);
 
 			if (blocksAround [(int)dir].isWalkable ()) {
+				PlayStepSound ();
+
 				lastMoveTime = Time.time;
 
 				curCoord += CubeMeshData.offsets [(int)dir];
@@ -257,6 +259,17 @@ public class Player : MonoBehaviour {
 				Die (dieInfo);
 			}
 		}
+
+		if (isSnaped)
+			AudioManager.PlaySoundFromLibrary ("WoodJump");
+		else if (curBlock.biome == Biome.Snowy)
+				AudioManager.PlaySoundFromLibrary ("SnowJump");
+	}
+
+	void PlayStepSound ()
+	{
+		AudioManager.PlaySoundFromLibrary ("Jump");
+
 	}
 
 	void CheckBalk (Direction dir)
@@ -268,9 +281,9 @@ public class Player : MonoBehaviour {
 			} else if (curBalk.transform != curCollider [0].transform) {
 					curBalk = curCollider [0].transform.GetComponent <Balk> ();
 					Snap (curBalk, dir);
-				} else {
-					MoveBalk (dir);
-				}
+				} else if (!MoveBalk (dir)) {
+						Unsnap (dir);
+					}
 		} else if (isSnaped)
 				Unsnap (dir);
 	}
@@ -282,12 +295,11 @@ public class Player : MonoBehaviour {
 		snapedPos = GetCloseBalkPoint (balk);
 
 		targetPos = balk.transform.position + new Vector3 (0, startHeight, GetCloseBalkPoint (balk));
-
 	}
 
 	int GetCloseBalkPoint (Balk balk)
 	{
-		int maxSize = Mathf.FloorToInt (balk.transform.localScale.z / .3f);
+		int maxSize = balk.curBalkLine.size;
 
 		Vector3 localPos = balk.transform.InverseTransformPoint (transform.position);
 		int point = Mathf.RoundToInt (localPos.z);
@@ -311,7 +323,7 @@ public class Player : MonoBehaviour {
 
 	}
 
-	void MoveBalk (Direction dir)
+	bool MoveBalk (Direction dir)
 	{
 		if (Direction.Up == dir)
 			snapedPos++;
@@ -319,9 +331,13 @@ public class Player : MonoBehaviour {
 		if (Direction.Down == dir)
 			snapedPos--;
 
+		if (snapedPos > curBalk.curBalkLine.size || snapedPos < -curBalk.curBalkLine.size)
+			return false;
+
 		curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
 
 		targetPos = curBalk.transform.position + Vector3.up * (startHeight + 0.4f) + Vector3.forward * snapedPos;
+		return true;
 	}
 
 	public Vector2I WorldPositionToBlockCoords (Vector3 pos)
@@ -417,9 +433,6 @@ public class Player : MonoBehaviour {
 		curBlock = World.Ins.GetBlock (curCoord);
 
 		curCollider = Physics.OverlapBox ((/*WorldPositionToBlockCoords (*/transform.position + CubeMeshData.offsets [(int)dir].ToVector3 ())/*.ToVector3 (.7f)*/, Vector3.one * .4f, Quaternion.identity, MovingObjectsManager.Ins.balkMask);
-
-		if (curCollider.Length > 0)
-			print (curCollider [0].name);
 	}
 
 	public Vector2I GetCurCoords ()

@@ -93,11 +93,9 @@ public class NoiseMap : MonoBehaviour {
 					BalkController.AddLineToGenerateBalks (yOffset + y);
 				}*/
 
-
-				if ((xOffset + y > 21 && xOffset + y < 30) || (xOffset + y > 50 && xOffset + y < 60)) {
+				if ((xOffset + y) % 20 > 0 && ((xOffset + y) % 20 + (xOffset + y) / 10) < (((xOffset + y) / 10) * 2) && (xOffset + y) > 10) {
 					//if (xOffset + y > 20 + Random.Range (0, 2) && xOffset + y < 30 + Random.Range (0, 2)) {
 					map [x, y] = 4;
-					biomesMap [y, x] = 0;
 
 					MovingObjectsManager.AddLineToGenerateBalks (xOffset + y);
 

@@ -4,33 +4,32 @@ using UnityEngine;
 
 public class Balk : MonoBehaviour {
 
-	public enum BalkDirection
-	{
+	public enum BalkDirection {
 		Left,
 		Right
 	}
 
-	public float speed = .5f;
-
-	public BalkDirection dir;
+	public MovingObjectsManager.BalksLine curBalkLine;
 
 	public bool isOnChunk;
 
 	public LayerMask lm;
-	public int line;
 
 	void Start ()
 	{
-		isOnChunk = World.IsOnChunk (transform.position);
+
+		float localSize = 0.2f + curBalkLine.size * 0.3f;
+		transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, localSize);
+
+
+		//isOnChunk = World.IsOnChunk (transform.position);
 	}
 
 	void Update ()
 	{
-		if (!World.IsOnChunk (transform.position))
-		if (isOnChunk)
-			OutOfChunk ();
-
 		isOnChunk = World.IsOnChunk (transform.position);
+		if (!isOnChunk)
+			OutOfChunk ();
 	}
 
 	void FixedUpdate ()
@@ -42,7 +41,7 @@ public class Balk : MonoBehaviour {
 
 	void Move ()
 	{
-		transform.position += Time.fixedDeltaTime * Vector3.forward * speed * ((int)dir * 2 - 1);
+		transform.position += Time.fixedDeltaTime * Vector3.forward * curBalkLine.speed * ((int)curBalkLine.dir * 2 - 1);
 	}
 
 	Vector2I curChunkCoord {
@@ -53,23 +52,24 @@ public class Balk : MonoBehaviour {
 
 	void OutOfChunk ()
 	{
-		//bool chunkOut = (dir == BalkDirection.Left) ? World.Ins.outChunkIndexMinY - 1 < curChunkCoord.y : World.Ins.outChunkIndexMaxY + 1 > curChunkCoord.y;
+		//bool chunkOut = (curBalkLine.dir == BalkDirection.Left) ? World.Ins.outChunkIndexMinY - 1 < curChunkCoord.y : World.Ins.outChunkIndexMaxY + 1 > curChunkCoord.y;
 
-		bool chunkOut = World.Ins.outChunkIndexMinY - 2 < curChunkCoord.x;
+		//bool chunkOut = World.Ins.outChunkIndexMinY - 2 < curChunkCoord.x;
 
-		if (!chunkOut) {
-			if (MovingObjectsManager.Ins.balks.ContainsKey (line))
-				MovingObjectsManager.Ins.DestroyBalksInLine (line);
+/*		if (!chunkOut) {
+			if (MovingObjectsManager.Ins.balksLine.ContainsKey (curBalkLine.line))
+				MovingObjectsManager.Ins.DestroyBalksInLine (curBalkLine.line);
 
-			print (transform.name + "   " + dir + "  " + line + "  " + curChunkCoord + "    " + World.Ins.outChunkIndexMinY + "   " + World.Ins.outChunkIndexMaxY);
+			print (transform.name + "   " + curBalkLine.dir + "  " + curBalkLine.line + "  " + curChunkCoord + "    " + World.Ins.outChunkIndexMinY + "   " + World.Ins.outChunkIndexMaxY);
 			return;
+		}*/
+
+		//if (chunkOut)
+		if (MovingObjectsManager.Ins.balksLine.ContainsKey (curBalkLine.line)) {
+
+			transform.position = MovingObjectsManager.GetStartBalkPosition (curBalkLine.line);
+
 		}
 
-		if (MovingObjectsManager.Ins.balks.ContainsKey (line)) {
-			
-			transform.position = MovingObjectsManager.GetStartBalkPosition (line);
-
-		}
 	}
-
 }

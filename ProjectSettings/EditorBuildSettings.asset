@@ -5,9 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Appodeal/AppodealDemo/AppodealDemo.unity
-    guid: 047bd3f39625945bd8e885278c1d6ed6
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 3d67fe7a485b76e4a976941d4b133770
+  m_configObjects: {}
