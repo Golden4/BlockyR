@@ -58,10 +58,10 @@ public class MovingObjectsManager : MonoBehaviour {
 //		print (line);
 		//1.1 0.8 0.5 0.2
 
-		int count = Random.Range (5, 8);
+		int count = 5;
 		float spaceBetweenBalks = Random.Range (7f, 10f);
 		float speed = Random.Range (1.9f, 2.5f);
-        int size = Random.Range(0, 3);
+		int size = Random.Range (0, 3);
 
 		BalksLine bl = SpawnBalksInLine (line, count, spaceBetweenBalks, (Balk.BalkDirection)(line % 2), speed, size);
 		balksLine [line] = bl;
@@ -206,7 +206,7 @@ public class MovingObjectsManager : MonoBehaviour {
 
 			float yCoord = World.Ins.outChunkIndexMaxY * Chunk.size - balks.Count * spaceBetweenBalks;
 
-            balk.transform.position = new Vector3 (line, .1f, yCoord);
+			balk.transform.position = new Vector3 (line, .1f, yCoord);
 
 			balks.Add (balk);
 			balk.transform.name = "Balk|Line:" + line + "|" + balks.Count;

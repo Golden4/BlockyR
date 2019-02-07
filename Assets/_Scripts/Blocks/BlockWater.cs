@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockWater : Block {
-
+	
 	public override bool CanDie ()
 	{
 		return (biome != Biome.Snowy);
@@ -19,6 +19,8 @@ public class BlockWater : Block {
 		float height = /*(biomeIndex == 2) ? 0.95f :*/ 0.3f;
 
 		MakeFace (5, pos - Vector3.up * height, mesh);
+
+		OnGenerateBlockMesh ();
 	}
 
 	public BlockWater (int x, int y, Chunk chunk, Biome biome) : base (x, y, chunk, biome)
@@ -29,4 +31,5 @@ public class BlockWater : Block {
 	{
 		return (isWalkable () && !CanDie ()) ? -.1f : -1.5f;
 	}
+
 }

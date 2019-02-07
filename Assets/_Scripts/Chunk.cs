@@ -86,17 +86,27 @@ public class Chunk : MonoBehaviour {
 		case 1:
 			blocksInChunk [x, y] = new BlockWater (x, y, this, (Biome)biomesMap [x, y]);
 			break;
+		case 2:
+			blocksInChunk [x, y] = new BlockObstacle (x, y, this, (Biome)biomesMap [x, y]);
+			break;
+		case 3: 
+			blocksInChunk [x, y] = new BlockTrap (x, y, this, (Biome)biomesMap [x, y]);
+			break;
 		case 4:
 			blocksInChunk [x, y] = new BlockBalk (x, y, this, (Biome)biomesMap [x, y]);
 			break;
+		case 5:
+			blocksInChunk [x, y] = new BlockWaterLily (x, y, this, (Biome)biomesMap [x, y]);
+			break;
 		default:
-			if ((Biome)Random.Range (0, 2) == Biome.Forest) {
+/*			if ((Biome)Random.Range (0, 2) == Biome.Forest) {
 				blocksInChunk [x, y] = new BlockTrap (x, y, this, (Biome)biomesMap [x, y]);
-			} else
-				blocksInChunk [x, y] = new BlockObstacle (x, y, this, (Biome)biomesMap [x, y]);
+			}*/
+
+			blocksInChunk [x, y] = new BlockGrass (x, y, this, (Biome)biomesMap [x, y]);
+			print (biomeBlock);
 			break;
 		}
-
 	}
 
 

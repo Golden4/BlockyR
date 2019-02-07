@@ -15,6 +15,11 @@ public class BlockBalk : BlockWater {
 		return new Vector2I (2, coord);
 	}
 
+	public override bool CanDie ()
+	{
+		return true;
+	}
+
 	public BlockBalk (int x, int y, Chunk chunk, Biome biome) : base (x, y, chunk, biome)
 	{
 	}

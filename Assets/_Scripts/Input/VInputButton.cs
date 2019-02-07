@@ -22,12 +22,14 @@ public class VInputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 	void OnEnable ()
 	{
 		active = true;
+		isHolding = false;
 		MobileInputManager.RegisterInput (this, direction);
 	}
 
 	void OnDisable ()
 	{
 		active = false;
+		isHolding = false;
 		MobileInputManager.UnRegisterInput (direction);
 	}
 

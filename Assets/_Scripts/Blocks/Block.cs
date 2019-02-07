@@ -4,7 +4,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class Block {
-	
+
+	public BlockData data;
 	public Vector2I localChunkCoords;
 	public Vector2I worldCoords;
 	public Chunk chunk;
@@ -114,6 +115,8 @@ public class Block {
 		this.chunk = chunk;
 		this.biome = biome;
 	}
-	
 
+	public class BlockData {
+		
+	}
 }

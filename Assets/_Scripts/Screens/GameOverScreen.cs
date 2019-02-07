@@ -30,6 +30,13 @@ public class GameOverScreen : ScreenBase {
 		SceneController.RestartLevel ();
 	}
 
+	public void RetryGame ()
+	{
+		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.UI);
+
+		Player.Ins.Retry ();
+	}
+
 	void RespawnPlayer ()
 	{
 		if (AdController.Ins != null)

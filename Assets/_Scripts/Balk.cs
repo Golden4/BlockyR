@@ -18,7 +18,7 @@ public class Balk : MonoBehaviour {
 	void Start ()
 	{
 
-		float localSize = 0.2f + curBalkLine.size * 0.3f;
+		float localSize = 0.15f + curBalkLine.size * 0.3f;
 		transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, localSize);
 
 

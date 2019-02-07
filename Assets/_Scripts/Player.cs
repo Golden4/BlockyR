@@ -8,11 +8,10 @@ public class Player : MonoBehaviour {
 	public static Player Ins;
 
 	public static event System.Action OnPlayerDie;
+	public static event System.Action OnPlayerRetry;
 
 	Vector2I curCoord = new Vector2I ();
 	Rigidbody rb;
-
-	//[SerializeField]
 	float speed = 4;
 	float speedChangeMultiply = 3;
 
@@ -21,6 +20,8 @@ public class Player : MonoBehaviour {
 
 	public static bool isWaitingOnStart = true;
 	float waitingTime = .8f;
+
+	Material origMaterial;
 
 	void Awake ()
 	{
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour {
 		whiteMat = Resources.Load <Material> ("Materials/WhiteMaterial");
 		Game.OnGameStarted += OnGameStart;
 		gameObject.AddComponent <AudioListener> ();
+		origMaterial = GetComponent <MeshRenderer> ().material;
 	}
 
 	void OnGameStart ()
@@ -63,11 +65,10 @@ public class Player : MonoBehaviour {
 
 		for (int i = 0; i < 4; i++)
 			if (MobileInputManager.GetKey ((Direction)i)) {
-				
 				Move ((Direction)i);
 			}
 
-		CheckDirection ();
+		//CheckDirection ();
 
 		/*if (Input.GetKey (KeyCode.A))
 			Move (Direction.Left);		
@@ -83,8 +84,8 @@ public class Player : MonoBehaviour {
 			isWaitingBalk = false;
 		}*/
 
-		if (!isSnaped /*&& !isWaitingBalk*/)
-			Move (curDir);
+		//if (!isSnaped /*&& !isWaitingBalk*/)
+		//	Move (curDir);
 		
 		UIScreen.Ins.UpdateScore (curBlock.worldCoords.x);
 
@@ -110,6 +111,9 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
+		if (isDead || !Game.isGameStarted || Game.isPause || isWaitingOnStart)
+			return;
+		
 		MoveAnimate ();
 	}
 
@@ -186,7 +190,6 @@ public class Player : MonoBehaviour {
 		moving = false;
 
 		OnEndMove ();
-
 	}
 
 	void StartMove (Direction dir, Vector3 targetPos)
@@ -208,10 +211,8 @@ public class Player : MonoBehaviour {
 	void Move (Direction dir)
 	{
 		if (Time.time > lastMoveTime + (1f / speed) + .01f) {
-
-
 			CheckBlocksAndCollidersAround (dir);
-
+			print (blocksAround [(int)dir]);
 			if (blocksAround [(int)dir].isWalkable ()) {
 				PlayStepSound ();
 
@@ -250,7 +251,7 @@ public class Player : MonoBehaviour {
 				Type blockType = curBlock.GetType ();
 				DieInfo dieInfo;
 
-				if (blockType == typeof(BlockWater) || blockType == typeof(BlockBalk)) {
+				if (blockType.IsSubclassOf (typeof(BlockWater)) || blockType == typeof(BlockWater)) {
 					dieInfo = DieInfo.Water;
 				} else {
 					dieInfo = DieInfo.Trap;
@@ -443,5 +444,16 @@ public class Player : MonoBehaviour {
 	void OnDestroy ()
 	{
 		Game.OnGameStarted -= OnGameStart;
+	}
+
+	public void Retry ()
+	{
+		GetComponent <MeshRenderer> ().material = origMaterial;
+		isDead = false;
+		dirApply = false;
+		curDir = Direction.Right;
+
+		if (OnPlayerRetry != null)
+			OnPlayerRetry ();
 	}
 }

@@ -59,9 +59,23 @@ public class NoiseMap : MonoBehaviour {
 		return map;
 	}
 
+	/* 0 = BlockGrass
+	 * 1 = BlockWater
+	 * 2 = BlockObstacle
+	 * 3 = BlockTrap
+	 * 4 = BlockBalk
+	* 5 = blockWaterLily
+	*/
+
 	public static int[,] BlocksMap (int width, int height, int xOffset, int yOffset, ref int[,] biomesMap)
 	{
 		int[,] map = new int[width, height];
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				map [x, y] = -1;
+			}
+		}
 
 		int[,] levelMap = ObjectsMap (width, height, xOffset, yOffset);
 
@@ -73,12 +87,20 @@ public class NoiseMap : MonoBehaviour {
 					continue;
 				}
 
+				if (map [x, y] != -1)
+					continue;
+
 				if (Random.Range (0, 15) > 0)
 					map [x, y] = 0;
 				else if (Random.Range (0, 5) > 0) {
-						map [x, y] = 2;
-					} else if (biomesMap [x, y] != 1) {
-							CreatePool (x, y, map);
+					
+						if ((Biome)Random.Range (0, 2) == Biome.Forest)
+							map [x, y] = 3;
+						else
+							map [x, y] = 2;
+					
+					} else if (biomesMap [x, y] != (int)Biome.Desert) {
+							CreatePool (x, y, map, biomesMap);
 							//map [x, y] = 1;
 						} else {
 							map [x, y] = 0;
@@ -107,16 +129,25 @@ public class NoiseMap : MonoBehaviour {
 		return map;
 	}
 
-	static void CreatePool (int x, int y, int[,] map)
+	static void CreatePool (int x, int y, int[,] map, int[,] biomesMap)
 	{
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				if (x + i >= 0 && x + i < map.GetLength (0) && y + j >= 0 && y + j < map.GetLength (1)) {
-					if (Random.Range (0, 3) > 0)
-						map [x + i, y + j] = 1;
+					if (Random.Range (0, 3) > 0) {
+						if (Random.Range (0, 10) == 0 && biomesMap [x + i, y + j] != (int)Biome.Snowy) {
+							map [x + i, y + j] = 5;//WaterLily
+						} else {
+							map [x + i, y + j] = 1;//WaterBlock
+						}
+
+					}
 				}
 			}
 		}
+
+		map [x, y] = 1;
+
 	}
 
 	public static int[,] ObjectsMap (int width, int height, int xOffset, int yOffset)

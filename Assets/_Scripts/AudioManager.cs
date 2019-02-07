@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour {
 	public void EnableAudio (bool enable)
 	{
 		audioEnabled = enable;
-		print ("Audio " + enable);
+//		print ("Audio " + enable);
 	}
 
 	public static void PlaySoundFromLibrary (string name)

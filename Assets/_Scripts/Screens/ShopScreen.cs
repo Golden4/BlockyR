@@ -22,6 +22,7 @@ public class ShopScreen : ScreenBase {
 	}
 
 	public Text itemNameText;
+	public Text itemAbilityText;
 
 	public Button SelectAndPlayBtn;
 
@@ -66,6 +67,7 @@ public class ShopScreen : ScreenBase {
 	void OnChangeItem (int index)
 	{
 		itemNameText.text = Database.Get.playersData [index].name;
+		itemAbilityText.text = Database.Get.playersData [index].ability;
 		UpdateItemState (index);
 	}
 
