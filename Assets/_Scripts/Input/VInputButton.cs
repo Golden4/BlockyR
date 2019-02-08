@@ -24,6 +24,7 @@ public class VInputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 		active = true;
 		isHolding = false;
 		MobileInputManager.RegisterInput (this, direction);
+		curState = State.None;
 	}
 
 	void OnDisable ()
@@ -31,6 +32,7 @@ public class VInputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 		active = false;
 		isHolding = false;
 		MobileInputManager.UnRegisterInput (direction);
+		curState = State.None;
 	}
 
 	bool btnDown = false;

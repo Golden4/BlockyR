@@ -5,9 +5,8 @@ using UnityEngine;
 public class BlockGrass : Block {
 	
 	public GameObject coin;
-	static string coinPath = "Models/Coin/Coin";
 	static ParticleSystem ps;
-	static GameObject coinPrefab;
+	//static GameObject coinPrefab = GameAssets.i.pfCoin;
 
 	public override Vector2I textureCoords (int dir)
 	{
@@ -19,11 +18,18 @@ public class BlockGrass : Block {
 
 	public override void OnGenerateBlockMesh ()
 	{
-		if (worldCoords.x > 5 && Random.Range (0, 400) == 0) {
+		if (worldCoords.x > 5) {
+			if (Random.Range (0, 400) == 0) {
+				Vector3 pos = new Vector3 (worldCoords.x, .5f, worldCoords.y);
+				data.AddObject (GameAssets.i.asCoin.CreateOnWorld (chunk.transform, pos, Vector3.zero));
 
-			coin = MonoBehaviour.Instantiate (coinPrefab);
+				/*coin = MonoBehaviour.Instantiate (coinPrefab);
 			coin.transform.SetParent (chunk.transform, false);
-			coin.transform.position = new Vector3 (worldCoords.x, .5f, worldCoords.y);
+			coin.transform.position = new Vector3 (worldCoords.x, .5f, worldCoords.y);*/
+			} else if (Random.Range (0, 400) == 0) {
+					Vector3 pos = new Vector3 (worldCoords.x, .5f, worldCoords.y);
+					data.AddObject (GameAssets.i.asAbility.CreateOnWorld (chunk.transform, pos, Vector3.zero));
+				}
 		}
 	}
 
@@ -32,10 +38,6 @@ public class BlockGrass : Block {
 		if (Random.Range (0, 20) == 0) {
 			addedToSpawnEnemy = true;
 			EnemyController.Ins.AddBlockToSpawnEnemy (worldCoords);
-		}
-
-		if (coinPrefab == null) {
-			coinPrefab = Resources.Load <GameObject> (coinPath);
 		}
 
 		if (ps == null) {

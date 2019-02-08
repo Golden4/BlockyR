@@ -52,7 +52,7 @@ public class Chunk : MonoBehaviour {
 
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
-				CreateBlock (x, y);
+				CreateBlock (x, y, blocksMap);
 			}
 		}
 
@@ -72,10 +72,9 @@ public class Chunk : MonoBehaviour {
 				}
 			}
 		}
-
 	}
 
-	void CreateBlock (int x, int y)
+	void CreateBlock (int x, int y, int[,] blocksMap)
 	{
 		int biomeBlock = blocksMap [y, x];
 
@@ -107,6 +106,11 @@ public class Chunk : MonoBehaviour {
 			print (biomeBlock);
 			break;
 		}
+	}
+
+	void SetBlock (Block block, int x, int y)
+	{
+		
 	}
 
 
@@ -165,6 +169,15 @@ public class Chunk : MonoBehaviour {
 			return blocksInChunk [localCoords.x, localCoords.y];
 
 		return world.GetBlock (localCoords + chunkCoords * size);
+	}
+
+	public void SetBlockLocalCoords (Block block, Vector2I localCoords)
+	{
+		if (BlockInChunk (localCoords)) {
+			blocksInChunk [localCoords.x, localCoords.y] = block;
+		}
+
+		generated = false;
 	}
 
 	public bool BlockInChunk (Vector2I localCoords)

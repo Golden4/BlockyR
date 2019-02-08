@@ -2,28 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinComp : MonoBehaviour {
+public class CoinSpecialItem : SpecialItem {
 
-	public float rotationSpeed = 80;
 	Vector2I coinCount = new Vector2I (1, 10);
 
-	void Update ()
-	{
-		transform.localEulerAngles += Vector3.up * rotationSpeed * Time.deltaTime;
-		Vector3 pos = transform.localPosition;
-		pos.y = Mathf.Sin (Time.time * 1.5f) * 0.2f + 1;
-		transform.localPosition = pos;
-	}
-
-	void OnTriggerEnter (Collider col)
-	{
-		if (col.CompareTag ("Player")) {
-			PickUp ();
-			Destroy ();
-		}
-	}
-
-	void PickUp ()
+	public override void PickUp ()
 	{
 		int coinAmount = Random.Range (coinCount.x, coinCount.y);
 
@@ -35,10 +18,5 @@ public class CoinComp : MonoBehaviour {
 			AudioManager.PlaySoundFromLibrary ("Coin");
 		});
 
-	}
-
-	void Destroy ()
-	{
-		Destroy (gameObject);
 	}
 }

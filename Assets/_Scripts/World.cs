@@ -169,6 +169,21 @@ public class World : MonoBehaviour {
 		return block;
 	}
 
+	public void SetBlock (Block block, int x, int y)
+	{
+
+		Vector2I worldCoords = new Vector2I (x, y);
+
+		Chunk chunk = GetChunkFromChunkCoords (Chunk.WorldToChunkCoord (worldCoords));
+
+		if (chunk == null)
+			Debug.LogError ("Not Found Chunk: " + x + "  " + y);
+		return;
+
+		chunk.SetBlockLocalCoords (block, chunk.WorldToLocalCoord (worldCoords));
+
+	}
+
 	public static bool IsOnChunk (Vector3 position)
 	{
 		Vector2I curChunkCoord = World.WorldPositionToChunkCoords (position);
@@ -179,4 +194,33 @@ public class World : MonoBehaviour {
 
 		return false;
 	}
+
+	public static Vector2I FindSpawnPos (Vector2I coords)
+	{
+		Vector2I coordToSpawn = new Vector2I ();
+
+		bool finded = false;
+
+		for (int _x = 0; _x < 30; _x++) {
+			Block block;
+			for (int _y = 0; _y < 5; _y++) {
+				for (int v = 0; v < 2; v++) {
+					block = World.Ins.GetBlock (new Vector2I (coords.x - _x, coords.y + ((v == 0) ? 1 : -1) * _y));
+					if (CorrectBlock (block)) {
+						coordToSpawn = block.worldCoords;
+						return coordToSpawn;
+					}
+				}
+			}
+		}
+
+		Debug.LogError ("Not Found SpawnPos: " + coords);
+		return coordToSpawn;
+	}
+
+	public static bool CorrectBlock (Block block)
+	{
+		return block != null && !block.CanDie () && block.isWalkable ();
+	}
+
 }

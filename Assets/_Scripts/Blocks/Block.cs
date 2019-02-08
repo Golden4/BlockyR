@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Block {
 
-	public BlockData data;
+	public BlockData data = new BlockData ();
+
 	public Vector2I localChunkCoords;
 	public Vector2I worldCoords;
 	public Chunk chunk;
@@ -117,6 +118,18 @@ public class Block {
 	}
 
 	public class BlockData {
-		
+
+		List<GameAssets.GameAsset> gameObjects = new List<GameAssets.GameAsset> ();
+		public int curObjIndex;
+
+		public void AddObject (GameAssets.GameAsset go)
+		{
+			gameObjects.Add (go);
+		}
+
+		public GameAssets.GameAsset GetObject ()
+		{
+			return gameObjects [0];
+		}
 	}
 }

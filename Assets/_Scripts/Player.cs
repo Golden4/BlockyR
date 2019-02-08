@@ -10,28 +10,36 @@ public class Player : MonoBehaviour {
 	public static event System.Action OnPlayerDie;
 	public static event System.Action OnPlayerRetry;
 
-	Vector2I curCoord = new Vector2I ();
-	Rigidbody rb;
-	float speed = 4;
-	float speedChangeMultiply = 3;
+	private Vector2I curCoord = new Vector2I ();
+	private Rigidbody rb;
+	private float speed = 4;
+	private float speedChangeMultiply = 3;
 
 	[HideInInspector]
 	public bool isDead = false;
 
 	public static bool isWaitingOnStart = true;
-	float waitingTime = .8f;
+	private float waitingTime = .8f;
 
-	Material origMaterial;
+	private Material origMaterial;
 
-	void Awake ()
+	public PlayerAbility ability;
+
+	protected int lifeCount = 1;
+
+	protected virtual void Awake ()
 	{
 		Ins = this;
+		Game.OnGameStarted += OnGameStart;
+	}
+
+	protected virtual void Start ()
+	{
 		rb = GetComponent <Rigidbody> ();
 		rb.useGravity = false;
 		rb.isKinematic = true;
 		targetScale = transform.localScale;
 		whiteMat = Resources.Load <Material> ("Materials/WhiteMaterial");
-		Game.OnGameStarted += OnGameStart;
 		gameObject.AddComponent <AudioListener> ();
 		origMaterial = GetComponent <MeshRenderer> ().material;
 	}
@@ -212,7 +220,6 @@ public class Player : MonoBehaviour {
 	{
 		if (Time.time > lastMoveTime + (1f / speed) + .01f) {
 			CheckBlocksAndCollidersAround (dir);
-			print (blocksAround [(int)dir]);
 			if (blocksAround [(int)dir].isWalkable ()) {
 				PlayStepSound ();
 
@@ -234,6 +241,17 @@ public class Player : MonoBehaviour {
 		speed = Mathf.Clamp ((float)Math.Sqrt ((double)(UIScreen.Ins.score / 100f * speedChangeMultiply)) + 4, 4, 12);
 		OnPlayerStepOnBlock ();
 		//print (speed);
+	}
+
+	void SetCoords (Vector2I coords)
+	{
+		curCoord = coords;
+		curBlock = World.Ins.GetBlock (curCoord);
+		moveProgress = 10;
+
+		targetPos = new Vector3 (curCoord.x, startHeight + curBlock.GetBlockHeight (), curCoord.y);
+		transform.position = targetPos;
+		isSnaped = false;
 	}
 
 	bool isSnaped;
@@ -270,7 +288,6 @@ public class Player : MonoBehaviour {
 	void PlayStepSound ()
 	{
 		AudioManager.PlaySoundFromLibrary ("Jump");
-
 	}
 
 	void CheckBalk (Direction dir)
@@ -296,6 +313,7 @@ public class Player : MonoBehaviour {
 		snapedPos = GetCloseBalkPoint (balk);
 
 		targetPos = balk.transform.position + new Vector3 (0, startHeight, GetCloseBalkPoint (balk));
+		balk.OnPlayerSnap ();
 	}
 
 	int GetCloseBalkPoint (Balk balk)
@@ -322,6 +340,8 @@ public class Player : MonoBehaviour {
 		curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
 		targetPos = new Vector3 (curCoord.x, startHeight + curBlock.GetBlockHeight (), curCoord.y);
 
+		if (curBalk != null)
+			curBalk.OnPlayerUnsnap ();
 	}
 
 	bool MoveBalk (Direction dir)
@@ -369,13 +389,24 @@ public class Player : MonoBehaviour {
 
 		/*if (dieInfo.hidePlayer)
 			gameObject.SetActive (false);*/
-
+		
 		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.GameOver);
 
 		StartCoroutine (FadeMat ());
 
 		if (OnPlayerDie != null)
 			OnPlayerDie ();
+	}
+
+	public void DieAndRetry (DieInfo dieInfo)
+	{
+		if (dieInfo.soundName == "") {
+			AudioManager.PlaySoundFromLibrary ("Dead");
+		} else {
+			AudioManager.PlaySoundFromLibrary (dieInfo.soundName);
+		}
+
+		Retry ();
 	}
 
 	GameObject warningPlayer;
@@ -452,6 +483,8 @@ public class Player : MonoBehaviour {
 		isDead = false;
 		dirApply = false;
 		curDir = Direction.Right;
+
+		SetCoords (World.FindSpawnPos (curCoord));
 
 		if (OnPlayerRetry != null)
 			OnPlayerRetry ();

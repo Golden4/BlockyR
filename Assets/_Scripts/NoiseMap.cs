@@ -90,21 +90,27 @@ public class NoiseMap : MonoBehaviour {
 				if (map [x, y] != -1)
 					continue;
 
-				if (Random.Range (0, 15) > 0)
-					map [x, y] = 0;
-				else if (Random.Range (0, 5) > 0) {
+
+				if ((xOffset + y) % 20 > 0 && ((xOffset + y) % 20 + (xOffset + y) / 10) < (((xOffset + y) / 10) * 2) && (xOffset + y) > 10) {
+					//if (xOffset + y > 20 + Random.Range (0, 2) && xOffset + y < 30 + Random.Range (0, 2)) {
+					map [x, y] = 4;
+					MovingObjectsManager.AddLineToGenerateBalks (xOffset + y);
+				
+				} else if (Random.Range (0, 15) > 0)
+						map [x, y] = 0;
+					else if (Random.Range (0, 5) > 0) {
 					
-						if ((Biome)Random.Range (0, 2) == Biome.Forest)
-							map [x, y] = 3;
-						else
-							map [x, y] = 2;
+							if ((Biome)Random.Range (0, 2) == Biome.Forest)
+								map [x, y] = 3;
+							else
+								map [x, y] = 2;
 					
-					} else if (biomesMap [x, y] != (int)Biome.Desert) {
-							CreatePool (x, y, map, biomesMap);
-							//map [x, y] = 1;
-						} else {
-							map [x, y] = 0;
-						}
+						} else if (biomesMap [x, y] != (int)Biome.Desert) {
+								CreatePool (x, y, map, biomesMap);
+								//map [x, y] = 1;
+							} else {
+								map [x, y] = 0;
+							}
 
 
 				/*	if (levelMap [x, y] == 1) {
@@ -115,14 +121,7 @@ public class NoiseMap : MonoBehaviour {
 					BalkController.AddLineToGenerateBalks (yOffset + y);
 				}*/
 
-				if ((xOffset + y) % 20 > 0 && ((xOffset + y) % 20 + (xOffset + y) / 10) < (((xOffset + y) / 10) * 2) && (xOffset + y) > 10) {
-					//if (xOffset + y > 20 + Random.Range (0, 2) && xOffset + y < 30 + Random.Range (0, 2)) {
-					map [x, y] = 4;
 
-					MovingObjectsManager.AddLineToGenerateBalks (xOffset + y);
-
-
-				}
 			}
 		}
 
@@ -134,8 +133,8 @@ public class NoiseMap : MonoBehaviour {
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				if (x + i >= 0 && x + i < map.GetLength (0) && y + j >= 0 && y + j < map.GetLength (1)) {
-					if (Random.Range (0, 3) > 0) {
-						if (Random.Range (0, 10) == 0 && biomesMap [x + i, y + j] != (int)Biome.Snowy) {
+					if (Random.Range (0, 3) > 0 && map [x + i, y + j] != 4) {//не спавнить в blockBalk
+						if (Random.Range (0, 10) == 0 && biomesMap [x + i, y + j] != (int)Biome.Snowy) {//не спавнить в snowy
 							map [x + i, y + j] = 5;//WaterLily
 						} else {
 							map [x + i, y + j] = 1;//WaterBlock
@@ -146,7 +145,8 @@ public class NoiseMap : MonoBehaviour {
 			}
 		}
 
-		map [x, y] = 1;
+		if (map [x, y] == -1)
+			map [x, y] = 1;
 
 	}
 

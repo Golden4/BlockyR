@@ -22,12 +22,13 @@ public class CameraController : MonoBehaviour {
 
 	void Player_OnPlayerRetry ()
 	{
+		StopCoroutine ("FocusToPlayer");
 		curCamera.fieldOfView = fromFOV;
 	}
 
 	void Player_OnPlayerDie ()
 	{
-		StartCoroutine (FocusToPlayer ());
+		StartCoroutine ("FocusToPlayer");
 	}
 
 	Vector3 velocity;
@@ -75,6 +76,8 @@ public class CameraController : MonoBehaviour {
 		}
 
 		curCamera.fieldOfView = targetFOV;
+
+		focusing = false;
 
 	}
 }

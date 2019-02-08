@@ -28,6 +28,8 @@ public class Fire : MonoBehaviour {
 	}*/
 	float speed = .8f;
 
+	ParticleSystem[] ps;
+
 	void Awake ()
 	{
 		Ins = this;
@@ -37,7 +39,17 @@ public class Fire : MonoBehaviour {
 	{
 		target = Player.Ins;
 		Game.OnGameStarted += Game_OnGameStarted;
+		Player.OnPlayerRetry += Player_OnPlayerRetry;
 		source = GetComponent <AudioSource> ();
+		ps = GetComponentsInChildren <ParticleSystem> ();
+	}
+
+	void Player_OnPlayerRetry ()
+	{
+		distance = target.transform.position.x - maxDistance;
+		foreach (var particle in ps) {
+			particle.Clear ();
+		}
 	}
 
 	void Game_OnGameStarted ()
@@ -49,6 +61,7 @@ public class Fire : MonoBehaviour {
 	void OnDestroy ()
 	{
 		Game.OnGameStarted -= Game_OnGameStarted;
+		Player.OnPlayerRetry -= Player_OnPlayerRetry;
 	}
 
 	void Update ()

@@ -15,6 +15,7 @@ public class Balk : MonoBehaviour {
 
 	public LayerMask lm;
 
+
 	void Start ()
 	{
 
@@ -23,6 +24,16 @@ public class Balk : MonoBehaviour {
 
 
 		//isOnChunk = World.IsOnChunk (transform.position);
+	}
+
+	public void OnPlayerSnap ()
+	{
+		
+	}
+
+	public void OnPlayerUnsnap ()
+	{
+		
 	}
 
 	void Update ()

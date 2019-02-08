@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d748c46ab3912b4a96af61e99997134, type: 3}
+  m_Name: Assets
+  m_EditorClassIdentifier: 
+  asCoin:
+    name: Coin
+    pf: {fileID: 1249540133174684, guid: 1847942ce289bc0458852d610a48cf51, type: 3}
+  asAbility:
+    name: Ability
+    pf: {fileID: 10117231669314597, guid: bc3efb6326529174984a79ab463bb6ae, type: 3}
+  asShipi:
+    name: Shipi
+    pf: {fileID: 1327954147242218, guid: 72464f9a7612fc34d8de03d623fb81b9, type: 3}
+  asBearTrap:
+    name: BearTrap
+    pf: {fileID: 1849900196622672, guid: 37c854fab7d10d54697a1090fe1b63b2, type: 3}
+  asWaterLily:
+    name: WaterLily
+    pf: {fileID: 8317679471375781070, guid: 31bb5cd7f2a55b34abd6eb606b5dbfef, type: 3}
