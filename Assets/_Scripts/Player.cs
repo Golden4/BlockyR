@@ -239,7 +239,6 @@ public class Player : MonoBehaviour {
 
 	void OnEndMove ()
 	{
-		
 		speed = Mathf.Clamp ((float)Math.Sqrt ((double)(UIScreen.Ins.score / 100f * speedChangeMultiply)) + 4, 4, 12);
 		OnPlayerStepOnBlock ();
 		//print (speed);

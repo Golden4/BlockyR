@@ -17,7 +17,7 @@ public class Fire : MonoBehaviour {
 	}
 
 	float distance = -4.5f;
-	float maxDistance = 6f;
+	float maxDistance = 7f;
 
 	float startPos = 4.5f;
 
@@ -77,6 +77,8 @@ public class Fire : MonoBehaviour {
 		}
 
 		transform.position = new Vector3 (distance, transform.position.y, target.transform.position.z);
+
+		speed = Mathf.Clamp ((UIScreen.Ins.score / 250f) + 0.5f, 0.5f, 0.9f);
 
 	}
 

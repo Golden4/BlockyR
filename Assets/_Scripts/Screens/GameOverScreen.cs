@@ -62,7 +62,7 @@ public class GameOverScreen : ScreenBase {
 			AdController.Ins.ShowAD ();
 	}
 
-	void OpenBoxBtn ()
+	public void OpenBoxBtn ()
 	{
 		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Prize);
 	}

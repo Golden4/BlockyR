@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShopScreen : ScreenBase {
 
 	public GameObject itemsHolder;
+	public Button openBoxBtn;
 
 	public ScrollSnap scrollSnap;
 
@@ -46,12 +47,25 @@ public class ShopScreen : ScreenBase {
 		for (int i = 0; i < ItemCount; i++) {
 			scrollSnap.SetItemState (i, User.GetInfo.userData [i].bought);
 		}
+
 	}
 
 	public override void OnActivate ()
 	{
+		for (int i = 0; i < ItemCount; i++) {
+			scrollSnap.SetItemState (i, User.GetInfo.userData [i].bought);
+		}
+
 		UpdateItemState (curActiveItem);
+
+
 		scrollSnap.SnapToObj (User.GetInfo.curPlayerIndex, false);
+
+		if (!User.GetInfo.AllCharactersBought () && User.HaveCoin (100))
+			openBoxBtn.gameObject.SetActive (true);
+		else
+			openBoxBtn.gameObject.SetActive (false);
+
 	}
 
 	public override void OnDeactivate ()
@@ -97,7 +111,11 @@ public class ShopScreen : ScreenBase {
 
 	public void BackBtn ()
 	{
-		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Menu);
+		if (Player.Ins.isDead) {
+			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.GameOver);
+		} else
+			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Menu);
+
 	}
 
 }

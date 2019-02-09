@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PrizeScreen : ScreenBase {
 	public static PrizeScreen Ins;
-	static GameObject prizeGO;
+	private GameObject prizeGO;
 	public Transform prizeHolder;
 	public Animation prizeBoxAnimation;
 	public Button selectAndPlayBtn;
@@ -13,6 +13,8 @@ public class PrizeScreen : ScreenBase {
 	public Button backBtn;
 	public Text nameText;
 	public Text abilityText;
+	public GUIAnim rayBG;
+	public ParticleSystem confettiParticle;
 	private bool isOpenedBox;
 	private bool isCharacterShowed;
 	private int charactedIndex = -1;
@@ -23,11 +25,12 @@ public class PrizeScreen : ScreenBase {
 		Ins = this;
 
 		openBoxBtn.onClick.RemoveAllListeners ();
-		openBoxBtn.onClick.AddListener (OpenBox);
-		openBoxBtn.gameObject.SetActive (true);
-		backBtn.gameObject.SetActive (false);
 
-		selectAndPlayBtn.gameObject.SetActive (false);
+		openBoxBtn.onClick.AddListener (() => {
+			if (User.BuyWithCoin (100))
+				OpenBox ();
+		});
+
 		selectAndPlayBtn.onClick.RemoveAllListeners ();
 		selectAndPlayBtn.onClick.AddListener (() => {
 			User.SetPlayerIndex (charactedIndex);
@@ -36,15 +39,8 @@ public class PrizeScreen : ScreenBase {
 
 		backBtn.onClick.RemoveAllListeners ();
 		backBtn.onClick.AddListener (() => {
-			SceneController.RestartLevel ();
-			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Menu);
-
+			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Shop);
 		});
-	}
-
-	public void GivePrize ()
-	{
-		
 	}
 
 	void Update ()
@@ -53,6 +49,15 @@ public class PrizeScreen : ScreenBase {
 			isCharacterShowed = true;
 			CharacterShow ();
 		}
+
+		if (rayBG.gameObject.activeSelf) {
+			rayBG.transform.Rotate (0, 0, 10f * Time.deltaTime);
+		}
+
+		if (isCharacterShowed) {
+			prizeGO.transform.localEulerAngles = new Vector3 (0, prizeGO.transform.localEulerAngles.y + Time.deltaTime * 45, 0);
+		}
+
 	}
 
 	void CharacterShow ()
@@ -64,6 +69,7 @@ public class PrizeScreen : ScreenBase {
 			abilityText.text = Database.Get.playersData [charactedIndex].ability;
 			selectAndPlayBtn.gameObject.SetActive (true);
 			backBtn.gameObject.SetActive (true);
+			backBtn.gameObject.SetActive (true);
 		}
 	}
 
@@ -73,15 +79,37 @@ public class PrizeScreen : ScreenBase {
 		charactedIndex = GetRandomCharacter ();
 		prizeBoxAnimation.Play ("PrizeBoxOpenAnim");
 		openBoxBtn.gameObject.SetActive (false);
-		User.BuyWithCoin (100);
+
 		User.GetInfo.userData [charactedIndex].bought = true;
 		User.SaveUserInfo ();
+		rayBG.gameObject.SetActive (true);
+		rayBG.MoveIn (GUIAnimSystem.eGUIMove.Self);
+		backBtn.gameObject.SetActive (false);
+		confettiParticle.Play ();
 	}
 
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
 		prizeBoxAnimation.Play ("PrizeBoxIdleAnim");
+		openBoxBtn.gameObject.SetActive (true);
+		backBtn.gameObject.SetActive (true);
+		rayBG.gameObject.SetActive (false);
+		selectAndPlayBtn.gameObject.SetActive (false);
+		isOpenedBox = false;
+		charactedIndex = -1;
+		nameText.gameObject.SetActive (false);
+		abilityText.gameObject.SetActive (false);
+		isCharacterShowed = false;
+		confettiParticle.Clear ();
+		if (prizeGO != null)
+			Destroy (prizeGO);
+	}
+
+	public override void OnDeactivate ()
+	{
+		base.OnDeactivate ();
+
 	}
 
 	public static int GetRandomCharacter ()
@@ -90,15 +118,15 @@ public class PrizeScreen : ScreenBase {
 
 		if (index > -1) {
 
-			prizeGO = new GameObject ("Prize");
-			prizeGO.transform.SetParent (Ins.prizeHolder);
-			prizeGO.transform.localPosition = Vector3.zero;
-			prizeGO.transform.localEulerAngles = Vector3.up * 90;
-			prizeGO.transform.localScale = Vector3.one * 0.6f;
-			prizeGO.layer = LayerMask.NameToLayer ("ShopItem");
+			Ins.prizeGO = new GameObject ("Prize");
+			Ins.prizeGO.transform.SetParent (Ins.prizeHolder);
+			Ins.prizeGO.transform.localPosition = Vector3.zero;
+			Ins.prizeGO.transform.localEulerAngles = Vector3.up * 90;
+			Ins.prizeGO.transform.localScale = Vector3.one * 0.6f;
+			Ins.prizeGO.layer = LayerMask.NameToLayer ("ShopItem");
 
-			MeshFilter mf = prizeGO.AddComponent <MeshFilter> ();
-			MeshRenderer mr = prizeGO.AddComponent <MeshRenderer> ();
+			MeshFilter mf = Ins.prizeGO.AddComponent <MeshFilter> ();
+			MeshRenderer mr = Ins.prizeGO.AddComponent <MeshRenderer> ();
 
 			mf.sharedMesh = Database.Get.playersData [index].playerPrefab.GetComponent <MeshFilter> ().sharedMesh;
 			mr.sharedMaterials = Database.Get.playersData [index].playerPrefab.GetComponent <MeshRenderer> ().sharedMaterials;

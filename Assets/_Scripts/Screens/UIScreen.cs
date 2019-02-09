@@ -100,7 +100,7 @@ public class UIScreen : ScreenBase {
 
 	void ShowFireDistance (float distance)
 	{
-		if (distance < 3f) {
+		if (distance < 4f) {
 			fireAlert.gameObject.SetActive (true);
 			fireAlertText.text = (distance).ToString ("F1") + "m";
 		} else {

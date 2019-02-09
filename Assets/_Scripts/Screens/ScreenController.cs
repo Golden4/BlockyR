@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScreenController : MonoBehaviour {
 	public static ScreenController Ins;
 
+	[System.Serializable]
 	public enum GameScreen {
 		Menu,
 		Shop,
@@ -34,7 +35,7 @@ public class ScreenController : MonoBehaviour {
 		if (System.Enum.GetNames (typeof(GameScreen)).Length != screensList.Length) {
 			Debug.LogError ("GameScreen Count: " + System.Enum.GetNames (typeof(GameScreen)).Length + " != screensList: " + screensList.Length);
 		}
-
+		PlayerPrefs.DeleteAll ();
 		User.AddCoin (1000);
 		//ActivateScreen (GameScreen.Prize);
 		ActivateScreen (GameScreen.Menu);
@@ -63,9 +64,8 @@ public class ScreenController : MonoBehaviour {
 			} else {
 				screensList [i].Deactivate ();
 			}
-				
 		}
-
+		
 		curActiveScreen = (GameScreen)screen;
 
 		if (OnChangeScreenEvent != null) {
