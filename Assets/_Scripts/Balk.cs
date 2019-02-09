@@ -13,27 +13,27 @@ public class Balk : MonoBehaviour {
 
 	public bool isOnChunk;
 
-	public LayerMask lm;
+	public bool canSnap = true;
 
+	public int size;
 
-	void Start ()
+	protected bool isSnaped = false;
+
+	protected virtual void Start ()
 	{
-
-		float localSize = 0.15f + curBalkLine.size * 0.3f;
+		float localSize = 0.15f + size * 0.3f;
 		transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, localSize);
-
-
 		//isOnChunk = World.IsOnChunk (transform.position);
 	}
 
-	public void OnPlayerSnap ()
+	public virtual void OnPlayerSnap ()
 	{
-		
+		isSnaped = true;
 	}
 
-	public void OnPlayerUnsnap ()
+	public virtual void OnPlayerUnsnap ()
 	{
-		
+		isSnaped = false;
 	}
 
 	void Update ()
@@ -43,7 +43,7 @@ public class Balk : MonoBehaviour {
 			OutOfChunk ();
 	}
 
-	void FixedUpdate ()
+	protected virtual void FixedUpdate ()
 	{
 		if (Game.isGameStarted || Player.Ins.isDead)
 			Move ();
@@ -78,9 +78,14 @@ public class Balk : MonoBehaviour {
 		//if (chunkOut)
 		if (MovingObjectsManager.Ins.balksLine.ContainsKey (curBalkLine.line)) {
 
-			transform.position = MovingObjectsManager.GetStartBalkPosition (curBalkLine.line);
+			OnReuse ();
 
 		}
 
+	}
+
+	protected virtual void OnReuse ()
+	{
+		transform.position = MovingObjectsManager.GetStartBalkPosition (curBalkLine.line);
 	}
 }

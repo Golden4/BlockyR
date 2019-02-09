@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingObjectsManager : MonoBehaviour {
 	public static MovingObjectsManager Ins;
 
-	public Balk balkPrefab;
+	public Balk[] balkPrefabs;
 
 	public List<int> linesToGenerate = new List<int> ();
 
@@ -61,13 +61,12 @@ public class MovingObjectsManager : MonoBehaviour {
 		int count = 5;
 		float spaceBetweenBalks = Random.Range (7f, 10f);
 		float speed = Random.Range (1.9f, 2.5f);
-		int size = Random.Range (0, 3);
 
-		BalksLine bl = SpawnBalksInLine (line, count, spaceBetweenBalks, (Balk.BalkDirection)(line % 2), speed, size);
+		BalksLine bl = SpawnBalksInLine (line, count, spaceBetweenBalks, (Balk.BalkDirection)(line % 2), speed);
 		balksLine [line] = bl;
 	}
 
-	BalksLine SpawnBalksInLine (int line, int count, float spaceBetweenBalks, Balk.BalkDirection dir, float speed, int size)
+	BalksLine SpawnBalksInLine (int line, int count, float spaceBetweenBalks, Balk.BalkDirection dir, float speed)
 	{
 /*		Balk[] balksList = new Balk[count];
 
@@ -86,7 +85,7 @@ public class MovingObjectsManager : MonoBehaviour {
 			balksList [y] = curBalk;
 		}*/
 
-		return new BalksLine (dir, line, speed, size, count, spaceBetweenBalks, this);
+		return new BalksLine (dir, line, speed, count, spaceBetweenBalks, this);
 	}
 
 	/*	Balk SpawnBalkInLine (int line, float yCoord, Balk.BalkDirection dir, float speed, float size)
@@ -155,15 +154,13 @@ public class MovingObjectsManager : MonoBehaviour {
 		public Balk.BalkDirection dir;
 		public int line;
 		public float speed;
-		public int size;
 		float spaceBetweenBalks;
 
-		public BalksLine (Balk.BalkDirection dir, int line, float speed, int size, int count, float spaceBetweenBalks, MovingObjectsManager mom)
+		public BalksLine (Balk.BalkDirection dir, int line, float speed, int count, float spaceBetweenBalks, MovingObjectsManager mom)
 		{
 			this.dir = dir;
 			this.mom = mom;
 			this.speed = speed;
-			this.size = size;
 			this.line = line;
 			this.spaceBetweenBalks = spaceBetweenBalks;
 			SpawnBalks (count);
@@ -198,18 +195,20 @@ public class MovingObjectsManager : MonoBehaviour {
 
 		public Balk SpawnBalk ()
 		{
-			Balk balk =	GameObject.Instantiate (mom.balkPrefab.gameObject).GetComponent <Balk> ();
+			int balkIndex = Random.Range (0, mom.balkPrefabs.Length);
+
+			Balk balk =	GameObject.Instantiate (mom.balkPrefabs [balkIndex].gameObject).GetComponent <Balk> ();
 
 			balk.curBalkLine = this;
 
 			balk.transform.SetParent (mom.transform, false);
 
 			float yCoord = World.Ins.outChunkIndexMaxY * Chunk.size - balks.Count * spaceBetweenBalks;
-
+			balk.size = Random.Range (0, 3);
 			balk.transform.position = new Vector3 (line, .1f, yCoord);
 
 			balks.Add (balk);
-			balk.transform.name = "Balk|Line:" + line + "|" + balks.Count;
+			balk.transform.name = mom.balkPrefabs [balkIndex].transform.name + "|Line:" + line + "|" + balks.Count;
 			return balk;
 		}
 

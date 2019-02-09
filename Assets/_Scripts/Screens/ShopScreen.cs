@@ -61,7 +61,7 @@ public class ShopScreen : ScreenBase {
 
 		scrollSnap.SnapToObj (User.GetInfo.curPlayerIndex, false);
 
-		if (!User.GetInfo.AllCharactersBought () && User.HaveCoin (100))
+		if (!User.GetInfo.AllCharactersBought () /*&& User.HaveCoin (100)*/)
 			openBoxBtn.gameObject.SetActive (true);
 		else
 			openBoxBtn.gameObject.SetActive (false);

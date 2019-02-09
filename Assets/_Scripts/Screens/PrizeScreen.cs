@@ -19,6 +19,11 @@ public class PrizeScreen : ScreenBase {
 	private bool isCharacterShowed;
 	private int charactedIndex = -1;
 
+	public static int GetBoxPrise ()
+	{
+		return 150;
+	}
+
 	public override void Init ()
 	{
 		base.Init ();
@@ -27,7 +32,7 @@ public class PrizeScreen : ScreenBase {
 		openBoxBtn.onClick.RemoveAllListeners ();
 
 		openBoxBtn.onClick.AddListener (() => {
-			if (User.BuyWithCoin (100))
+			if (User.BuyWithCoin (GetBoxPrise ()))
 				OpenBox ();
 		});
 

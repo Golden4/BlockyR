@@ -28,6 +28,8 @@ public class ScreenController : MonoBehaviour {
 		for (int i = 0; i < screensList.Length; i++) {
 			screensList [i].Init ();
 		}
+
+		PlayerPrefs.DeleteAll ();
 	}
 
 	void Start ()
@@ -35,9 +37,9 @@ public class ScreenController : MonoBehaviour {
 		if (System.Enum.GetNames (typeof(GameScreen)).Length != screensList.Length) {
 			Debug.LogError ("GameScreen Count: " + System.Enum.GetNames (typeof(GameScreen)).Length + " != screensList: " + screensList.Length);
 		}
-		PlayerPrefs.DeleteAll ();
-		User.AddCoin (1000);
-		//ActivateScreen (GameScreen.Prize);
+
+		User.AddCoin (10);
+
 		ActivateScreen (GameScreen.Menu);
 
 	}

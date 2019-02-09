@@ -22,13 +22,15 @@ public class CameraController : MonoBehaviour {
 
 	void Player_OnPlayerRetry ()
 	{
-		StopCoroutine ("FocusToPlayer");
-		curCamera.fieldOfView = fromFOV;
+		StopAllCoroutines ();
+		StartCoroutine (FocusToPlayer (fromFOV, 2f));
+		//curCamera.fieldOfView = fromFOV;
 	}
 
 	void Player_OnPlayerDie ()
 	{
-		StartCoroutine ("FocusToPlayer");
+		StopAllCoroutines ();
+		StartCoroutine (FocusToPlayer (fromFOV - 15, .4f));
 	}
 
 	Vector3 velocity;
@@ -57,13 +59,9 @@ public class CameraController : MonoBehaviour {
 
 	bool focusing = false;
 
-	IEnumerator FocusToPlayer ()
+	IEnumerator FocusToPlayer (float targetFOV, float focusTime = .4f)
 	{
 		focusing = true;
-
-		float targetFOV = fromFOV - 15;
-
-		float focusTime = .4f;
 
 		float progress = 0;
 
@@ -71,7 +69,7 @@ public class CameraController : MonoBehaviour {
 			
 			progress += Time.deltaTime / focusTime;	
 
-			curCamera.fieldOfView = Mathf.Lerp (fromFOV, targetFOV, progress);
+			curCamera.fieldOfView = Mathf.Lerp (curCamera.fieldOfView, targetFOV, progress);
 			yield return null;
 		}
 

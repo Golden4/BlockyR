@@ -37,7 +37,8 @@ public static class CubeMeshData {
 		new Vector2I (0, 1),
 		new Vector2I (1, 0),
 		new Vector2I (0, -1),
-		new Vector2I (-1, 0)
+		new Vector2I (-1, 0),
+		new Vector2I (0, 0)
 	};
 
 	public static Vector2[] _uvs = {
@@ -57,8 +58,7 @@ public static class CubeMeshData {
 	}
 }
 
-public enum Direction
-{
+public enum Direction {
 	Up,
 	Right,
 	Down,

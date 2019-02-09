@@ -25,8 +25,6 @@ public class Player : MonoBehaviour {
 
 	public PlayerAbility ability;
 
-	protected int lifeCount = 1;
-
 	protected virtual void Awake ()
 	{
 		Ins = this;
@@ -61,7 +59,7 @@ public class Player : MonoBehaviour {
 	protected Direction curDir;
 	protected bool dirApply;
 
-	void Update ()
+	protected virtual void Update ()
 	{
 
 		if (isDead || !Game.isGameStarted || Game.isPause || isWaitingOnStart)
@@ -120,7 +118,7 @@ public class Player : MonoBehaviour {
 				}
 	}
 
-	void FixedUpdate ()
+	protected virtual void FixedUpdate ()
 	{
 		if (isDead || !Game.isGameStarted || Game.isPause || isWaitingOnStart)
 			return;
@@ -139,7 +137,7 @@ public class Player : MonoBehaviour {
 
 	protected bool moving;
 
-	void MoveAnimate ()
+	protected void MoveAnimate ()
 	{
 		if (isSnaped && curBalk != null) {
 			if (moving) {
@@ -205,7 +203,11 @@ public class Player : MonoBehaviour {
 	void StartMove (Direction dir, Vector3 targetPos)
 	{
 		moveProgress = 0;
-		targetRotation = Quaternion.LookRotation (new Vector3 (CubeMeshData.offsets [(int)dir].x, 0, CubeMeshData.offsets [(int)dir].y)).eulerAngles;
+		Vector3 rotTemp = new Vector3 (CubeMeshData.offsets [(int)dir].x, 0, CubeMeshData.offsets [(int)dir].y);
+
+		if (rotTemp != Vector3.zero)
+			targetRotation = Quaternion.LookRotation (rotTemp).eulerAngles;
+		
 		transform.localScale = new Vector3 (1.1f, .8f, 1.1f);
 		targetScale = Vector3.one;
 		this.targetPos = targetPos; //= new Vector3 (curCoord.x, startHeight + curBlock.GetBlockHeight (), curCoord.y);
@@ -218,11 +220,20 @@ public class Player : MonoBehaviour {
 	protected int nextMoveDir;
 	protected bool isWaitingBalk;
 
-	void Move (Direction dir)
+	public virtual void Move (Direction dir)
 	{
 		if (Time.time > lastMoveTime + (1f / speed) + .01f) {
 			CheckBlocksAndCollidersAround (dir);
-			if (blocksAround [(int)dir].isWalkable ()) {
+
+			Block block;
+
+			if (dir != Direction.Top) {
+				block = blocksAround [(int)dir];
+			} else {
+				block = curBlock;
+			}
+
+			if (block.isWalkable ()) {
 				PlayStepSound ();
 
 				lastMoveTime = Time.time;
@@ -234,6 +245,7 @@ public class Player : MonoBehaviour {
 				CheckBalk (dir);
 				StartMove (dir, targetPos);
 			}
+
 		}
 	}
 
@@ -278,12 +290,11 @@ public class Player : MonoBehaviour {
 
 				Die (dieInfo);
 			}
-		}
-
-		if (isSnaped)
-			AudioManager.PlaySoundFromLibrary ("WoodJump");
-		else if (curBlock.biome == Biome.Snowy)
+		} else if (curBlock.biome == Biome.Snowy) {
 				AudioManager.PlaySoundFromLibrary ("SnowJump");
+			} else {
+				AudioManager.PlaySoundFromLibrary ("WoodJump");
+			}
 	}
 
 	void PlayStepSound ()
@@ -296,30 +307,36 @@ public class Player : MonoBehaviour {
 		if (curCollider.Length > 0) {
 			if (!isSnaped) {
 				curBalk = curCollider [0].transform.GetComponent <Balk> ();
-				Snap (curBalk, dir);
+				TrySnap (curBalk, dir);
 			} else if (curBalk.transform != curCollider [0].transform) {
+					curBalk.OnPlayerUnsnap ();
 					curBalk = curCollider [0].transform.GetComponent <Balk> ();
-					Snap (curBalk, dir);
+					TrySnap (curBalk, dir);
 				} else if (!MoveBalk (dir)) {
 						Unsnap (dir);
 					}
+
 		} else if (isSnaped)
 				Unsnap (dir);
 	}
 
-	void Snap (Balk balk, Direction dir)
+	void TrySnap (Balk balk, Direction dir)
 	{
-		isSnaped = true;
+		if (balk.canSnap) {
+			isSnaped = true;
 
-		snapedPos = GetCloseBalkPoint (balk);
+			snapedPos = GetCloseBalkPoint (balk);
 
-		targetPos = balk.transform.position + new Vector3 (0, startHeight, GetCloseBalkPoint (balk));
-		balk.OnPlayerSnap ();
+			targetPos = balk.transform.position + new Vector3 (0, startHeight, GetCloseBalkPoint (balk));
+			balk.OnPlayerSnap ();
+		} else {
+			Unsnap (dir);
+		}
 	}
 
 	int GetCloseBalkPoint (Balk balk)
 	{
-		int maxSize = balk.curBalkLine.size;
+		int maxSize = balk.size;
 
 		Vector3 localPos = balk.transform.InverseTransformPoint (transform.position);
 		int point = Mathf.RoundToInt (localPos.z);
@@ -327,18 +344,20 @@ public class Player : MonoBehaviour {
 		point = Mathf.Clamp (point, -maxSize, maxSize);
 
 		return point;
-		
 	}
 
-	void Unsnap (Direction dir)
+	public void Unsnap (Direction dir)
 	{
 		isSnaped = false;
 
 		Vector2I vec = WorldPositionToBlockCoords (transform.position);
 
 		targetPos = new Vector3 (vec.x, .5f, vec.y);
+		if (dir == Direction.Top)
+			curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords;
+		else
+			curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
 
-		curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
 		targetPos = new Vector3 (curCoord.x, startHeight + curBlock.GetBlockHeight (), curCoord.y);
 
 		if (curBalk != null)
@@ -353,7 +372,7 @@ public class Player : MonoBehaviour {
 		if (Direction.Down == dir)
 			snapedPos--;
 
-		if (snapedPos > curBalk.curBalkLine.size || snapedPos < -curBalk.curBalkLine.size)
+		if (snapedPos > curBalk.size || snapedPos < -curBalk.size)
 			return false;
 
 		curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
@@ -371,7 +390,9 @@ public class Player : MonoBehaviour {
 
 	Material whiteMat;
 
-	public void Die (DieInfo dieInfo)
+	protected bool retry = false;
+
+	public virtual void Die (DieInfo dieInfo)
 	{
 		if (isDead)
 			return;
@@ -391,7 +412,8 @@ public class Player : MonoBehaviour {
 		/*if (dieInfo.hidePlayer)
 			gameObject.SetActive (false);*/
 		
-		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.GameOver);
+		if (!retry)
+			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.GameOver);
 
 		StartCoroutine (FadeMat ());
 
@@ -400,17 +422,10 @@ public class Player : MonoBehaviour {
 
 		if (OnPlayerDie != null)
 			OnPlayerDie ();
-	}
 
-	public void DieAndRetry (DieInfo dieInfo)
-	{
-		if (dieInfo.soundName == "") {
-			AudioManager.PlaySoundFromLibrary ("Dead");
-		} else {
-			AudioManager.PlaySoundFromLibrary (dieInfo.soundName);
-		}
+		if (retry)
+			Utility.Invoke (this, 1, Retry);
 
-		Retry ();
 	}
 
 	protected GameObject warningPlayer;
@@ -460,7 +475,7 @@ public class Player : MonoBehaviour {
 	protected Block[] blocksAround = new Block[4];
 	protected Block curBlock;
 
-	void CheckBlocksAndCollidersAround (Direction dir)
+	protected void CheckBlocksAndCollidersAround (Direction dir)
 	{
 		for (int i = 0; i < blocksAround.Length; i++) {
 			blocksAround [i] = World.Ins.GetBlock (curCoord + CubeMeshData.offsets [i]);

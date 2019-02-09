@@ -10,6 +10,8 @@ public class GameOverScreen : ScreenBase {
 
 	[SerializeField] Button continueAdBtn;
 	[SerializeField] Button openBoxBtn;
+	public Slider coinSlider;
+	public Text needCoinText;
 
 	public override void Init ()
 	{
@@ -24,10 +26,20 @@ public class GameOverScreen : ScreenBase {
 	{
 		base.OnActivate ();
 
-		if (!User.GetInfo.AllCharactersBought () && User.HaveCoin (100))
+		if (!User.GetInfo.AllCharactersBought ()) {
 			openBoxPanel.gameObject.SetActive (true);
-		else
+			if (User.HaveCoin (PrizeScreen.GetBoxPrise ())) {
+				openBoxBtn.gameObject.SetActive (true);
+				coinSlider.gameObject.SetActive (false);
+			} else {
+				openBoxBtn.gameObject.SetActive (false);
+				coinSlider.gameObject.SetActive (true);
+				coinSlider.value = (float)User.Coins / PrizeScreen.GetBoxPrise ();
+				needCoinText.text = User.Coins + "/" + PrizeScreen.GetBoxPrise ();
+			}
+		} else {
 			openBoxPanel.gameObject.SetActive (false);
+		}
 
 		GUIAnimSystem.Instance.MoveIn (transform, true);
 

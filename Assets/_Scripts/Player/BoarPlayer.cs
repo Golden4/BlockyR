@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class FrogPlayer : Player {
+public class BoarPlayer : Player {
 
 	protected override void OnPlayerStepOnBlock ()
 	{
@@ -12,9 +12,10 @@ public class FrogPlayer : Player {
 			curBlock.OnPlayerContact ();
 
 			if (curBlock.CanDie ()) {
+
 				Type blockType = curBlock.GetType ();
 
-				if (blockType == typeof(BlockWaterLily)) {
+				if (blockType == typeof(BlockTrap)) {
 					return;
 				}
 
@@ -33,5 +34,7 @@ public class FrogPlayer : Player {
 			} else {
 				AudioManager.PlaySoundFromLibrary ("WoodJump");
 			}
+
 	}
+
 }

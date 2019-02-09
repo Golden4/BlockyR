@@ -65,7 +65,7 @@ public class Utility {
 		for (int i = 0; i < coinsCount; i++) {
 			objs [i] = MonoBehaviour.Instantiate (prefab) as GameObject;
 			objs [i].transform.SetParent (parent, false);
-			//objs [i].transform.SetAsFirstSibling ();
+			objs [i].transform.SetAsFirstSibling ();
 		}
 
 		for (int i = 0; i < coinsCount; i++) {
