@@ -21,8 +21,8 @@ public class GUIAnimSystem : MonoBehaviour {
 			instance = this;
 			UnityEngine.Object.DontDestroyOnLoad (this);
 		} else if (this != instance) {
-			UnityEngine.Object.Destroy (base.gameObject);
-		}
+				UnityEngine.Object.Destroy (base.gameObject);
+			}
 	}
 
 	private IEnumerator DelayEnableButton (bool Enable, float Seconds)
@@ -297,10 +297,10 @@ public class GUIAnimSystem : MonoBehaviour {
 		if (delay <= 0f) {
 			SceneManager.LoadScene (LevelName);
 		} else if (base.gameObject.activeInHierarchy) {
-			base.StartCoroutine (this.LoadLevelDelay (LevelName, delay));
-		} else {
-			UnityEngine.Debug.LogWarning (base.name + " is inactive");
-		}
+				base.StartCoroutine (this.LoadLevelDelay (LevelName, delay));
+			} else {
+				UnityEngine.Debug.LogWarning (base.name + " is inactive");
+			}
 	}
 
 	private IEnumerator LoadLevelDelay (string LevelName, float delay)
@@ -349,6 +349,7 @@ public class GUIAnimSystem : MonoBehaviour {
 			if (button != null) {
 				button.interactable = false;
 			}
+
 			if (EffectsOnChildren) {
 				foreach (Transform transform in trans) {
 					this.MoveOut (transform, EffectsOnChildren);
@@ -458,8 +459,7 @@ public class GUIAnimSystem : MonoBehaviour {
 		}
 	}
 
-	public enum eAnimationMode
-	{
+	public enum eAnimationMode {
 		None,
 		In,
 		Idle,
@@ -467,8 +467,7 @@ public class GUIAnimSystem : MonoBehaviour {
 		All
 	}
 
-	public enum eGUIMove
-	{
+	public enum eGUIMove {
 		Self,
 		Children,
 		SelfAndChildren

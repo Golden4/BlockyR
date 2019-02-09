@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class UserInfo {
 	
-	public UserData[] _userData;
+	UserData[] _userData;
 
 	public UserData[] userData {
 		get {
@@ -29,6 +29,16 @@ public class UserInfo {
 		for (int i = 0; i < userData.Length; i++) {
 			userData [i].bought = (i == 0);
 		}
+	}
+
+	public bool AllCharactersBought ()
+	{
+		for (int i = 0; i < userData.Length; i++) {
+			if (!userData [i].bought) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public UserInfo ()

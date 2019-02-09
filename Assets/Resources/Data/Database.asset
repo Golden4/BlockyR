@@ -15,7 +15,7 @@ MonoBehaviour:
   playersData:
   - name: Bird
     price: 100
-    playerPrefab: {fileID: 114848689077837618, guid: b0d94c359d7124644a0e7ea139c81407,
+    playerPrefab: {fileID: 6919558610010395251, guid: b0d94c359d7124644a0e7ea139c81407,
       type: 3}
     ability: Can Fly
   - name: Cat
@@ -40,7 +40,7 @@ MonoBehaviour:
     ability: 
   - name: Frog
     price: 100
-    playerPrefab: {fileID: 114613796114214126, guid: f2e88da4480ee944d96e99136ec6484b,
+    playerPrefab: {fileID: 5593789153539883462, guid: f2e88da4480ee944d96e99136ec6484b,
       type: 3}
     ability: Can Jump On Water Lilies
   - name: Chicken

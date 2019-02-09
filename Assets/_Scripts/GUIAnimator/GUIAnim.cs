@@ -1070,6 +1070,7 @@ public class GUIAnim : MonoBehaviour {
 						m_FadeIn.Actions.OnBegin.Invoke ();
 					}
 				}
+
 				if (((!this.m_MoveIn.Enable && !this.m_RotationIn.Enable) && (!this.m_ScaleIn.Enable && !this.m_FadeIn.Enable)) && (this.m_ScaleLoop.Enable || this.m_FadeLoop.Enable)) {
 					this.StartMoveIdle ();
 				}
@@ -1305,13 +1306,13 @@ public class GUIAnim : MonoBehaviour {
 	{
 		if ((this != null) && (base.gameObject != null)) {
 			if (this.m_MoveIn == null) {
-				if (UnityEngine.Object.FindObjectOfType<GUIAnimSystem> () == null) {
+				if (GUIAnimSystem.Instance == null) {
 					GameObject target = new GameObject {
 						transform = { localPosition = new Vector3 (0f, 0f, 0f) },
 						name = "GUIAnimSystem"
 					};
-					target.AddComponent<GUIAnimSystem> ();
-					GUIAnimSystem.Instance = UnityEngine.Object.FindObjectOfType<GUIAnimSystem> ();
+
+					GUIAnimSystem.Instance = target.AddComponent<GUIAnimSystem> ();
 					UnityEngine.Object.DontDestroyOnLoad (target);
 				}
 			} else {

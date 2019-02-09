@@ -10,7 +10,19 @@ public class BirdPlayer : Player {
 	{
 		base.Start ();
 
-		//ability = new PlayerAbility ();
+		ability = new PlayerAbility (Fly, Walk, 2);
+	}
+
+	void Fly ()
+	{
+		isFlying = true;
+		Debug.Log ("Flying!");
+	}
+
+	void Walk ()
+	{
+		isFlying = false;
+		Debug.Log ("Walking!");
 	}
 
 }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler {
-
 	public GameObject[] items;
 
 	public Transform itemsHolder;
@@ -29,7 +28,7 @@ public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler {
 	bool dragging;
 
 	public void Init ()
-	{		
+	{
 		sr = GetComponent <ScrollRect> ();
 
 		SpawnItemsFromData ();

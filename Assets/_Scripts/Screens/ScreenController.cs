@@ -5,14 +5,14 @@ using UnityEngine;
 public class ScreenController : MonoBehaviour {
 	public static ScreenController Ins;
 
-	public enum GameScreen
-	{
+	public enum GameScreen {
 		Menu,
 		Shop,
 		UI,
 		Continue,
 		GameOver,
-		Pause
+		Pause,
+		Prize
 	}
 
 	public ScreenBase[] screensList;
@@ -36,6 +36,7 @@ public class ScreenController : MonoBehaviour {
 			Debug.LogError ("GameScreen Count: " + System.Enum.GetNames (typeof(GameScreen)).Length + " != screensList: " + screensList.Length);
 		}
 
+		//ActivateScreen (GameScreen.Prize);
 		ActivateScreen (GameScreen.Menu);
 
 	}

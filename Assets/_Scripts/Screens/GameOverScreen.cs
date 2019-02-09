@@ -5,14 +5,31 @@ using UnityEngine.UI;
 
 public class GameOverScreen : ScreenBase {
 
+	[SerializeField] Transform continueAdPanel;
+	[SerializeField] Transform openBoxPanel;
+
 	[SerializeField] Button continueAdBtn;
+	[SerializeField] Button openBoxBtn;
+
+	public override void Init ()
+	{
+		base.Init ();
+		continueAdBtn.onClick.RemoveAllListeners ();
+		continueAdBtn.onClick.AddListener (RespawnPlayer);
+		openBoxBtn.onClick.RemoveAllListeners ();
+		openBoxBtn.onClick.AddListener (OpenBoxBtn);
+	}
 
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
+		if (User.GetInfo.AllCharactersBought ())
+			openBoxPanel.gameObject.SetActive (false);
+		else
+			openBoxPanel.gameObject.SetActive (true);
 
-		continueAdBtn.onClick.RemoveAllListeners ();
-		continueAdBtn.onClick.AddListener (RespawnPlayer);
+		GUIAnimSystem.Instance.MoveIn (transform, true);
+
 	}
 
 	public override void OnCleanUp ()
@@ -23,6 +40,7 @@ public class GameOverScreen : ScreenBase {
 	public override void OnDeactivate ()
 	{
 		base.OnDeactivate ();
+
 	}
 
 	public void RestartLevel ()
@@ -41,6 +59,11 @@ public class GameOverScreen : ScreenBase {
 	{
 		if (AdController.Ins != null)
 			AdController.Ins.ShowAD ();
+	}
+
+	void OpenBoxBtn ()
+	{
+		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Prize);
 	}
 
 }

@@ -214,6 +214,20 @@ public class World : MonoBehaviour {
 			}
 		}
 
+		for (int _x = 0; _x < 30; _x++) {
+			Block block;
+			for (int _y = 0; _y < 5; _y++) {
+				for (int v = 0; v < 2; v++) {
+					block = World.Ins.GetBlock (new Vector2I (coords.x + _x, coords.y + ((v == 0) ? 1 : -1) * _y));
+					if (CorrectBlock (block)) {
+						coordToSpawn = block.worldCoords;
+						return coordToSpawn;
+					}
+				}
+			}
+		}
+
+
 		Debug.LogError ("Not Found SpawnPos: " + coords);
 		return coordToSpawn;
 	}

@@ -36,6 +36,8 @@ public class UIScreen : ScreenBase {
 
 	public GameObject inputsMap;
 
+	public Button abilityBtn;
+
 	public override void Init ()
 	{
 		Ins = this;
@@ -65,6 +67,19 @@ public class UIScreen : ScreenBase {
 
 		gameStarted = true;
 
+		if (Player.Ins.ability == null) {
+			abilityBtn.gameObject.SetActive (false);
+		} else {
+			abilityBtn.gameObject.SetActive (true);
+			abilityBtn.onClick.RemoveAllListeners ();
+			abilityBtn.onClick.AddListener (AbilityBtn);
+		}
+	}
+
+	void AbilityBtn ()
+	{
+		if (Player.Ins.ability != null)
+			Player.Ins.ability.Use ();
 	}
 
 	void Update ()

@@ -7,9 +7,9 @@ public class PlayerAbility {
 
 	public Action ablityAction;
 	public Action onAblityEndAction;
-	float abilityTime;
-	float lastUseAbilityTime;
-
+	private float abilityTime;
+	private float lastUseAbilityTime = -1;
+	public bool isUsingAbility;
 
 	public void Use ()
 	{
@@ -18,11 +18,19 @@ public class PlayerAbility {
 		}
 
 		lastUseAbilityTime = Time.time;
+
+		isUsingAbility = true;
+
+		Debug.Log ("AbilityUsing " + lastUseAbilityTime);
+
 	}
 
 	public void Update ()
 	{
-		
+		if (isUsingAbility)
+			if (lastUseAbilityTime + abilityTime < Time.time) {
+				OnAbilityEnd ();
+			}
 	}
 
 	public void OnAbilityEnd ()
@@ -30,6 +38,11 @@ public class PlayerAbility {
 		if (onAblityEndAction != null) {
 			onAblityEndAction ();
 		}
+
+		isUsingAbility = false;
+
+		Debug.Log ("AbilityEnd " + Time.time);
+
 	}
 
 	public PlayerAbility (Action ablityAction, Action onAblityEndAction, float abilityTime)

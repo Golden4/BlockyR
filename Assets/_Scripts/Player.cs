@@ -10,18 +10,18 @@ public class Player : MonoBehaviour {
 	public static event System.Action OnPlayerDie;
 	public static event System.Action OnPlayerRetry;
 
-	private Vector2I curCoord = new Vector2I ();
-	private Rigidbody rb;
-	private float speed = 4;
-	private float speedChangeMultiply = 3;
+	protected Vector2I curCoord = new Vector2I ();
+	protected Rigidbody rb;
+	protected float speed = 4;
+	protected float speedChangeMultiply = 3;
 
 	[HideInInspector]
 	public bool isDead = false;
 
 	public static bool isWaitingOnStart = true;
-	private float waitingTime = .8f;
+	protected float waitingTime = .8f;
 
-	private Material origMaterial;
+	protected Material origMaterial;
 
 	public PlayerAbility ability;
 
@@ -56,10 +56,10 @@ public class Player : MonoBehaviour {
 
 	}
 
-	float lastMoveTime = -1;
+	protected float lastMoveTime = -1;
 
-	Direction curDir;
-	bool dirApply;
+	protected Direction curDir;
+	protected bool dirApply;
 
 	void Update ()
 	{
@@ -75,6 +75,9 @@ public class Player : MonoBehaviour {
 			if (MobileInputManager.GetKey ((Direction)i)) {
 				Move ((Direction)i);
 			}
+		
+		if (ability != null)
+			ability.Update ();
 
 		//CheckDirection ();
 
@@ -125,16 +128,16 @@ public class Player : MonoBehaviour {
 		MoveAnimate ();
 	}
 
-	float moveProgress;
+	protected float moveProgress;
 
-	float jumpHeight = .5f;
+	protected float jumpHeight = .5f;
 	public float startHeight = .5f;
 
-	Vector3 targetRotation;
-	Vector3 targetScale;
-	Vector3 targetPos;
+	protected Vector3 targetRotation;
+	protected Vector3 targetScale;
+	protected Vector3 targetPos;
 
-	bool moving;
+	protected bool moving;
 
 	void MoveAnimate ()
 	{
@@ -145,7 +148,6 @@ public class Player : MonoBehaviour {
 				transform.position = curBalk.transform.position + Vector3.up * startHeight + Vector3.forward * snapedPos;
 				curCoord = GetCurCoords ();
 			}
-
 		}
 /*		if (moveProgress < 1) {
 			
@@ -213,8 +215,8 @@ public class Player : MonoBehaviour {
 		dirApply = false;
 	}
 
-	int nextMoveDir;
-	bool isWaitingBalk;
+	protected int nextMoveDir;
+	protected bool isWaitingBalk;
 
 	void Move (Direction dir)
 	{
@@ -254,11 +256,11 @@ public class Player : MonoBehaviour {
 		isSnaped = false;
 	}
 
-	bool isSnaped;
-	Balk curBalk;
-	int snapedPos = 0;
+	protected bool isSnaped;
+	protected Balk curBalk;
+	protected int snapedPos = 0;
 
-	void OnPlayerStepOnBlock ()
+	protected virtual void OnPlayerStepOnBlock ()
 	{
 		
 		if (!isSnaped) {
@@ -394,6 +396,9 @@ public class Player : MonoBehaviour {
 
 		StartCoroutine (FadeMat ());
 
+		if (ability != null && ability.isUsingAbility)
+			ability.OnAbilityEnd ();
+
 		if (OnPlayerDie != null)
 			OnPlayerDie ();
 	}
@@ -409,7 +414,7 @@ public class Player : MonoBehaviour {
 		Retry ();
 	}
 
-	GameObject warningPlayer;
+	protected GameObject warningPlayer;
 
 	void ShowPlayerWarning (bool activate)
 	{
@@ -452,9 +457,9 @@ public class Player : MonoBehaviour {
 
 	}
 
-	Collider[] curCollider;
-	Block[] blocksAround = new Block[4];
-	Block curBlock;
+	protected Collider[] curCollider;
+	protected Block[] blocksAround = new Block[4];
+	protected Block curBlock;
 
 	void CheckBlocksAndCollidersAround (Direction dir)
 	{
