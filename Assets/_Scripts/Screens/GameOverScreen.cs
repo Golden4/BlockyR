@@ -23,10 +23,11 @@ public class GameOverScreen : ScreenBase {
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
-		if (User.GetInfo.AllCharactersBought ())
-			openBoxPanel.gameObject.SetActive (false);
-		else
+
+		if (!User.GetInfo.AllCharactersBought () && User.HaveCoin (100))
 			openBoxPanel.gameObject.SetActive (true);
+		else
+			openBoxPanel.gameObject.SetActive (false);
 
 		GUIAnimSystem.Instance.MoveIn (transform, true);
 

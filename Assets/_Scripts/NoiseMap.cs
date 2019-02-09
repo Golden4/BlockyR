@@ -133,13 +133,12 @@ public class NoiseMap : MonoBehaviour {
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				if (x + i >= 0 && x + i < map.GetLength (0) && y + j >= 0 && y + j < map.GetLength (1)) {
-					if (Random.Range (0, 3) > 0 && map [x + i, y + j] != 4) {//не спавнить в blockBalk
+					if (map [x + i, y + j] != 4) {//не спавнить в blockBalk
 						if (Random.Range (0, 10) == 0 && biomesMap [x + i, y + j] != (int)Biome.Snowy) {//не спавнить в snowy
 							map [x + i, y + j] = 5;//WaterLily
 						} else {
 							map [x + i, y + j] = 1;//WaterBlock
 						}
-
 					}
 				}
 			}

@@ -853,6 +853,7 @@ public class GUIAnim : MonoBehaviour {
 				this.m_MoveIn.BeginPos = this.m_MoveOriginal;
 				break;
 			}
+
 			this.m_RectTransform.anchoredPosition = this.m_MoveIn.BeginPos;
 			this.m_MoveIn.EndPos = this.m_MoveOriginal;
 		}
@@ -1019,6 +1020,7 @@ public class GUIAnim : MonoBehaviour {
 		if ((((this != null) && (base.gameObject != null)) && base.gameObject.activeSelf) && base.enabled) {
 			if ((GUIMoveType == GUIAnimSystem.eGUIMove.Self) || (GUIMoveType == GUIAnimSystem.eGUIMove.SelfAndChildren)) {
 				if (this.m_MoveIn.Enable && !this.m_MoveIn.Began) {
+					this.m_RectTransform.anchoredPosition = this.m_MoveIn.BeginPos;
 					this.m_MoveIn.Began = true;
 					this.m_MoveIn.Animating = false;
 					this.m_MoveIn.Done = false;

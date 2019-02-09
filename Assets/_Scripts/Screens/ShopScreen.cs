@@ -82,7 +82,7 @@ public class ShopScreen : ScreenBase {
 			User.GetInfo.userData [index].bought = true;
 			UpdateItemState (index);
 			scrollSnap.SetItemState (index, User.GetInfo.userData [index].bought);
-			User.SaveUserInfoToFile ();
+			User.SaveUserInfo ();
 		}
 	}
 

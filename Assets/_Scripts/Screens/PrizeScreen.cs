@@ -73,7 +73,9 @@ public class PrizeScreen : ScreenBase {
 		charactedIndex = GetRandomCharacter ();
 		prizeBoxAnimation.Play ("PrizeBoxOpenAnim");
 		openBoxBtn.gameObject.SetActive (false);
+		User.BuyWithCoin (100);
 		User.GetInfo.userData [charactedIndex].bought = true;
+		User.SaveUserInfo ();
 	}
 
 	public override void OnActivate ()

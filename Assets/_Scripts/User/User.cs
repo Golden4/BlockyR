@@ -90,7 +90,7 @@ public static class User {
 	public static void SetPlayerIndex (int index)
 	{
 		GetInfo.curPlayerIndex = index;
-		SaveUserInfoToFile ();
+		SaveUserInfo ();
 	}
 
 	public static bool BuyWithCoin (int coinAmount)
@@ -104,7 +104,16 @@ public static class User {
 		}
 	}
 
-	public static void SaveUserInfoToFile ()
+	public static bool HaveCoin (int coinAmount)
+	{
+		if (Coins - coinAmount >= 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static void SaveUserInfo ()
 	{
 		if (dataUser != null)
 			JsonSaver.SaveData ("UserInfo", dataUser);
@@ -113,13 +122,14 @@ public static class User {
 	public static void LoadUserInfoFromFileOrCreateNew ()
 	{
 		UserInfo data = JsonSaver.LoadData<UserInfo> ("UserInfo");
-
 		if (data == null) {
 			dataUser = new UserInfo ();
-			SaveUserInfoToFile ();
+			SaveUserInfo ();
 
 		} else {
 			dataUser = data;
+
+
 
 			if (dataUser.userData.Length < Database.Get.playersData.Length) {
 
@@ -132,7 +142,7 @@ public static class User {
 						dataTemp [i] = new UserInfo.UserData ();
 				}
 				dataUser.userData = dataTemp;
-				SaveUserInfoToFile ();
+				SaveUserInfo ();
 			}
 
 		}

@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class UserInfo {
 	
-	UserData[] _userData;
+	public UserData[] _userData;
 
 	public UserData[] userData {
 		get {

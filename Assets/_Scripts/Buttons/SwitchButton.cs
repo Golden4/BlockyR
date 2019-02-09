@@ -20,7 +20,7 @@ public class SwitchButton : MonoBehaviour {
 
 	public int curSwitchIndex;
 
-	void Awake ()
+	void Start ()
 	{
 		btn = GetComponent <Button> ();
 
@@ -49,7 +49,7 @@ public class SwitchButton : MonoBehaviour {
 	void UpdateEvents ()
 	{
 		if (type == Buttons.Audio) {
-
+			
 			curSwitchIndex = (!AudioManager.Ins.audioEnabled) ? 1 : 0;
 
 			Action[] actions = {

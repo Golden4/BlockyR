@@ -10,13 +10,10 @@ public class SpoilerButton : MonoBehaviour {
 
 	public bool isShow = false;
 
-	void Awake ()
-	{
-		Show ();
-	}
-
 	void Start ()
 	{
+		Show ();
+
 		GetComponent <Button> ().onClick.AddListener (() => {
 
 			if (isShow) {
@@ -35,6 +32,7 @@ public class SpoilerButton : MonoBehaviour {
 		isShow = true;
 		tapToStart.SetActive (false);
 		spoilerParent.gameObject.SetActive (true);
+		GUIAnimSystem.Instance.MoveIn (spoilerParent.transform, true);
 	}
 
 	void Close ()
