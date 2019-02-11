@@ -60,6 +60,8 @@ public class BirdPlayer : Player {
 	{
 		isFlying = true;
 		Debug.Log ("Flying!");
+		if (isSnaped)
+			Unsnap (Direction.Right);
 		targetRotation = Quaternion.LookRotation (new Vector3 (CubeMeshData.offsets [(int)Direction.Right].x, 0, CubeMeshData.offsets [(int)Direction.Right].y)).eulerAngles;
 	}
 
