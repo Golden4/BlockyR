@@ -20,7 +20,7 @@ public class ScreenController : MonoBehaviour {
 
 	public static GameScreen curActiveScreen;
 
-	public static System.Action OnChangeScreenEvent;
+	public static System.Action<ScreenBase> OnChangeScreenEvent;
 
 	void Awake ()
 	{
@@ -38,10 +38,23 @@ public class ScreenController : MonoBehaviour {
 			Debug.LogError ("GameScreen Count: " + System.Enum.GetNames (typeof(GameScreen)).Length + " != screensList: " + screensList.Length);
 		}
 
-		User.AddCoin (10);
+		User.AddCoin (1000);
 
 		ActivateScreen (GameScreen.Menu);
 
+	}
+
+	public static T GetScreen<T> () where T : ScreenBase
+	{
+		for (int i = 0; i < Ins.screensList.Length; i++) {
+			if (Ins.screensList [i].GetType () == typeof(T)) {
+				return (T)Ins.screensList [i];
+			}
+		}
+
+		Debug.LogError ("Not Found Screen: " + typeof(T).Name);
+
+		return default(T);
 	}
 
 	/*	public static void ActivateScreen<T> (T screen) where T:ScreenBase
@@ -71,7 +84,7 @@ public class ScreenController : MonoBehaviour {
 		curActiveScreen = (GameScreen)screen;
 
 		if (OnChangeScreenEvent != null) {
-			OnChangeScreenEvent.Invoke ();
+			OnChangeScreenEvent.Invoke (screensList [screen]);
 		}
 
 	}
