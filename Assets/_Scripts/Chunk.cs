@@ -13,6 +13,7 @@ public class Chunk : MonoBehaviour {
 	public Block[,] blocksInChunk = new Block[size, size];
 
 	public static event System.Action<Vector2I> OnGenerateChunk;
+	public static event System.Action<Vector2I> OnDestroyChunk;
 
 	public int[,] biomesMap;
 	public int[,] blocksMap;
@@ -131,6 +132,9 @@ public class Chunk : MonoBehaviour {
 				blocksInChunk [x, y].OnBlockDestroy ();
 			}
 		}
+
+		if (OnDestroyChunk != null)
+			OnDestroyChunk (chunkCoords);
 
 		Destroy (gameObject);
 	}

@@ -16,9 +16,9 @@ public class AudioManager : MonoBehaviour {
 			Ins = this;
 			DontDestroyOnLoad (gameObject);
 		} else if (Ins != this) {
-				Destroy (gameObject);
-				return;
-			}
+			Destroy (gameObject);
+			return;
+		}
 
 		source = gameObject.AddComponent<AudioSource> ();
 
@@ -43,6 +43,10 @@ public class AudioManager : MonoBehaviour {
 	public void EnableAudio (bool enable)
 	{
 		audioEnabled = enable;
+		AudioListener listener = FindObjectOfType<AudioListener> ();
+		if (listener != null)
+			listener.enabled = enable;
+
 //		print ("Audio " + enable);
 	}
 

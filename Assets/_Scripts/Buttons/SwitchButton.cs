@@ -7,7 +7,8 @@ using System;
 
 public class SwitchButton : MonoBehaviour {
 
-	public enum Buttons {
+	public enum Buttons
+	{
 		Audio,
 		Input
 	}
@@ -68,6 +69,20 @@ public class SwitchButton : MonoBehaviour {
 
 		if (type == Buttons.Input) {
 			
+			curSwitchIndex = (InputMobileController.curInputType == InputMobileController.InputType.Touch) ? 0 : 1;
+
+			Action[] actions = {
+				delegate {
+					InputMobileController.ChangeInputType (InputMobileController.InputType.Swipe);
+				}, delegate {
+					InputMobileController.ChangeInputType (InputMobileController.InputType.Touch);
+				}
+			};
+
+			for (int i = 0; i < switchInfos.Length; i++) {
+				switchInfos [i].Event = actions [i];
+			}
+
 		}
 	}
 

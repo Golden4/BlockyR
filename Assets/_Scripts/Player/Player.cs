@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
 		}
 
 		for (int i = 0; i < 4; i++)
-			if (MobileInputManager.GetKey ((Direction)i)) {
+			if (MobileInputTouchManager.GetKey ((Direction)i, true)) {
 				Move ((Direction)i);
 			}
 		
@@ -106,16 +106,16 @@ public class Player : MonoBehaviour {
 			dirApply = true;
 			curDir = Direction.Left;
 		} else if (Input.GetKey (KeyCode.W)) {
-				dirApply = true;
-				curDir = Direction.Up;
-			} else if (Input.GetKey (KeyCode.S)) {
-					dirApply = true;
-					curDir = Direction.Down;
-				} else {
-					if (!dirApply && curDir != Direction.Right) {
-						curDir = Direction.Right;
-					}
-				}
+			dirApply = true;
+			curDir = Direction.Up;
+		} else if (Input.GetKey (KeyCode.S)) {
+			dirApply = true;
+			curDir = Direction.Down;
+		} else {
+			if (!dirApply && curDir != Direction.Right) {
+				curDir = Direction.Right;
+			}
+		}
 	}
 
 	protected virtual void FixedUpdate ()
@@ -291,10 +291,10 @@ public class Player : MonoBehaviour {
 				Die (dieInfo);
 			}
 		} else if (curBlock.biome == Biome.Snowy) {
-				AudioManager.PlaySoundFromLibrary ("SnowJump");
-			} else {
-				AudioManager.PlaySoundFromLibrary ("WoodJump");
-			}
+			AudioManager.PlaySoundFromLibrary ("SnowJump");
+		} else {
+			AudioManager.PlaySoundFromLibrary ("WoodJump");
+		}
 	}
 
 	void PlayStepSound ()
@@ -309,15 +309,15 @@ public class Player : MonoBehaviour {
 				curBalk = curCollider [0].transform.GetComponent <Balk> ();
 				TrySnap (curBalk, dir);
 			} else if (curBalk.transform != curCollider [0].transform) {
-					curBalk.OnPlayerUnsnap ();
-					curBalk = curCollider [0].transform.GetComponent <Balk> ();
-					TrySnap (curBalk, dir);
-				} else if (!MoveBalk (dir)) {
-						Unsnap (dir);
-					}
+				curBalk.OnPlayerUnsnap ();
+				curBalk = curCollider [0].transform.GetComponent <Balk> ();
+				TrySnap (curBalk, dir);
+			} else if (!MoveBalk (dir)) {
+				Unsnap (dir);
+			}
 
 		} else if (isSnaped)
-				Unsnap (dir);
+			Unsnap (dir);
 	}
 
 	void TrySnap (Balk balk, Direction dir)
@@ -483,7 +483,7 @@ public class Player : MonoBehaviour {
 
 		curBlock = World.Ins.GetBlock (curCoord);
 
-		curCollider = Physics.OverlapBox ((/*WorldPositionToBlockCoords (*/transform.position + CubeMeshData.offsets [(int)dir].ToVector3 ())/*.ToVector3 (.7f)*/, Vector3.one * .4f, Quaternion.identity, MovingObjectsManager.Ins.balkMask);
+		curCollider = Physics.OverlapBox ((/*WorldPositionToBlockCoords (*/transform.position + CubeMeshData.offsets [(int)dir].ToVector3 ())/*.ToVector3 (.7f)*/, Vector3.one * .4f, Quaternion.identity, BalksController.Ins.balkMask);
 	}
 
 	public Vector2I GetCurCoords ()

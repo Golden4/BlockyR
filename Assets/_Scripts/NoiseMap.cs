@@ -94,7 +94,7 @@ public class NoiseMap : MonoBehaviour {
 				if ((xOffset + y) % 20 > 0 && ((xOffset + y) % 20 + (xOffset + y) / 10) < (((xOffset + y) / 10) * 2) && (xOffset + y) > 10) {
 					//if (xOffset + y > 20 + Random.Range (0, 2) && xOffset + y < 30 + Random.Range (0, 2)) {
 					map [x, y] = 4;
-					MovingObjectsManager.AddLineToGenerateBalks (xOffset + y);
+					BalksController.AddLineToGenerateBalks (xOffset + y);
 				
 				} else if (Random.Range (0, 15) > 0)
 						map [x, y] = 0;

@@ -8,15 +8,20 @@ public class MenuScreen : ScreenBase {
 
 	public static event System.Action OnStartGame;
 
+	public Button startGameBtn;
+
 	public Text gameTitleText;
 
 	void Start ()
 	{
 		SceneController.Init ();
 		ShowGameTitle (true, true);
+
+		startGameBtn.onClick.RemoveAllListeners ();
+		startGameBtn.onClick.AddListener (StartGame);
 	}
 
-	void Update ()
+	/*void Update ()
 	{
 		#if UNITY_EDITOR || UNITY_STANDALONE_WIN
 
@@ -31,7 +36,7 @@ public class MenuScreen : ScreenBase {
 		}
 
 		#endif
-	}
+	}*/
 
 	public void ShowGameTitle (bool show, bool fade)
 	{

@@ -80,13 +80,13 @@ namespace VoxelImporter {
 
 			#region Material
 			if (rendererMaterial0 != playMaterial0 ||
-			    rendererMaterial1 != playMaterial1 ||
-			    rendererMaterial2 != playMaterial2 ||
-			    rendererMaterial3 != playMaterial3 ||
-			    rendererMaterial4 != playMaterial4 ||
-			    rendererMaterial5 != playMaterial5 ||
-			    rendererMaterial6 != playMaterial6 ||
-			    rendererMaterial7 != playMaterial7) {
+			             rendererMaterial1 != playMaterial1 ||
+			             rendererMaterial2 != playMaterial2 ||
+			             rendererMaterial3 != playMaterial3 ||
+			             rendererMaterial4 != playMaterial4 ||
+			             rendererMaterial5 != playMaterial5 ||
+			             rendererMaterial6 != playMaterial6 ||
+			             rendererMaterial7 != playMaterial7) {
 				int count = 0;
 				if (playMaterial0 != null)
 					count++;
@@ -205,9 +205,9 @@ namespace VoxelImporter {
 			return false;
 		}
 
-		public void ChangeFrame (int frameId)
+		public void ChangeFrame (int frameIndex)
 		{
-			ChangeFrame (frames [frameId].name);
+			ChangeFrame (frames [frameIndex].name);
 		}
 
 		#if UNITY_EDITOR
@@ -265,7 +265,8 @@ namespace VoxelImporter {
 
 		public FrameData edit_currentFrame { get { return edit_frameEnable ? frames [edit_frameIndex] : null; } }
 
-		public enum Edit_CameraMode {
+		public enum Edit_CameraMode
+		{
 			forward,
 			back,
 			up,

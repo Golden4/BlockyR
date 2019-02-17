@@ -23,7 +23,7 @@ public class BirdPlayer : Player {
 		}
 
 		for (int i = 0; i < 4; i++)
-			if (MobileInputManager.GetKey ((Direction)i)) {
+			if (MobileInputTouchManager.GetKey ((Direction)i, true)) {
 				
 				if (isFlying) {
 					MoveFlying ((Direction)i);

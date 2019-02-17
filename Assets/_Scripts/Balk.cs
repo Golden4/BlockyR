@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Balk : MonoBehaviour {
 
-	public enum BalkDirection {
+	public enum BalkDirection
+	{
 		Left,
 		Right
 	}
 
-	public MovingObjectsManager.BalksLine curBalkLine;
+	public BalksController.BalksLine curBalkLine;
 
 	public bool isOnChunk;
 
@@ -65,18 +66,18 @@ public class Balk : MonoBehaviour {
 	{
 		//bool chunkOut = (curBalkLine.dir == BalkDirection.Left) ? World.Ins.outChunkIndexMinY - 1 < curChunkCoord.y : World.Ins.outChunkIndexMaxY + 1 > curChunkCoord.y;
 
-		//bool chunkOut = World.Ins.outChunkIndexMinY - 2 < curChunkCoord.x;
+		/*bool chunkOut = World.Ins.outChunkIndexMinY - 2 < curChunkCoord.x;
 
-/*		if (!chunkOut) {
-			if (MovingObjectsManager.Ins.balksLine.ContainsKey (curBalkLine.line))
-				MovingObjectsManager.Ins.DestroyBalksInLine (curBalkLine.line);
+		if (!chunkOut) {
+			if (BalksController.Ins.balksLine.ContainsKey (curBalkLine.line))
+				BalksController.Ins.DestroyBalksInLine (curBalkLine.line);
 
 			print (transform.name + "   " + curBalkLine.dir + "  " + curBalkLine.line + "  " + curChunkCoord + "    " + World.Ins.outChunkIndexMinY + "   " + World.Ins.outChunkIndexMaxY);
 			return;
 		}*/
 
 		//if (chunkOut)
-		if (MovingObjectsManager.Ins.balksLine.ContainsKey (curBalkLine.line)) {
+		if (BalksController.Ins.balksLine.ContainsKey (curBalkLine.line)) {
 
 			OnReuse ();
 
@@ -86,6 +87,6 @@ public class Balk : MonoBehaviour {
 
 	protected virtual void OnReuse ()
 	{
-		transform.position = MovingObjectsManager.GetStartBalkPosition (curBalkLine.line);
+		transform.position = BalksController.GetStartBalkPosition (curBalkLine.line);
 	}
 }
