@@ -25,9 +25,9 @@ public class BlockWaterLily : BlockWater {
 		
 	}
 
-	public override float GetBlockHeight ()
+	/*public override float GetBlockHeight ()
 	{
 		return -.1f;
-	}
+	}*/
 	
 }

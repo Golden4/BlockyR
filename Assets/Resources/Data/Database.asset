@@ -22,7 +22,7 @@ MonoBehaviour:
     price: 100
     playerPrefab: {fileID: 7327326141959592250, guid: bd28d60781a594d48b5f5d0e6d3f0747,
       type: 3}
-    ability: One More Life
+    ability: +1 Life
   - name: Pig
     price: 100
     playerPrefab: {fileID: 114409454338205590, guid: f767dfe658e880249b32320062402c93,

@@ -17,12 +17,12 @@ public class SpecialItem : MonoBehaviour {
 	void OnTriggerEnter (Collider col)
 	{
 		if (col.CompareTag ("Player")) {
-			PickUp ();
+			PickUp (col.GetComponent <Player> ());
 			Destroy ();
 		}
 	}
 
-	public virtual void PickUp ()
+	public virtual void PickUp (Player player)
 	{
 		
 	}

@@ -10,7 +10,7 @@ public class BirdPlayer : Player {
 	{
 		base.Start ();
 
-		ability = new PlayerAbility (Fly, Walk, 2);
+		ability = new FlyingPlayerAbility (Fly, Walk, 2);
 	}
 
 	protected override void Update ()

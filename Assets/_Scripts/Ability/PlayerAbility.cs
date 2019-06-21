@@ -4,15 +4,20 @@ using UnityEngine;
 using System;
 
 public class PlayerAbility {
+	
+	public bool canUseAbility = true;
 
 	public Action ablityAction;
 	public Action onAblityEndAction;
-	private float abilityTime;
-	private float lastUseAbilityTime = -1;
+	protected float abilityTime;
+	protected float lastUseAbilityTime = -1;
 	public bool isUsingAbility;
 
 	public void Use ()
 	{
+		if (!canUseAbility)
+			return;
+		
 		if (ablityAction != null) {
 			ablityAction ();
 		}
@@ -21,16 +26,18 @@ public class PlayerAbility {
 
 		isUsingAbility = true;
 
-		Debug.Log ("AbilityUsing " + lastUseAbilityTime);
+		canUseAbility = false;
 
+		Debug.Log ("AbilityUsing " + lastUseAbilityTime);
 	}
 
-	public void Update ()
+	public virtual void Update ()
 	{
-		if (isUsingAbility)
+		if (isUsingAbility) {
 			if (lastUseAbilityTime + abilityTime < Time.time) {
 				OnAbilityEnd ();
 			}
+		}
 	}
 
 	public void OnAbilityEnd ()
@@ -43,6 +50,11 @@ public class PlayerAbility {
 
 		Debug.Log ("AbilityEnd " + Time.time);
 
+	}
+
+	public virtual void PickUp ()
+	{
+		canUseAbility = true;
 	}
 
 	public PlayerAbility (Action ablityAction, Action onAblityEndAction, float abilityTime)

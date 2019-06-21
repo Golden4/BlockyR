@@ -11,29 +11,48 @@ public class Saw : MonoBehaviour {
 	public Vector3 endPosToMove;
 	public float speed = 10;
 
+	Vector2I chunkCoords;
+
 	float moveValue;
 	float randomValue;
 
-	public void Init (Vector3 startPosToMove, Vector3 endPosToMove)
+	public void Init (Vector3 startPosToMove, Vector3 endPosToMove, Vector2I chunkCoords)
 	{
 		this.startPosToMove = startPosToMove;
 		this.endPosToMove = endPosToMove;
 		randomValue = Random.Range (0, 100f);
+		this.chunkCoords = chunkCoords;
+		Chunk.OnDestroyChunk += Chunk_OnDestroyChunk;
+	}
+
+	void Chunk_OnDestroyChunk (Vector2I obj)
+	{
+		if (chunkCoords == obj) {
+
+			Destroy (gameObject);
+		}
+	}
+
+	void OnDestroy ()
+	{
+		Chunk.OnDestroyChunk -= Chunk_OnDestroyChunk;
 	}
 
 
-	void Update ()
+	void FixedUpdate ()
 	{
 		Vector3 rot = transform.localEulerAngles;
 		rot.y = 90;
-		rot.z += rotationSpeed * Time.deltaTime;
+		rot.z += rotationSpeed * Time.fixedDeltaTime;
 		transform.localEulerAngles = rot;
 
 		moveValue = Mathf.PingPong ((Time.time + randomValue) * speed, 1);
-		moveValue += Time.deltaTime * speed;
+		moveValue += Time.fixedDeltaTime * speed;
 
 		transform.position = Vector3.Lerp (startPosToMove, endPosToMove, moveValue);
 	}
+
+
 
 	void OnTriggerEnter (Collider col)
 	{

@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BalkCrocodile : Balk {
-	
+
+	float lastSnapTime;
+
 	protected override void Start ()
 	{
 		canSnap = true;
-		float localSize = 1;//0.15f + curBalkLine.size * 0.3f;
+
+		size = 2;
+		float localSize = 1;
 		transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, localSize);
-		size = 1;
-		transform.localEulerAngles = new Vector3 (0, 180 * ((curBalkLine.dir == BalkDirection.Left) ? 0 : 1), 0);
+		transform.GetChild (0).localEulerAngles = new Vector3 (0, 180 * ((curBalkLine.dir == BalkDirection.Left) ? 0 : 1), 0);
 	}
 
 	public override void OnPlayerSnap ()
 	{
 		base.OnPlayerSnap ();
 
-		Utility.Invoke (this, 0.8f, MoveDown);
+		lastSnapTime = Time.time;
 		targetPos.y = -1.5f;
 	}
 
@@ -44,9 +47,9 @@ public class BalkCrocodile : Balk {
 		}
 	}
 
-	void MoveDown ()
+	void Update ()
 	{
-		if (isSnaped) {
+		if (isSnaped && lastSnapTime + 0.8f < Time.time) {
 			GetComponent <BoxCollider> ().enabled = false;
 			Player.Ins.Move (Direction.Top);
 		}

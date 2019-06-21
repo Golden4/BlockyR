@@ -7,14 +7,6 @@ using System;
 
 public class SwitchButton : MonoBehaviour {
 
-	public enum Buttons
-	{
-		Audio,
-		Input
-	}
-
-	public Buttons type;
-
 	Button btn;
 
 	public SwitchInfo[] switchInfos;
@@ -28,7 +20,10 @@ public class SwitchButton : MonoBehaviour {
 		btn.onClick.AddListener (() => {
 			SwitchNext ();
 		});
+	}
 
+	void OnEnable ()
+	{
 		UpdateEvents ();
 		Switch (curSwitchIndex);
 	}
@@ -47,43 +42,8 @@ public class SwitchButton : MonoBehaviour {
 		Switch (curSwitchIndex);
 	}
 
-	void UpdateEvents ()
+	public virtual void UpdateEvents ()
 	{
-		if (type == Buttons.Audio) {
-			
-			curSwitchIndex = (!AudioManager.Ins.audioEnabled) ? 1 : 0;
-
-			Action[] actions = {
-				delegate {
-					AudioManager.Ins.EnableAudio (true);
-				}, delegate {
-					AudioManager.Ins.EnableAudio (false);
-				}
-			};
-
-			for (int i = 0; i < switchInfos.Length; i++) {
-				switchInfos [i].Event = actions [i];
-			}
-
-		}
-
-		if (type == Buttons.Input) {
-			
-			curSwitchIndex = (InputMobileController.curInputType == InputMobileController.InputType.Touch) ? 0 : 1;
-
-			Action[] actions = {
-				delegate {
-					InputMobileController.ChangeInputType (InputMobileController.InputType.Swipe);
-				}, delegate {
-					InputMobileController.ChangeInputType (InputMobileController.InputType.Touch);
-				}
-			};
-
-			for (int i = 0; i < switchInfos.Length; i++) {
-				switchInfos [i].Event = actions [i];
-			}
-
-		}
 	}
 
 	[System.Serializable]

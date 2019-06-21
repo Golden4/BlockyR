@@ -17,7 +17,7 @@ public class CatPlayer : Player {
 		base.Die (dieInfo);
 		lifeCount--;
 
-		if (lifeCount <= 0) {
+		if (lifeCount <= 1) {
 			retry = false;
 		}
 	}

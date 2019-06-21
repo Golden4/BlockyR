@@ -6,7 +6,7 @@ public class CoinSpecialItem : SpecialItem {
 
 	Vector2I coinCount = new Vector2I (1, 10);
 
-	public override void PickUp ()
+	public override void PickUp (Player player)
 	{
 		int coinAmount = Random.Range (coinCount.x, coinCount.y);
 

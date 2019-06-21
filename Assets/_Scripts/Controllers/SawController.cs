@@ -40,7 +40,7 @@ public class SawController : MonoBehaviour {
 
 					saw.transform.position = startPointToMove;
 
-					saw.Init (startPointToMove, endPointToMove);
+					saw.Init (startPointToMove, endPointToMove, chunkCoords);
 
 					//SawLine line = new SawLine (saw, );
 				}
@@ -53,19 +53,21 @@ public class SawController : MonoBehaviour {
 	{
 
 		int correctLineCount = 0;
-
+		print (startChunkPoint + "   " + line);
+		startPoint = startChunkPoint;
 		for (int i = 0; i < Chunk.size; i++) {
 			if (World.Ins.GetBlock (new Vector2I (line, i + startChunkPoint)).GetType () == typeof(BlockGrass)) {
 				correctLineCount++;
-
-				if (correctLineCount > 5) {
-					startPoint = i + startChunkPoint;
-					endPoint = startPoint + correctLineCount;
-					return true;
-				}
 			} else {
 				correctLineCount = 0;
+				startPoint = i + 1 + startChunkPoint;
 			}
+
+			if (correctLineCount > 5) {
+				endPoint = startPoint + correctLineCount;
+				return true;
+			}
+
 		}
 
 		return false;

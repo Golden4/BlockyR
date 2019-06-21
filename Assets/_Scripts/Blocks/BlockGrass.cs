@@ -26,10 +26,10 @@ public class BlockGrass : Block {
 				/*coin = MonoBehaviour.Instantiate (coinPrefab);
 			coin.transform.SetParent (chunk.transform, false);
 			coin.transform.position = new Vector3 (worldCoords.x, .5f, worldCoords.y);*/
-			} else if (Random.Range (0, 400) == 0) {
-					Vector3 pos = new Vector3 (worldCoords.x, .5f, worldCoords.y);
-					data.AddObject (GameAssets.i.asAbility.CreateOnWorld (chunk.transform, pos, Vector3.zero));
-				}
+			} else if (Player.Ins.ability != null && Random.Range (0, 300) == 0) {
+				Vector3 pos = new Vector3 (worldCoords.x, .5f, worldCoords.y);
+				data.AddObject (GameAssets.i.asAbility.CreateOnWorld (chunk.transform, pos, Vector3.zero));
+			}
 		}
 	}
 

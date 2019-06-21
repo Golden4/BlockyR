@@ -80,7 +80,7 @@ public class BalksController : MonoBehaviour {
 
 		int count = 5;
 		float spaceBetweenBalks = Random.Range (7f, 10f);
-		float speed = Mathf.Clamp (1.5f + UIScreen.Ins.score / 100f, 1.5f, 3.5f);
+		float speed = Mathf.Clamp (1.5f + UIScreen.Ins.score / 50f, 1.5f, 5f);
 //		Debug.Log (speed + "  " + UIScreen.Ins.score);
 
 		//BalksLine bl = SpawnBalksInLine (line, count, spaceBetweenBalks, (Balk.BalkDirection)(line % 2), speed);

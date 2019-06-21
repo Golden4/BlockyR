@@ -51,7 +51,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 21381961375624986}
+  - {fileID: 2100000, guid: 98a5a36519305c344bffb84d7ef14aa0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +78,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8959588218120080963}
-  m_Mesh: {fileID: 43235275713981162}
+  m_Mesh: {fileID: 55}
 --- !u!65 &8959588218120080989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109,9 +109,10 @@ MonoBehaviour:
     dir: 0
     line: 0
     speed: 0
-    size: 0
   isOnChunk: 0
---- !u!21 &21381961375624986
+  canSnap: 1
+  size: 0
+--- !u!21 &18
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 28442557089033310}
+        m_Texture: {fileID: 43}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -186,7 +187,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
---- !u!28 &28442557089033310
+--- !u!28 &43
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,7 +227,7 @@ Texture2D:
     offset: 0
     size: 0
     path: 
---- !u!43 &43235275713981162
+--- !u!43 &55
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

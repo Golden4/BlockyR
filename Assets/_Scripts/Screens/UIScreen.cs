@@ -37,6 +37,7 @@ public class UIScreen : ScreenBase {
 	public GameObject inputsMap;
 
 	public Button abilityBtn;
+	public Image abilityAmountImage;
 
 	public override void Init ()
 	{
@@ -73,7 +74,18 @@ public class UIScreen : ScreenBase {
 			abilityBtn.gameObject.SetActive (true);
 			abilityBtn.onClick.RemoveAllListeners ();
 			abilityBtn.onClick.AddListener (AbilityBtn);
+			if (!Player.Ins.ability.canUseAbility) {
+				SetAbilityAmountUI (0);
+			} else {
+				SetAbilityAmountUI (1);
+			}
 		}
+
+	}
+
+	public void SetAbilityAmountUI (float amount)
+	{
+		abilityAmountImage.fillAmount = amount;
 	}
 
 	void AbilityBtn ()

@@ -38,9 +38,9 @@ public class AudioManager : MonoBehaviour {
 		source.PlayOneShot (sound);
 	}
 
-	public bool audioEnabled = true;
+	public static bool audioEnabled = true;
 
-	public void EnableAudio (bool enable)
+	public static void EnableAudio (bool enable)
 	{
 		audioEnabled = enable;
 		AudioListener listener = FindObjectOfType<AudioListener> ();

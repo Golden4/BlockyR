@@ -27,7 +27,7 @@ public class SpoilerButton : MonoBehaviour {
 		Close ();
 	}
 
-	void Show ()
+	public void Show ()
 	{
 		isShow = true;
 		tapToStart.SetActive (false);
@@ -35,7 +35,7 @@ public class SpoilerButton : MonoBehaviour {
 		GUIAnimSystem.Instance.MoveIn (spoilerParent.transform, true);
 	}
 
-	void Close ()
+	public void Close ()
 	{
 
 		tapToStart.SetActive (true);

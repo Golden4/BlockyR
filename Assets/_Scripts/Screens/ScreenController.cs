@@ -6,7 +6,8 @@ public class ScreenController : MonoBehaviour {
 	public static ScreenController Ins;
 
 	[System.Serializable]
-	public enum GameScreen {
+	public enum GameScreen
+	{
 		Menu,
 		Shop,
 		UI,
@@ -20,7 +21,7 @@ public class ScreenController : MonoBehaviour {
 
 	public static GameScreen curActiveScreen;
 
-	public static System.Action<ScreenBase> OnChangeScreenEvent;
+	public static event System.Action<ScreenBase> OnChangeScreenEvent;
 
 	void Awake ()
 	{
