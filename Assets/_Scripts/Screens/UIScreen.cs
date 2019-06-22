@@ -115,6 +115,13 @@ public class UIScreen : ScreenBase {
 		if (distance < 4f) {
 			fireAlert.gameObject.SetActive (true);
 			fireAlertText.text = (distance).ToString ("F1") + "m";
+
+			/*if (distance < 1.5f) {
+				Player.Ins.ShowPlayerWarning (true);
+			} else {
+				Player.Ins.ShowPlayerWarning (false);
+			}*/
+
 		} else {
 			fireAlert.gameObject.SetActive (false);
 		}

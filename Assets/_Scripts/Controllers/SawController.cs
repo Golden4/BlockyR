@@ -53,7 +53,7 @@ public class SawController : MonoBehaviour {
 	{
 
 		int correctLineCount = 0;
-		print (startChunkPoint + "   " + line);
+		//print (startChunkPoint + "   " + line);
 		startPoint = startChunkPoint;
 		for (int i = 0; i < Chunk.size; i++) {
 			if (World.Ins.GetBlock (new Vector2I (line, i + startChunkPoint)).GetType () == typeof(BlockGrass)) {

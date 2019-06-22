@@ -54,8 +54,10 @@ public class Fire : MonoBehaviour {
 
 	void Game_OnGameStarted ()
 	{
-		source.clip = fireSound.clip;
-		source.Play ();
+		if (AudioManager.audioEnabled) {
+			source.clip = fireSound.clip;
+			source.Play ();
+		}
 	}
 
 	void OnDestroy ()

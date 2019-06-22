@@ -430,7 +430,7 @@ public class Player : MonoBehaviour {
 
 	protected GameObject warningPlayer;
 
-	void ShowPlayerWarning (bool activate)
+	public void ShowPlayerWarning (bool activate)
 	{
 		if (activate) {
 			if (warningPlayer == null) {
