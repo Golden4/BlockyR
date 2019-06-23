@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Purchasing;
 
 public class ShopScreen : ScreenBase {
 
@@ -41,12 +42,14 @@ public class ShopScreen : ScreenBase {
 		});
 
 		BuyBtn.onClick.AddListener (() => {
-			BuyItem (curActiveItem);
+			BuyPaidItem (curActiveItem);
 		});
 
 		for (int i = 0; i < ItemCount; i++) {
 			scrollSnap.SetItemState (i, User.GetInfo.userData [i].bought);
 		}
+
+		PurchaseManager.OnPurchaseNonConsumable += BuyPaidItemSuccess;
 
 	}
 
@@ -90,7 +93,7 @@ public class ShopScreen : ScreenBase {
 		User.SetPlayerIndex (index);
 	}
 
-	public void BuyItem (int index)
+	public void BuyItemWithCoin (int index)
 	{
 		if (User.BuyWithCoin (Database.Get.playersData [index].price)) {
 			User.GetInfo.userData [index].bought = true;
@@ -98,6 +101,31 @@ public class ShopScreen : ScreenBase {
 			scrollSnap.SetItemState (index, User.GetInfo.userData [index].bought);
 			User.SaveUserInfo ();
 		}
+	}
+
+	public void BuyPaidItem (int index)
+	{
+		PurchaseManager.Ins.BuyNonConsumable (index);
+	}
+
+	public void BuyPaidItemSuccess (PurchaseEventArgs args)
+	{
+		string purchID = args.purchasedProduct.definition.id;
+
+		int index = 0;
+
+		for (int i = 0; i < PurchaseManager.Ins.NC_PRODUCTS.Length; i++) {
+			if (purchID == PurchaseManager.Ins.NC_PRODUCTS [i]) {
+				index = i;
+				break;
+			}
+		}
+
+		Debug.Log ("You bought " + purchID + "  id " + index + " NonCon");
+		User.GetInfo.userData [index].bought = true;
+		UpdateItemState (index);
+		scrollSnap.SetItemState (index, User.GetInfo.userData [index].bought);
+		User.SaveUserInfo ();
 	}
 
 	public void UpdateItemState (int index)

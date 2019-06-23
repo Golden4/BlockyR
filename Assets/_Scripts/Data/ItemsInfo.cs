@@ -9,6 +9,7 @@ public class ItemsInfo : ScriptableObject {
 	[System.Serializable]
 	public class ItemData {
 		public string name;
+		public string purchaseID;
 		public int price;
 		public Player playerPrefab;
 		public string ability;
