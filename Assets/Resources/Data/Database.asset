@@ -14,37 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playersData:
   - name: Bird
-    price: 100
+    price: 2
     playerPrefab: {fileID: 6919558610010395251, guid: b0d94c359d7124644a0e7ea139c81407,
       type: 3}
     ability: 'Ability: Can Fly'
   - name: Cat
-    price: 100
+    price: 2
     playerPrefab: {fileID: 7327326141959592250, guid: bd28d60781a594d48b5f5d0e6d3f0747,
       type: 3}
     ability: +1 Life
   - name: Pig
-    price: 100
+    price: 2
     playerPrefab: {fileID: 114409454338205590, guid: f767dfe658e880249b32320062402c93,
       type: 3}
     ability: 
   - name: Boar
-    price: 100
+    price: 2
     playerPrefab: {fileID: 3870384449939390500, guid: 8ea58ba1c45d49643981290c585a617e,
       type: 3}
     ability: 'Ability: not afraid of traps'
   - name: Rabbit
-    price: 100
+    price: 2
     playerPrefab: {fileID: 8625674231059281730, guid: 7ae0f77fdfffc604693ec9e05e99ee9e,
       type: 3}
     ability: 'Ability: Double Jump'
   - name: Frog
-    price: 100
+    price: 2
     playerPrefab: {fileID: 5593789153539883462, guid: f2e88da4480ee944d96e99136ec6484b,
       type: 3}
     ability: 'Ability: Can Jump On Water Lilies'
   - name: Chicken
-    price: 200
+    price: 2
     playerPrefab: {fileID: 114903587025273576, guid: 3de2341ef8478294c8af07e281599988,
       type: 3}
     ability: 

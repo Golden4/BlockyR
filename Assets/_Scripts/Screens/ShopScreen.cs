@@ -106,7 +106,7 @@ public class ShopScreen : ScreenBase {
 
 		SelectAndPlayBtn.gameObject.SetActive (bought);
 		BuyBtn.gameObject.SetActive (!bought);
-		BuyBtn.GetComponentInChildren<Text> ().text = Database.Get.playersData [index].price.ToString ();
+		BuyBtn.GetComponentInChildren<Text> ().text = Database.Get.playersData [index].price.ToString () + "$";
 	}
 
 	public void BackBtn ()

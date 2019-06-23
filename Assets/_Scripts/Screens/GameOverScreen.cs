@@ -71,7 +71,7 @@ public class GameOverScreen : ScreenBase {
 	void RespawnPlayer ()
 	{
 		if (AdController.Ins != null)
-			AdController.Ins.ShowAD ();
+			AdController.Ins.ShowInterstitialAD ();
 	}
 
 	public void OpenBoxBtn ()
