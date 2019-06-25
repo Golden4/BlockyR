@@ -20,6 +20,12 @@ public class Balk : MonoBehaviour {
 
 	protected bool isSnaped = false;
 
+	protected float moveDownDegree;
+	protected float moveDownTime = 0.2f;
+
+	protected float targetPosY = -.15f;
+	protected float startPosY = .1f;
+
 	protected virtual void Start ()
 	{
 		float localSize = 0.15f + size * 0.3f;
@@ -37,7 +43,7 @@ public class Balk : MonoBehaviour {
 		isSnaped = false;
 	}
 
-	void Update ()
+	protected virtual void Update ()
 	{
 		isOnChunk = World.IsOnChunk (transform.position);
 		if (!isOnChunk)
@@ -48,12 +54,20 @@ public class Balk : MonoBehaviour {
 	{
 		if (Game.isGameStarted || Player.Ins.isDead)
 			Move ();
-
 	}
 
-	void Move ()
+	public virtual void PlayerMovedOnBalk (Direction dir)
 	{
-		transform.position += Time.fixedDeltaTime * Vector3.forward * curBalkLine.speed * ((int)curBalkLine.dir * 2 - 1);
+		moveDownDegree = 0;
+	}
+
+	protected virtual void Move ()
+	{
+		Vector3 pos = transform.position;
+		pos.z += Time.fixedDeltaTime * curBalkLine.speed * ((int)curBalkLine.dir * 2 - 1);
+		moveDownDegree = Mathf.Clamp (moveDownDegree + ((isSnaped) ? 1 : -1) * Time.fixedDeltaTime / moveDownTime, 0, 2);
+		pos.y = Mathf.Lerp (startPosY, targetPosY, 1 - Mathf.Abs (1 - moveDownDegree));
+		transform.position = pos;
 	}
 
 	Vector2I curChunkCoord {

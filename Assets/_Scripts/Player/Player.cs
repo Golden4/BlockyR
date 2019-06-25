@@ -362,6 +362,7 @@ public class Player : MonoBehaviour {
 
 		if (curBalk != null)
 			curBalk.OnPlayerUnsnap ();
+		curBalk = null;
 	}
 
 	bool MoveBalk (Direction dir)
@@ -372,12 +373,16 @@ public class Player : MonoBehaviour {
 		if (Direction.Down == dir)
 			snapedPos--;
 
-		if (snapedPos > curBalk.size || snapedPos < -curBalk.size)
-			return false;
-
 		curCoord = World.Ins.GetBlock (WorldPositionToBlockCoords (transform.position)).worldCoords + CubeMeshData.offsets [(int)dir];
 
 		targetPos = curBalk.transform.position + Vector3.up * (startHeight + 0.4f) + Vector3.forward * snapedPos;
+
+		if (snapedPos > curBalk.size || snapedPos < -curBalk.size)
+			return false;
+
+		if (curBalk != null)
+			curBalk.PlayerMovedOnBalk (dir);
+
 		return true;
 	}
 

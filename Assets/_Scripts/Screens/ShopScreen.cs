@@ -36,11 +36,13 @@ public class ShopScreen : ScreenBase {
 
 		scrollSnap.OnChangeItemEvent += OnChangeItem;
 
+		SelectAndPlayBtn.onClick.RemoveAllListeners ();
 		SelectAndPlayBtn.onClick.AddListener (() => {
 			SelectAndPlay (curActiveItem);
 			SceneController.RestartLevel ();
 		});
 
+		BuyBtn.onClick.RemoveAllListeners ();
 		BuyBtn.onClick.AddListener (() => {
 			BuyPaidItem (curActiveItem);
 		});
@@ -48,6 +50,7 @@ public class ShopScreen : ScreenBase {
 		for (int i = 0; i < ItemCount; i++) {
 			scrollSnap.SetItemState (i, User.GetInfo.userData [i].bought);
 		}
+
 
 		PurchaseManager.OnPurchaseNonConsumable += BuyPaidItemSuccess;
 
@@ -69,6 +72,11 @@ public class ShopScreen : ScreenBase {
 		else
 			openBoxBtn.gameObject.SetActive (false);
 
+		//Init LocalizedPrice
+		for (int i = 0; i < Database.Get.playersData.Length; i++) {
+			Database.Get.playersData [i].price = PurchaseManager.Ins.GetLocalizedPrice (Database.Get.playersData [i].purchaseID);
+		}
+
 	}
 
 	public override void OnDeactivate ()
@@ -79,6 +87,7 @@ public class ShopScreen : ScreenBase {
 	public override void OnCleanUp ()
 	{
 		scrollSnap.OnChangeItemEvent -= OnChangeItem;
+		PurchaseManager.OnPurchaseNonConsumable -= BuyPaidItemSuccess;
 	}
 
 	void OnChangeItem (int index)
@@ -93,7 +102,7 @@ public class ShopScreen : ScreenBase {
 		User.SetPlayerIndex (index);
 	}
 
-	public void BuyItemWithCoin (int index)
+	/*	public void BuyItemWithCoin (int index)
 	{
 		if (User.BuyWithCoin (Database.Get.playersData [index].price)) {
 			User.GetInfo.userData [index].bought = true;
@@ -101,7 +110,7 @@ public class ShopScreen : ScreenBase {
 			scrollSnap.SetItemState (index, User.GetInfo.userData [index].bought);
 			User.SaveUserInfo ();
 		}
-	}
+	}*/
 
 	public void BuyPaidItem (int index)
 	{
@@ -134,7 +143,7 @@ public class ShopScreen : ScreenBase {
 
 		SelectAndPlayBtn.gameObject.SetActive (bought);
 		BuyBtn.gameObject.SetActive (!bought);
-		BuyBtn.GetComponentInChildren<Text> ().text = Database.Get.playersData [index].price.ToString () + "$";
+		BuyBtn.GetComponentInChildren<Text> ().text = Database.Get.playersData [index].price.ToString ();
 	}
 
 	public void BackBtn ()

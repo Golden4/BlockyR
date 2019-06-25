@@ -64,7 +64,7 @@ public class BalksController : MonoBehaviour {
 			int line = chunkCoord + i;
 
 			if (balksLine.ContainsKey (line)) {
-				print (coords + "  " + World.Ins.outChunkIndexMaxX + "  " + World.Ins.outChunkIndexMinX + "   " + World.Ins.outChunkIndexMaxY + "   " + World.Ins.outChunkIndexMinY + "  " + line);
+//				print (coords + "  " + World.Ins.outChunkIndexMaxX + "  " + World.Ins.outChunkIndexMinX + "   " + World.Ins.outChunkIndexMaxY + "   " + World.Ins.outChunkIndexMinY + "  " + line);
 				if (coords.x < World.Ins.outChunkIndexMinX)
 					DestroyBalksInLine (line);
 

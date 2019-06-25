@@ -80,6 +80,18 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 		BuyProductID (NC_PRODUCTS [index]);
 	}
 
+	public string GetLocalizedPrice (string productId)
+	{
+		if (IsInitialized ()) {
+			print (m_StoreController.products.WithID (productId).metadata.localizedDescription);
+
+			return m_StoreController.products.WithID (productId).metadata.localizedPriceString;
+		} else {
+			Debug.LogError ("Not Initialized - GetLocalizedPrice");
+			return "Unavailable";
+		}
+	}
+
 	void BuyProductID (string productId)
 	{
 		if (IsInitialized ()) {
