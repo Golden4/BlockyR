@@ -51,11 +51,19 @@ public class AdController : MonoBehaviour {
 		RequestBanner ();
 	}
 
-	public void ShowRewardedAD ()
+	public bool RewardedADLoaded ()
+	{
+		return this.rewardedAd.IsLoaded ();
+	}
+
+	public bool ShowRewardedAD ()
 	{
 		if (this.rewardedAd.IsLoaded ()) {
 			this.rewardedAd.Show ();
+			return true;
 		}
+
+		return false;
 	}
 
 	private void RequestBanner ()
@@ -209,11 +217,22 @@ public class AdController : MonoBehaviour {
 
 	public void HandleUserEarnedReward (object sender, Reward args)
 	{
-		string type = args.Type;
-		double amount = args.Amount;
-		MonoBehaviour.print (
+		/*string type = args.Type;
+		double amount = args.Amount;*/
+
+		int coinAmount = 10;
+		User.AddCoin (coinAmount);
+
+		Vector3 fromPos = Vector3.zero;
+		Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
+
+		Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
+			AudioManager.PlaySoundFromLibrary ("Coin");
+		});
+
+		/*MonoBehaviour.print (
 			"HandleRewardedAdRewarded event received for "
-			+ amount.ToString () + " " + type);
+			+ amount.ToString () + " " + type);*/
 	}
 
 }

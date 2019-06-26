@@ -88,7 +88,7 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 			return m_StoreController.products.WithID (productId).metadata.localizedPriceString;
 		} else {
 			Debug.LogError ("Not Initialized - GetLocalizedPrice");
-			return "Unavailable";
+			return "null";
 		}
 	}
 

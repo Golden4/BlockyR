@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fb96c6ae100ea1942b228d805c417bf3
+guid: 27f8e4b7dda749146987d80091ad2902
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -12,7 +12,7 @@ TrueTypeFontImporter:
   fontNames:
   - Aldo the Apache
   fallbackFontReferences:
-  - {fileID: 12800000, guid: 27f8e4b7dda749146987d80091ad2902, type: 3}
+  - {fileID: 12800000, guid: 8c253f8d5b692ab4f80e8bf50aa940cd, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
