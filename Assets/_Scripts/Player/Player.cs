@@ -141,9 +141,9 @@ public class Player : MonoBehaviour {
 	{
 		if (isSnaped && curBalk != null) {
 			if (moving) {
-				targetPos = curBalk.transform.position + Vector3.up * startHeight + Vector3.forward * snapedPos;
+				targetPos = curBalk.transform.position + Vector3.up * (startHeight + .15f) + Vector3.forward * snapedPos;
 			} else {
-				transform.position = curBalk.transform.position + Vector3.up * startHeight + Vector3.forward * snapedPos;
+				transform.position = curBalk.transform.position + Vector3.up * (startHeight + .15f) + Vector3.forward * snapedPos;
 				curCoord = GetCurCoords ();
 			}
 		}

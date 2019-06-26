@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinSpecialItem : SpecialItem {
 
-	Vector2I coinCount = new Vector2I (1, 10);
+	Vector2I coinCount = new Vector2I (1, 3);
 
 	public override void PickUp (Player player)
 	{

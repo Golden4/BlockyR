@@ -66,6 +66,7 @@ public class NoiseMap : MonoBehaviour {
 	 * 4 = BlockBalk
 	* 5 = blockWaterLily
 	*/
+	static List<int> riverLines = new List<int> ();
 
 	public static int[,] BlocksMap (int width, int height, int xOffset, int yOffset, ref int[,] biomesMap)
 	{
@@ -90,27 +91,36 @@ public class NoiseMap : MonoBehaviour {
 				if (map [x, y] != -1)
 					continue;
 
+				int curLine = (xOffset + y);
 
-				if ((xOffset + y) % 20 > 0 && ((xOffset + y) % 20 + (xOffset + y) / 10) < (((xOffset + y) / 10) * 2) && (xOffset + y) > 10) {
+				//	if (riverLines [riverLines.Count - 1] <= Player.Ins.GetCurCoords ().x - Chunk.size * 2)
+				//		SetRiverLines (Player.Ins.GetCurCoords ().x, out riverLines);
+
+				//	Debug.Log (riverLines);
+
+
+				if (curLine % 20 > 0 && (curLine % 20 + (curLine / 10)) < ((curLine / 10) * 2) && curLine > 10) {
+					//	if (riverLines.Exists (x => x.Equals (curLine)) && curLine > 10) {
 					//if (xOffset + y > 20 + Random.Range (0, 2) && xOffset + y < 30 + Random.Range (0, 2)) {
+					//Debug.Log ("Line " + curLine);
 					map [x, y] = 4;
 					BalksController.AddLineToGenerateBalks (xOffset + y);
 				
 				} else if (Random.Range (0, 15) > 0)
-						map [x, y] = 0;
-					else if (Random.Range (0, 5) > 0) {
+					map [x, y] = 0;
+				else if (Random.Range (0, 5) > 0) {
 					
-							if ((Biome)Random.Range (0, 2) == Biome.Forest)
-								map [x, y] = 3;
-							else
-								map [x, y] = 2;
+					if ((Biome)Random.Range (0, 2) == Biome.Forest)
+						map [x, y] = 3;
+					else
+						map [x, y] = 2;
 					
-						} else if (biomesMap [x, y] != (int)Biome.Desert) {
-								CreatePool (x, y, map, biomesMap);
-								//map [x, y] = 1;
-							} else {
-								map [x, y] = 0;
-							}
+				} else if (biomesMap [x, y] != (int)Biome.Desert) {
+					CreatePool (x, y, map, biomesMap);
+					//map [x, y] = 1;
+				} else {
+					map [x, y] = 0;
+				}
 
 
 				/*	if (levelMap [x, y] == 1) {
@@ -126,6 +136,23 @@ public class NoiseMap : MonoBehaviour {
 		}
 
 		return map;
+	}
+
+	static Vector2I SetRiverLines (int curLine, ref List<int> riverLinesList)
+	{
+		Vector2I riverLines = new Vector2I ();
+
+		int grassLineAmount = curLine + Random.Range (7, 25);
+
+		riverLines.x = grassLineAmount;
+
+		riverLines.y = grassLineAmount + Random.Range (curLine / 20, curLine / 10);
+
+		for (int i = riverLines.y; i <= riverLines.y; i++) {
+			riverLinesList.Add (i);
+		}
+
+		return riverLines;
 	}
 
 	static void CreatePool (int x, int y, int[,] map, int[,] biomesMap)

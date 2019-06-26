@@ -43,9 +43,11 @@ public class AudioManager : MonoBehaviour {
 	public static void EnableAudio (bool enable)
 	{
 		audioEnabled = enable;
-		AudioListener listener = FindObjectOfType<AudioListener> ();
-		if (listener != null)
-			listener.enabled = enable;
+
+		AudioListener.volume = enable ? 1 : 0;
+
+		/*if (listener != null)
+			listener.enabled = enable;*/
 
 //		print ("Audio " + enable);
 	}
