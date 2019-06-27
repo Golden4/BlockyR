@@ -40,8 +40,13 @@ public class SceneController : MonoBehaviour {
 		Ins.StartCoroutine (LoadSceneCoroutine (index, true));
 	}
 
+	public static event Action OnRestartLevel;
+
 	public static void RestartLevel ()
 	{
+		if (OnRestartLevel != null) {
+			OnRestartLevel ();
+		}
 		LoadSceneWithFade (SceneManager.GetActiveScene ().buildIndex);
 	}
 

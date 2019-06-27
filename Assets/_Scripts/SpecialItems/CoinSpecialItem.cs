@@ -14,7 +14,7 @@ public class CoinSpecialItem : SpecialItem {
 
 		Vector3 fromPos = Camera.main.WorldToScreenPoint (transform.position);
 		Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
-		Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount / 3 + 1, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
+		Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
 			AudioManager.PlaySoundFromLibrary ("Coin");
 		});
 

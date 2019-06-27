@@ -1,15 +1,16 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using System.Collections.Generic;
 
 public class PurchaseManager : MonoBehaviour, IStoreListener {
 	private static IStoreController m_StoreController;
 	private static IExtensionProvider m_StoreExtensionProvider;
 	private int currentProductIndex;
 	public static PurchaseManager Ins;
-	[Tooltip ("Не многоразовые товары. Больше подходит для отключения рекламы и т.п.")]
+
 	public string[] NC_PRODUCTS;
-	[Tooltip ("Многоразовые товары. Больше подходит для покупки игровой валюты и т.п.")]
+
 	public string[] C_PRODUCTS;
 
 	/// <summary>
@@ -54,12 +55,17 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 			NC_PRODUCTS [i] = Database.Get.playersData [i].purchaseID;
 		}
 
+		C_PRODUCTS = new string[] { "coins_1", "coins_2", "coins_3" };
+
+
 		var builder = ConfigurationBuilder.Instance (StandardPurchasingModule.Instance ());
 
 		foreach (string s in C_PRODUCTS)
 			builder.AddProduct (s, ProductType.Consumable);
+		
 		foreach (string s in NC_PRODUCTS)
 			builder.AddProduct (s, ProductType.NonConsumable);
+		
 		UnityPurchasing.Initialize (this, builder);
 	}
 
@@ -72,6 +78,17 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 	{
 		currentProductIndex = index;
 		BuyProductID (C_PRODUCTS [index]);
+	}
+
+	public void BuyConsumable (string id)
+	{
+		List<string> temp = new List<string> (C_PRODUCTS);
+
+		if (temp.Contains (id)) {
+			int index = temp.IndexOf (id);
+			currentProductIndex = index;
+			BuyProductID (C_PRODUCTS [index]);
+		}
 	}
 
 	public void BuyNonConsumable (int index)

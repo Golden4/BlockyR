@@ -15,6 +15,7 @@ public class AdController : MonoBehaviour {
 	string adBannerID = "ca-app-pub-8878808814241755/1477739641";
 	string adRewardedID = "ca-app-pub-8878808814241755/4399540162";
 	string appID = "ca-app-pub-8878808814241755~7293420529";
+	
 	#else
 	string adInterstitialID = "unexpected_platform";
 	string adBannerID = "unexpected_platform";
@@ -28,19 +29,34 @@ public class AdController : MonoBehaviour {
 
 	public static AdController Ins;
 
+	void Awake ()
+	{
+		if (Ins == null)
+			Ins = this;
+		else if (Ins != this) {
+			Destroy (gameObject);
+			return;
+		}
+
+		DontDestroyOnLoad (gameObject);
+	}
+
 	void Start ()
 	{
-		Ins = this;
-
+			
 		MobileAds.Initialize (appID);
+		SceneController.OnRestartLevel += RequestAds;
+		RequestAds ();
+	}
 
+	void RequestAds ()
+	{
 		RequestInterstitial ();
 		RequestRewardedAd ();
 	}
 
 	public void ShowInterstitialAD ()
 	{
-
 		if (interstitial.IsLoaded ()) {
 			interstitial.Show ();
 		}
@@ -223,7 +239,7 @@ public class AdController : MonoBehaviour {
 		int coinAmount = 10;
 		User.AddCoin (coinAmount);
 
-		Vector3 fromPos = Vector3.zero;
+		Vector3 fromPos = MenuScreen.Ins.freeCoinsBtn.transform.position;
 		Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
 
 		Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
@@ -233,6 +249,11 @@ public class AdController : MonoBehaviour {
 		/*MonoBehaviour.print (
 			"HandleRewardedAdRewarded event received for "
 			+ amount.ToString () + " " + type);*/
+	}
+
+	void OnDestroy ()
+	{
+		SceneController.OnRestartLevel -= RequestAds;
 	}
 
 }

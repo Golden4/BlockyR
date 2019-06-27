@@ -42,10 +42,10 @@ public class PrizeScreen : ScreenBase {
 			SceneController.RestartLevel ();
 		});
 
-		backBtn.onClick.RemoveAllListeners ();
+		/*backBtn.onClick.RemoveAllListeners ();
 		backBtn.onClick.AddListener (() => {
 			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Shop);
-		});
+		});*/
 	}
 
 	void Update ()

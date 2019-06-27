@@ -14,7 +14,8 @@ public class ScreenController : MonoBehaviour {
 		Continue,
 		GameOver,
 		Pause,
-		Prize
+		Prize,
+		BuyCoin
 	}
 
 	public ScreenBase[] screensList;

@@ -66,8 +66,20 @@ public class ButtonIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
 					outline.effectColor = colorOrigOutline;
 				}
 			}
-
+		} else if (!changingColor && image.color != colorOrig) {
+			image.color = colorOrig;
+			outline.effectColor = colorOrigOutline;
 		}
+	}
+
+	public void DeactivateBtn ()
+	{
+		gameObject.gameObject.SetActive (false);
+	}
+
+	public void ActivateBtn ()
+	{
+		gameObject.gameObject.SetActive (true);
 	}
 
 }
