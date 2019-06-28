@@ -61,7 +61,7 @@ public class UIScreen : ScreenBase {
 
 	public override void OnActivate ()
 	{
-		topScoreText.text = "Top " + topScore.ToString ();
+		topScoreText.text = LocalizationManager.GetLocalizedText ("top_score") + " " + topScore.ToString ();
 
 		if (!gameStarted)
 			Game.OnGameStartedCall ();

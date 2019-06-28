@@ -16,21 +16,25 @@ public class ButtonIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
 	private Outline outline;
 	private float lastChagingTime = -1;
 	private int colorIndex;
+	public bool btnEnabled = true;
 
 	Vector3 prevPos = Vector3.zero;
 
 	public void OnPointerDown (PointerEventData eventData)
 	{
-		if (prevPos == Vector3.zero)
-			prevPos = transform.GetChild (0).localPosition;
+		if (btnEnabled) {
+			if (prevPos == Vector3.zero)
+				prevPos = transform.GetChild (0).localPosition;
 		
-		transform.GetChild (0).localPosition = prevPos - Vector3.up * 5;
+			transform.GetChild (0).localPosition = prevPos - Vector3.up * 5;
+		}
 	}
 
 
 	public void OnPointerUp (PointerEventData eventData)
 	{
-		transform.GetChild (0).localPosition = prevPos;
+		if (btnEnabled)
+			transform.GetChild (0).localPosition = prevPos;
 	}
 
 	void Start ()
@@ -72,14 +76,12 @@ public class ButtonIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
 		}
 	}
 
-	public void DeactivateBtn ()
+	public void EnableBtn (bool enable)
 	{
-		gameObject.gameObject.SetActive (false);
-	}
+		btnEnabled = enable;
 
-	public void ActivateBtn ()
-	{
-		gameObject.gameObject.SetActive (true);
+		gameObject.GetComponent <Button> ().interactable = enable;
+
 	}
 
 }

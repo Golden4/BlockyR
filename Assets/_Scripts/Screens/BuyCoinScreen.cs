@@ -16,6 +16,11 @@ public class BuyCoinScreen : ScreenBase {
 
 		for (int i = 0; i < BuyCoinBtns.Length; i++) {
 			BuyCoinBtns [i].priceText.text = PurchaseManager.Ins.GetLocalizedPrice (BuyCoinBtns [i].productID).ToString ();
+			int index = i;
+
+			BuyCoinBtns [i].btn.onClick.RemoveAllListeners ();
+
+			BuyCoinBtns [i].btn.onClick.AddListener (() => BuyItem (BuyCoinBtns [index].productID));
 		}
 
 	}
@@ -32,9 +37,10 @@ public class BuyCoinScreen : ScreenBase {
 
 	[System.Serializable]
 	public class BuyCoinItem {
-		public Button btn;
 		public string productID;
+		public Button btn;
 		public Text priceText;
+		public int coinCount;
 	}
 
 	public Button getCoinsBtn;
@@ -57,6 +63,32 @@ public class BuyCoinScreen : ScreenBase {
 		} else {
 			OnDontTakeGift ();
 		}
+
+		PurchaseManager.OnPurchaseConsumable += OnPurchaseConsumable;
+	}
+
+	public override void OnCleanUp ()
+	{
+		base.OnCleanUp ();
+		PurchaseManager.OnPurchaseConsumable -= OnPurchaseConsumable;
+	}
+
+	void OnPurchaseConsumable (UnityEngine.Purchasing.PurchaseEventArgs args)
+	{
+		List<BuyCoinItem> list = new List<BuyCoinItem> (BuyCoinBtns);
+		int index = list.FindIndex (x => x.productID == args.purchasedProduct.definition.id);
+
+		int coinAmount = list [index].coinCount;
+		print (index + "  " + coinAmount);
+
+		User.AddCoin (coinAmount);
+
+		Vector3 fromPos = list [index].btn.transform.position;
+		Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
+
+		Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount / 50, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
+			AudioManager.PlaySoundFromLibrary ("Coin");
+		});
 	}
 
 	void GiveGift ()
@@ -108,6 +140,7 @@ public class BuyCoinScreen : ScreenBase {
 	void OnCanTakeGift ()
 	{
 		buyCoinScreenBtn.changingColor = true;
+		getCoinsBtn.GetComponent <ButtonIcon> ().changingColor = true;
 
 		print ("OnCanTakeGift");
 		getCoinsBtn.enabled = true;
@@ -117,6 +150,7 @@ public class BuyCoinScreen : ScreenBase {
 	void OnDontTakeGift ()
 	{
 		buyCoinScreenBtn.changingColor = false;
+		getCoinsBtn.GetComponent <ButtonIcon> ().changingColor = false;
 		print ("OnDontTakeGift");
 		getCoinsBtn.enabled = false;
 		timer.gameObject.SetActive (true);

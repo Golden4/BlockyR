@@ -92,8 +92,8 @@ public class ShopScreen : ScreenBase {
 
 	void OnChangeItem (int index)
 	{
-		itemNameText.text = Database.Get.playersData [index].name;
-		itemAbilityText.text = Database.Get.playersData [index].ability;
+		itemNameText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [index].name);
+		itemAbilityText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [index].name + "_desc");
 		UpdateItemState (index);
 	}
 

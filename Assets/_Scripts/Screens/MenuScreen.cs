@@ -27,7 +27,7 @@ public class MenuScreen : ScreenBase {
 		SceneController.Init ();
 		ShowGameTitle (true, true);
 		//if (AdController.Ins.RewardedADLoaded ()) {
-		freeCoinsBtn.gameObject.SetActive (true);
+
 		freeCoinsBtn.onClick.RemoveAllListeners ();
 		freeCoinsBtn.onClick.AddListener (GetFreeCoins);
 		/*} else {
@@ -36,9 +36,25 @@ public class MenuScreen : ScreenBase {
 
 		startGameBtn.onClick.RemoveAllListeners ();
 		startGameBtn.onClick.AddListener (StartGame);
+		//freeCoinsBtn.gameObject.GetComponent<ButtonIcon> ().EnableBtn (true);
 
-		freeCoinsBtn.gameObject.GetComponent<ButtonIcon> ().ActivateBtn ();
+	}
 
+	void Update ()
+	{
+		if (AdController.Ins.needGiveReward) {
+			AdController.Ins.needGiveReward = false;
+
+			int coinAmount = 10;
+			User.AddCoin (coinAmount);
+
+			Vector3 fromPos = MenuScreen.Ins.freeCoinsBtn.transform.position;
+			Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
+
+			Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
+				AudioManager.PlaySoundFromLibrary ("Coin");
+			});
+		}
 	}
 
 	/*void Update ()
@@ -79,11 +95,10 @@ public class MenuScreen : ScreenBase {
 
 	void GetFreeCoins ()
 	{
-		if (AdController.Ins.RewardedADLoaded ()) {
+		if (AdController.Ins != null) {
 			AdController.Ins.ShowRewardedAD ();
 		}
-
-		freeCoinsBtn.gameObject.GetComponent<ButtonIcon> ().DeactivateBtn ();
+		//freeCoinsBtn.gameObject.GetComponent<ButtonIcon> ().EnableBtn (false);
 
 
 /*		int coinAmount = 10;
@@ -102,6 +117,7 @@ public class MenuScreen : ScreenBase {
 	{
 		base.OnActivate ();
 		ShowGameTitle (true, true);
+		freeCoinsBtn.gameObject.SetActive (AdController.Ins.rewardedAdLoaded);
 	}
 
 	public override void OnDeactivate ()
@@ -109,7 +125,6 @@ public class MenuScreen : ScreenBase {
 		base.OnDeactivate ();
 
 		ShowGameTitle (false, false);
-
 	}
 
 	public void StartGame ()

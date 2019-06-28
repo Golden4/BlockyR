@@ -12,6 +12,7 @@ public class GameOverScreen : ScreenBase {
 	[SerializeField] Button openBoxBtn;
 	public Slider coinSlider;
 	public Text needCoinText;
+	bool givedSecondChance = false;
 
 	public override void Init ()
 	{
@@ -21,6 +22,8 @@ public class GameOverScreen : ScreenBase {
 		openBoxBtn.onClick.RemoveAllListeners ();
 		openBoxBtn.onClick.AddListener (OpenBoxBtn);
 	}
+
+
 
 	public override void OnActivate ()
 	{
@@ -41,7 +44,15 @@ public class GameOverScreen : ScreenBase {
 			openBoxPanel.gameObject.SetActive (false);
 		}
 
-		GUIAnimSystem.Instance.MoveIn (transform, true);
+		if (!givedSecondChance) {
+			continueAdPanel.gameObject.SetActive (true);
+			continueAdBtn.gameObject.SetActive (true);
+			GUIAnimSystem.Instance.MoveIn (transform, true);
+			continueAdBtn.GetComponent <ButtonIcon> ().EnableBtn (AdController.Ins.interstitialLoaded);
+		} else {
+			continueAdPanel.gameObject.SetActive (false);
+		}
+
 
 	}
 
@@ -53,7 +64,6 @@ public class GameOverScreen : ScreenBase {
 	public override void OnDeactivate ()
 	{
 		base.OnDeactivate ();
-
 	}
 
 	public void RestartLevel ()
@@ -70,8 +80,15 @@ public class GameOverScreen : ScreenBase {
 
 	void RespawnPlayer ()
 	{
-		if (AdController.Ins != null)
-			AdController.Ins.ShowInterstitialAD ();
+		continueAdBtn.GetComponent <ButtonIcon> ().EnableBtn (false);
+
+		if (AdController.Ins.interstitialLoaded) {
+			givedSecondChance = true;
+			RetryGame ();
+
+			if (AdController.Ins != null)
+				AdController.Ins.ShowInterstitialAD ();
+		}
 	}
 
 	public void OpenBoxBtn ()

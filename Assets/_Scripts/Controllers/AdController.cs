@@ -23,9 +23,14 @@ public class AdController : MonoBehaviour {
 	string appID = "unexpected_platform";
 	#endif
 
-	private BannerView bannerView;
-	private InterstitialAd interstitial;
-	private RewardedAd rewardedAd;
+	public BannerView bannerView;
+	public InterstitialAd interstitial;
+	public RewardedAd rewardedAd;
+
+	public bool bannerViewLoaded;
+	public bool interstitialLoaded;
+	public bool rewardedAdLoaded;
+	public bool needGiveReward;
 
 	public static AdController Ins;
 
@@ -67,19 +72,10 @@ public class AdController : MonoBehaviour {
 		RequestBanner ();
 	}
 
-	public bool RewardedADLoaded ()
+	public void ShowRewardedAD ()
 	{
-		return this.rewardedAd.IsLoaded ();
-	}
-
-	public bool ShowRewardedAD ()
-	{
-		if (this.rewardedAd.IsLoaded ()) {
+		if (this.rewardedAd.IsLoaded ())
 			this.rewardedAd.Show ();
-			return true;
-		}
-
-		return false;
 	}
 
 	private void RequestBanner ()
@@ -154,13 +150,12 @@ public class AdController : MonoBehaviour {
 
 	public void HandleOnAdLoaded (object sender, EventArgs args)
 	{
-		MonoBehaviour.print ("HandleAdLoaded event received");
+		interstitialLoaded = true;
 	}
 
 	public void HandleOnAdFailedToLoad (object sender, AdFailedToLoadEventArgs args)
 	{
-		MonoBehaviour.print ("HandleFailedToReceiveAd event received with message: "
-		+ args.Message);
+		interstitialLoaded = false;
 	}
 
 	public void HandleOnAdOpened (object sender, EventArgs args)
@@ -204,14 +199,12 @@ public class AdController : MonoBehaviour {
 
 	public void HandleRewardedAdLoaded (object sender, EventArgs args)
 	{
-		MonoBehaviour.print ("HandleRewardedAdLoaded event received");
+		rewardedAdLoaded = true;
 	}
 
 	public void HandleRewardedAdFailedToLoad (object sender, AdErrorEventArgs args)
 	{
-		MonoBehaviour.print (
-			"HandleRewardedAdFailedToLoad event received with message: "
-			+ args.Message);
+		rewardedAdLoaded = false;
 	}
 
 	public void HandleRewardedAdOpening (object sender, EventArgs args)
@@ -233,18 +226,10 @@ public class AdController : MonoBehaviour {
 
 	public void HandleUserEarnedReward (object sender, Reward args)
 	{
+		
 		/*string type = args.Type;
 		double amount = args.Amount;*/
-
-		int coinAmount = 10;
-		User.AddCoin (coinAmount);
-
-		Vector3 fromPos = MenuScreen.Ins.freeCoinsBtn.transform.position;
-		Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
-
-		Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
-			AudioManager.PlaySoundFromLibrary ("Coin");
-		});
+		needGiveReward = true;
 
 		/*MonoBehaviour.print (
 			"HandleRewardedAdRewarded event received for "

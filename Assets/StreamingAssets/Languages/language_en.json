@@ -1,0 +1,112 @@
+{
+  "items": [
+    {
+      "key": "characters",
+      "value": "Characters"
+    },
+    {
+      "key": "capsule",
+      "value": "Capsule"
+    },
+    {
+      "key": "tap_to_play",
+      "value": "Tap to play"
+    },
+    {
+      "key": "tap_to_open",
+      "value": "Tap to open"
+    },
+    {
+      "key": "shop",
+      "value": "Shop"
+    },
+    {
+      "key": "audio",
+      "value": "Audio"
+    },
+    {
+      "key": "control",
+      "value": "Control"
+    },
+    {
+      "key": "quality",
+      "value": "Quality"
+    },
+    {
+      "key": "language",
+      "value": "Language"
+    },
+    {
+      "key": "second_chance",
+      "value": "Second chance"
+    },
+    {
+      "key": "сapsule_character",
+      "value": "Capsule with a character"
+    },
+    {
+      "key": "top_score",
+      "value": "Top"
+    },
+    {
+      "key": "all_characters",
+      "value": "All characters"
+    },
+    {
+      "key": "bird",
+      "value": "Bird"
+    },
+    {
+      "key": "bird_desc",
+      "value": "Ability: Can Fly"
+    },
+    {
+      "key": "cat",
+      "value": "Cat"
+    },
+    {
+      "key": "cat_desc",
+      "value": "+1 Life"
+    },
+    {
+      "key": "pig",
+      "value": "Pig"
+    },
+    {
+      "key": "pig_desc",
+      "value": ""
+    },
+    {
+      "key": "boar",
+      "value": "Boar"
+    },
+    {
+      "key": "boar_desc",
+      "value": "Ability: not afraid of traps"
+    },
+    {
+      "key": "rabbit",
+      "value": "Rabbit"
+    },
+    {
+      "key": "rabbit_desc",
+      "value": "Ability: Double Jump"
+    },
+    {
+      "key": "frog",
+      "value": "Frog"
+    },
+    {
+      "key": "frog_desc",
+      "value": "Ability: Can Jump On Water Lilies"
+    },
+    {
+      "key": "chicken",
+      "value": "Chicken"
+    },
+    {
+      "key": "chicken_desc",
+      "value": ""
+    }
+  ]
+}

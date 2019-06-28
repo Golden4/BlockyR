@@ -1,0 +1,112 @@
+{
+  "items": [
+    {
+      "key": "characters",
+      "value": "Персонажи"
+    },
+    {
+      "key": "capsule",
+      "value": "Капсула"
+    },
+    {
+      "key": "tap_to_play",
+      "value": "Жми, чтобы начать"
+    },
+    {
+      "key": "tap_to_open",
+      "value": "Нажми, чтобы открыть"
+    },
+    {
+      "key": "shop",
+      "value": "Магазин"
+    },
+    {
+      "key": "audio",
+      "value": "Аудио"
+    },
+    {
+      "key": "control",
+      "value": "Управление"
+    },
+    {
+      "key": "quality",
+      "value": "Качество"
+    },
+    {
+      "key": "language",
+      "value": "Язык"
+    },
+    {
+      "key": "second_chance",
+      "value": "Продолжить"
+    },
+    {
+      "key": "сapsule_character",
+      "value": "Капсула с персонажем"
+    },
+    {
+      "key": "top_score",
+      "value": "Рекорд"
+    },
+    {
+      "key": "all_characters",
+      "value": "Все персонажи"
+    },
+    {
+      "key": "bird",
+      "value": "Птица"
+    },
+    {
+      "key": "bird_desc",
+      "value": "Способность: Летать"
+    },
+    {
+      "key": "cat",
+      "value": "Кот"
+    },
+    {
+      "key": "cat_desc",
+      "value": "+1 жизнь"
+    },
+    {
+      "key": "pig",
+      "value": "Свинья"
+    },
+    {
+      "key": "pig_desc",
+      "value": ""
+    },
+    {
+      "key": "boar",
+      "value": "Кабан"
+    },
+    {
+      "key": "boar_desc",
+      "value": "Способность: Не боится ловушек"
+    },
+    {
+      "key": "rabbit",
+      "value": "Кролик"
+    },
+    {
+      "key": "rabbit_desc",
+      "value": "Способность: Двойной прыжок"
+    },
+    {
+      "key": "frog",
+      "value": "Лягушка"
+    },
+    {
+      "key": "frog_desc",
+      "value": "Способность: Прыгать через лилии"
+    },
+    {
+      "key": "chicken",
+      "value": "Курица"
+    },
+    {
+      "key": "chicken_desc",
+      "value": ""
+    }
+  ]
+}

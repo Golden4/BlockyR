@@ -32,7 +32,7 @@ public class PrizeScreen : ScreenBase {
 		openBoxBtn.onClick.RemoveAllListeners ();
 
 		openBoxBtn.onClick.AddListener (() => {
-			if (User.BuyWithCoin (GetBoxPrise ()))
+			if (!User.GetInfo.AllCharactersBought () && User.BuyWithCoin (GetBoxPrise ()))
 				OpenBox ();
 		});
 
@@ -70,8 +70,8 @@ public class PrizeScreen : ScreenBase {
 		if (charactedIndex != -1) {
 			nameText.gameObject.SetActive (true);
 			abilityText.gameObject.SetActive (true);
-			nameText.text = Database.Get.playersData [charactedIndex].name;
-			abilityText.text = Database.Get.playersData [charactedIndex].ability;
+			nameText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [charactedIndex].name);
+			abilityText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [charactedIndex].name + "_desc");// Database.Get.playersData [charactedIndex].ability;
 			selectAndPlayBtn.gameObject.SetActive (true);
 			backBtn.gameObject.SetActive (true);
 			backBtn.gameObject.SetActive (true);
@@ -80,6 +80,7 @@ public class PrizeScreen : ScreenBase {
 
 	public void OpenBox ()
 	{
+		
 		isOpenedBox = true;
 		charactedIndex = GetRandomCharacter ();
 		prizeBoxAnimation.Play ("PrizeBoxOpenAnim");
@@ -96,14 +97,20 @@ public class PrizeScreen : ScreenBase {
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
-		prizeBoxAnimation.Play ("PrizeBoxIdleAnim");
 		openBoxBtn.gameObject.SetActive (true);
+		if (!User.GetInfo.AllCharactersBought ()) {
+			openBoxBtn.GetComponentInChildren <Text> ().text = LocalizationManager.GetLocalizedText ("tap_to_open");
+		} else {
+			openBoxBtn.GetComponentInChildren <Text> ().text = LocalizationManager.GetLocalizedText ("all_characters");
+		}
+
 		backBtn.gameObject.SetActive (true);
-		rayBG.gameObject.SetActive (false);
-		selectAndPlayBtn.gameObject.SetActive (false);
+		prizeBoxAnimation.Play ("PrizeBoxIdleAnim");
 		isOpenedBox = false;
 		charactedIndex = -1;
 		nameText.gameObject.SetActive (false);
+		rayBG.gameObject.SetActive (false);
+		selectAndPlayBtn.gameObject.SetActive (false);
 		abilityText.gameObject.SetActive (false);
 		isCharacterShowed = false;
 		confettiParticle.Clear ();

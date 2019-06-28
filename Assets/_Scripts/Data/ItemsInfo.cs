@@ -12,7 +12,6 @@ public class ItemsInfo : ScriptableObject {
 		public string purchaseID;
 		public string price;
 		public Player playerPrefab;
-		public string ability;
 	}
 
 }
