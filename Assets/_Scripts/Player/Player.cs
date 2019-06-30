@@ -71,9 +71,16 @@ public class Player : MonoBehaviour {
 
 		for (int i = 0; i < 4; i++)
 			if (MobileInputTouchManager.GetKey ((Direction)i, true)) {
-				Move ((Direction)i);
+				dirApply = true;
+				curDir = (Direction)i;
 			}
 		
+		if (dirApply) {
+			dirApply = false;
+			Move (curDir);
+			curDir = Direction.Top;
+		}
+
 		if (ability != null)
 			ability.Update ();
 
@@ -214,7 +221,7 @@ public class Player : MonoBehaviour {
 		StartCoroutine (MoveCoroutine ());
 
 		//if (curDir != Direction.Right && dirApply)
-		dirApply = false;
+
 	}
 
 	protected int nextMoveDir;
@@ -251,7 +258,7 @@ public class Player : MonoBehaviour {
 
 	void OnEndMove ()
 	{
-		speed = Mathf.Clamp ((float)Math.Sqrt ((double)(UIScreen.Ins.score / 100f * speedChangeMultiply)) + 4, 4, 12);
+		speed = Mathf.Clamp ((float)Math.Sqrt ((double)(UIScreen.Ins.score / 100f * speedChangeMultiply)) + 4, 4.5f, 10);
 		OnPlayerStepOnBlock ();
 		//print (speed);
 	}

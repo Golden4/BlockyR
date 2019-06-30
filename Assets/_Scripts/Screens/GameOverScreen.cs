@@ -64,17 +64,27 @@ public class GameOverScreen : ScreenBase {
 		if (BuyCoinScreen.Ins.CanTakeGift ()) {
 			giftBtn.gameObject.SetActive (true);
 			giftimerText.gameObject.SetActive (false);
-			giftPanel.transform.GetChild (0).GetComponent <Text> ().text = "Get Gift";
+			giftPanel.transform.GetChild (0).GetComponent <Text> ().text = LocalizationManager.GetLocalizedText ("get_gift");
 		} else {
 			giftBtn.gameObject.SetActive (false);
 			giftimerText.gameObject.SetActive (true);
-			print (BuyCoinScreen.Ins.timeToGiveGift);
 			//string time = string.Format ("{0}", BuyCoinScreen.Ins.timeToGiveGift).Split ('.') [0];
 			string timeR = (BuyCoinScreen.Ins.timeToGiveGift.Minutes + 1) + "m";
 			giftimerText.text = timeR;
-			giftPanel.transform.GetChild (0).GetComponent <Text> ().text = "Gift through";
+			giftPanel.transform.GetChild (0).GetComponent <Text> ().text = LocalizationManager.GetLocalizedText ("gift_through");
 		}
 
+	}
+
+	void Update ()
+	{
+		if (!BuyCoinScreen.Ins.CanTakeGift ()) {
+			string timeR = (BuyCoinScreen.Ins.timeToGiveGift.Minutes + 1) + " m.";
+			giftimerText.text = timeR;
+		} else if (!giftBtn.gameObject.activeInHierarchy) {
+			giftBtn.gameObject.SetActive (true);
+			giftimerText.gameObject.SetActive (false);
+		}
 	}
 
 	public override void OnCleanUp ()

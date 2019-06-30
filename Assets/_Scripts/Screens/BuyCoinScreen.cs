@@ -11,6 +11,7 @@ public class BuyCoinScreen : ScreenBase {
 	public BuyCoinItem[] BuyCoinBtns;
 
 	public ButtonIcon buyCoinScreenBtn;
+	public Text giftTitle;
 
 	public override void OnActivate ()
 	{
@@ -58,6 +59,7 @@ public class BuyCoinScreen : ScreenBase {
 		base.Init ();
 		if (PlayerPrefs.HasKey ("giftTime"))
 			nextGiveGiftTime = new DateTime (long.Parse (PlayerPrefs.GetString ("giftTime")));
+		getCoinsBtn.onClick.RemoveAllListeners ();
 		getCoinsBtn.onClick.AddListener (GiveGift);
 
 		if (CanTakeGift ()) {
@@ -98,7 +100,6 @@ public class BuyCoinScreen : ScreenBase {
 	void GiveGift ()
 	{
 		if (CanTakeGift ()) {
-
 			nextGiveGiftTime = DateTime.Now.Add (nextGiftTime);
 
 			PlayerPrefs.SetString ("giftTime", nextGiveGiftTime.Ticks.ToString ());
@@ -109,7 +110,7 @@ public class BuyCoinScreen : ScreenBase {
 			Vector3 fromPos = getCoinsBtn.transform.position;
 			Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
 
-			Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
+			Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount / 10, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
 				AudioManager.PlaySoundFromLibrary ("Coin");
 			});
 
@@ -149,19 +150,20 @@ public class BuyCoinScreen : ScreenBase {
 	{
 		buyCoinScreenBtn.changingColor = true;
 		getCoinsBtn.GetComponent <ButtonIcon> ().changingColor = true;
-
+		getCoinsBtn.GetComponent <ButtonIcon> ().EnableBtn (true);
 		print ("OnCanTakeGift");
-		getCoinsBtn.enabled = true;
 		timer.gameObject.SetActive (false);
+		giftTitle.text = LocalizationManager.GetLocalizedText ("get_gift");
 	}
 
 	void OnDontTakeGift ()
 	{
 		buyCoinScreenBtn.changingColor = false;
 		getCoinsBtn.GetComponent <ButtonIcon> ().changingColor = false;
+		getCoinsBtn.GetComponent <ButtonIcon> ().EnableBtn (false);
 		print ("OnDontTakeGift");
-		getCoinsBtn.enabled = false;
 		timer.gameObject.SetActive (true);
+		giftTitle.text = LocalizationManager.GetLocalizedText ("gift_through");
 	}
 
 

@@ -55,3 +55,21 @@ MonoBehaviour:
     biomesList: 0000000003000000
     playerPrefab: {fileID: 5593789153539883462, guid: f2e88da4480ee944d96e99136ec6484b,
       type: 3}
+  - name: panda
+    purchaseID: char_8
+    price: $0.01
+    biomesList: 00000000
+    playerPrefab: {fileID: 5037287510818280197, guid: 2596cb8be8a5fb14bae32e32b0739efb,
+      type: 3}
+  - name: white_bear
+    purchaseID: char_9
+    price: $0.01
+    biomesList: 02000000
+    playerPrefab: {fileID: 3153033809986658952, guid: 38cb0afd0cd94b0499f350276da50495,
+      type: 3}
+  - name: pinguin
+    purchaseID: char_10
+    price: $0.01
+    biomesList: 02000000
+    playerPrefab: {fileID: 1497243489110394479, guid: 15d3e431759f86e4eb2c2218b86cebaf,
+      type: 3}

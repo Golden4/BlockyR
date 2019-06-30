@@ -53,12 +53,24 @@
       "value": "Капсула с персонажем"
     },
     {
+      "key": "new_character",
+      "value": "Новый персонаж!"
+    },
+    {
       "key": "top_score",
       "value": "Рекорд"
     },
     {
       "key": "all_characters",
       "value": "Все персонажи"
+    },
+    {
+      "key": "gift_through",
+      "value": "Подарок через"
+    },
+    {
+      "key": "get_gift",
+      "value": "Получить подарок"
     },
     {
       "key": "chicken",
@@ -115,6 +127,30 @@
     {
       "key": "frog_desc",
       "value": "Способность: Прыгать через лилии"
+    },
+    {
+      "key": "panda",
+      "value": "Панда"
+    },
+    {
+      "key": "panda_desc",
+      "value": "Нет способностей"
+    },
+    {
+      "key": "white_bear",
+      "value": "Белый медведь"
+    },
+    {
+      "key": "white_bear_desc",
+      "value": "Нет способностей"
+    },
+    {
+      "key": "pinguin",
+      "value": "Пингвин"
+    },
+    {
+      "key": "pinguin_desc",
+      "value": "Нет способностей"
     },
     {
       "key": "biomes",

@@ -53,12 +53,24 @@
       "value": "Capsule with a character"
     },
     {
+      "key": "new_character",
+      "value": "New character!"
+    },
+    {
       "key": "top_score",
       "value": "Top"
     },
     {
       "key": "all_characters",
       "value": "All characters"
+    },
+    {
+      "key": "gift_through",
+      "value": "Gift through"
+    },
+    {
+      "key": "get_gift",
+      "value": "Get gift"
     },
     {
       "key": "chicken",
@@ -115,6 +127,30 @@
     {
       "key": "frog_desc",
       "value": "Ability: Can Jump On Water Lilies"
+    },
+    {
+      "key": "panda",
+      "value": "Panda"
+    },
+    {
+      "key": "panda_desc",
+      "value": "No Ability"
+    },
+    {
+      "key": "white_bear",
+      "value": "White bear"
+    },
+    {
+      "key": "white_bear_desc",
+      "value": "No Ability"
+    },
+    {
+      "key": "pinguin",
+      "value": "Pinguin"
+    },
+    {
+      "key": "pinguin_desc",
+      "value": "No Ability"
     },
     {
       "key": "biomes",

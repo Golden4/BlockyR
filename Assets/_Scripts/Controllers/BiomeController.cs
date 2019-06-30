@@ -19,6 +19,17 @@ public class BiomeController : MonoBehaviour {
 
 	}
 
+	public string GetBiomesListString (int charInx)
+	{
+		string biomesStr = "";
+		for (int i = 0; i < Database.Get.playersData [charInx].biomesList.Length; i++) {
+			biomesStr += LocalizationManager.GetLocalizedText (BiomeController.Ins.biomesList [Database.Get.playersData [charInx].biomesList [i]].biomeID);
+			if (i < Database.Get.playersData [charInx].biomesList.Length - 1)
+				biomesStr += ", ";
+		}
+		return biomesStr;
+	}
+
 	[System.Serializable]
 	public class BiomeInfo {
 		public string biomeID;

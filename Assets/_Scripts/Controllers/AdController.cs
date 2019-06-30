@@ -19,7 +19,8 @@ public class AdController : MonoBehaviour {
 	string adRewardedID = "ca-app-pub-8878808814241755/4399540162";
 	string appID = "ca-app-pub-8878808814241755~7293420529";
 	
-	#else
+	
+#else
 	string adInterstitialID = "unexpected_platform";
 	string adBannerID = "unexpected_platform";
 	string adRewardedID = "unexpected_platform";
@@ -317,6 +318,7 @@ public class AdController : MonoBehaviour {
 		/*string type = args.Type;
 		double amount = args.Amount;*/
 		needGiveReward = true;
+		rewardedAdLoaded = false;
 
 		/*MonoBehaviour.print (
 			"HandleRewardedAdRewarded event received for "

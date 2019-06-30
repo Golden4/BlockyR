@@ -8,11 +8,13 @@ public class PrizeScreen : ScreenBase {
 	private GameObject prizeGO;
 	public Transform prizeHolder;
 	public Animation prizeBoxAnimation;
+	public Text title;
 	public Button selectAndPlayBtn;
 	public Button openBoxBtn;
 	public Button backBtn;
 	public Text nameText;
 	public Text abilityText;
+	public Text biomesText;
 	public GUIAnim rayBG;
 	public ParticleSystem confettiParticle;
 	private bool isOpenedBox;
@@ -70,8 +72,11 @@ public class PrizeScreen : ScreenBase {
 		if (charactedIndex != -1) {
 			nameText.gameObject.SetActive (true);
 			abilityText.gameObject.SetActive (true);
+			biomesText.gameObject.SetActive (true);
+			title.text = LocalizationManager.GetLocalizedText ("new_character");
 			nameText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [charactedIndex].name);
 			abilityText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [charactedIndex].name + "_desc");// Database.Get.playersData [charactedIndex].ability;
+			biomesText.text = LocalizationManager.GetLocalizedText ("biomes") + ": " + BiomeController.Ins.GetBiomesListString (charactedIndex);
 			selectAndPlayBtn.gameObject.SetActive (true);
 			backBtn.gameObject.SetActive (true);
 			backBtn.gameObject.SetActive (true);
@@ -91,6 +96,7 @@ public class PrizeScreen : ScreenBase {
 		rayBG.gameObject.SetActive (true);
 		rayBG.MoveIn (GUIAnimSystem.eGUIMove.Self);
 		backBtn.gameObject.SetActive (false);
+		title.text = "";
 		confettiParticle.Play ();
 	}
 
@@ -98,6 +104,7 @@ public class PrizeScreen : ScreenBase {
 	{
 		base.OnActivate ();
 		openBoxBtn.gameObject.SetActive (true);
+
 		if (!User.GetInfo.AllCharactersBought ()) {
 			openBoxBtn.GetComponentInChildren <Text> ().text = LocalizationManager.GetLocalizedText ("tap_to_open");
 		} else {
@@ -112,8 +119,10 @@ public class PrizeScreen : ScreenBase {
 		rayBG.gameObject.SetActive (false);
 		selectAndPlayBtn.gameObject.SetActive (false);
 		abilityText.gameObject.SetActive (false);
+		biomesText.gameObject.SetActive (false);
 		isCharacterShowed = false;
 		confettiParticle.Clear ();
+		title.text = LocalizationManager.GetLocalizedText ("сapsule_character");
 		if (prizeGO != null)
 			Destroy (prizeGO);
 	}
