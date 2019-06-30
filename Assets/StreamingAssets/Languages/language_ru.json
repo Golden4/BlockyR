@@ -17,6 +17,14 @@
       "value": "Нажми, чтобы открыть"
     },
     {
+      "key": "no",
+      "value": "Нет"
+    },
+    {
+      "key": "new_record",
+      "value": "Новый рекорд!"
+    },
+    {
       "key": "shop",
       "value": "Магазин"
     },
@@ -38,7 +46,7 @@
     },
     {
       "key": "second_chance",
-      "value": "Продолжить"
+      "value": "Продолжить?"
     },
     {
       "key": "сapsule_character",
@@ -51,6 +59,14 @@
     {
       "key": "all_characters",
       "value": "Все персонажи"
+    },
+    {
+      "key": "chicken",
+      "value": "Курица"
+    },
+    {
+      "key": "chicken_desc",
+      "value": "Нет способностей"
     },
     {
       "key": "bird",
@@ -74,7 +90,7 @@
     },
     {
       "key": "pig_desc",
-      "value": ""
+      "value": "Нет способностей"
     },
     {
       "key": "boar",
@@ -101,12 +117,24 @@
       "value": "Способность: Прыгать через лилии"
     },
     {
-      "key": "chicken",
-      "value": "Курица"
+      "key": "biomes",
+      "value": "Биомы"
     },
     {
-      "key": "chicken_desc",
-      "value": ""
+      "key": "forest",
+      "value": "Лес"
+    },
+    {
+      "key": "desert",
+      "value": "Пустыня"
+    },
+    {
+      "key": "snowy",
+      "value": "Зимний Лес"
+    },
+    {
+      "key": "dark_forest",
+      "value": "Темный Лес"
     }
   ]
 }

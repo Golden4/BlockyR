@@ -38,23 +38,24 @@ public class UIScreen : ScreenBase {
 
 	public Button abilityBtn;
 	public Image abilityAmountImage;
+	public bool newRecord;
 
 	public override void Init ()
 	{
 		Ins = this;
-		Player.OnPlayerDie += SetTopScore;
 		fireAlert.gameObject.SetActive (false);
 	}
 
 	public override void OnCleanUp ()
 	{
-		Player.OnPlayerDie -= SetTopScore;
 	}
 
-	void SetTopScore ()
+	public void SetTopScore ()
 	{
-		if (topScore < score)
+		if (topScore < score) {
 			topScore = score;
+			newRecord = true;
+		}
 	}
 
 	bool gameStarted;

@@ -13,38 +13,45 @@ MonoBehaviour:
   m_Name: Database
   m_EditorClassIdentifier: 
   playersData:
-  - name: bird
+  - name: chicken
     purchaseID: char_1
     price: $0.01
+    biomesList: 00000000
+    playerPrefab: {fileID: 114903587025273576, guid: 3de2341ef8478294c8af07e281599988,
+      type: 3}
+  - name: bird
+    purchaseID: char_2
+    price: $0.01
+    biomesList: 0000000001000000
     playerPrefab: {fileID: 6919558610010395251, guid: b0d94c359d7124644a0e7ea139c81407,
       type: 3}
   - name: cat
-    purchaseID: char_2
+    purchaseID: char_3
     price: $0.01
+    biomesList: 000000000100000002000000
     playerPrefab: {fileID: 7327326141959592250, guid: bd28d60781a594d48b5f5d0e6d3f0747,
       type: 3}
   - name: pig
-    purchaseID: char_3
+    purchaseID: char_4
     price: $0.01
+    biomesList: 0000000002000000
     playerPrefab: {fileID: 114409454338205590, guid: f767dfe658e880249b32320062402c93,
       type: 3}
   - name: boar
-    purchaseID: char_4
+    purchaseID: char_5
     price: $0.01
+    biomesList: 03000000
     playerPrefab: {fileID: 3870384449939390500, guid: 8ea58ba1c45d49643981290c585a617e,
       type: 3}
   - name: rabbit
-    purchaseID: char_5
+    purchaseID: char_6
     price: $0.01
+    biomesList: 0000000002000000
     playerPrefab: {fileID: 8625674231059281730, guid: 7ae0f77fdfffc604693ec9e05e99ee9e,
       type: 3}
   - name: frog
-    purchaseID: char_6
-    price: $0.01
-    playerPrefab: {fileID: 5593789153539883462, guid: f2e88da4480ee944d96e99136ec6484b,
-      type: 3}
-  - name: chicken
     purchaseID: char_7
     price: $0.01
-    playerPrefab: {fileID: 114903587025273576, guid: 3de2341ef8478294c8af07e281599988,
+    biomesList: 0000000003000000
+    playerPrefab: {fileID: 5593789153539883462, guid: f2e88da4480ee944d96e99136ec6484b,
       type: 3}

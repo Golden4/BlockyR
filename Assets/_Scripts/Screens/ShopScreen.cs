@@ -25,6 +25,7 @@ public class ShopScreen : ScreenBase {
 
 	public Text itemNameText;
 	public Text itemAbilityText;
+	public Text itemBiomeInfoText;
 
 	public Button SelectAndPlayBtn;
 
@@ -94,6 +95,15 @@ public class ShopScreen : ScreenBase {
 	{
 		itemNameText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [index].name);
 		itemAbilityText.text = LocalizationManager.GetLocalizedText (Database.Get.playersData [index].name + "_desc");
+
+		string biomesStr = "";
+		for (int i = 0; i < Database.Get.playersData [index].biomesList.Length; i++) {
+			biomesStr += LocalizationManager.GetLocalizedText (BiomeController.Ins.biomesList [Database.Get.playersData [index].biomesList [i]].biomeID);
+			if (i < Database.Get.playersData [index].biomesList.Length - 1)
+				biomesStr += ", ";
+		}
+
+		itemBiomeInfoText.text = LocalizationManager.GetLocalizedText ("biomes") + ": " + biomesStr;
 		UpdateItemState (index);
 	}
 

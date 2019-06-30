@@ -17,6 +17,14 @@
       "value": "Tap to open"
     },
     {
+      "key": "no",
+      "value": "No"
+    },
+    {
+      "key": "new_record",
+      "value": "New record!"
+    },
+    {
       "key": "shop",
       "value": "Shop"
     },
@@ -53,6 +61,14 @@
       "value": "All characters"
     },
     {
+      "key": "chicken",
+      "value": "Chicken"
+    },
+    {
+      "key": "chicken_desc",
+      "value": "No Ability"
+    },
+    {
       "key": "bird",
       "value": "Bird"
     },
@@ -74,7 +90,7 @@
     },
     {
       "key": "pig_desc",
-      "value": ""
+      "value": "No Ability"
     },
     {
       "key": "boar",
@@ -101,12 +117,24 @@
       "value": "Ability: Can Jump On Water Lilies"
     },
     {
-      "key": "chicken",
-      "value": "Chicken"
+      "key": "biomes",
+      "value": "Biomes"
     },
     {
-      "key": "chicken_desc",
-      "value": ""
+      "key": "forest",
+      "value": "Forest"
+    },
+    {
+      "key": "desert",
+      "value": "Desert"
+    },
+    {
+      "key": "snowy",
+      "value": "snowy"
+    },
+    {
+      "key": "dark_forest",
+      "value": "Dark Forest"
     }
   ]
 }

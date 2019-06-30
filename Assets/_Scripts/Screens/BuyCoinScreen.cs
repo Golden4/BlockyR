@@ -6,6 +6,8 @@ using System;
 
 public class BuyCoinScreen : ScreenBase {
 
+	public static BuyCoinScreen Ins;
+
 	public BuyCoinItem[] BuyCoinBtns;
 
 	public ButtonIcon buyCoinScreenBtn;
@@ -47,7 +49,7 @@ public class BuyCoinScreen : ScreenBase {
 
 	public Text timer;
 
-	public TimeSpan nextGiftTime = new TimeSpan (0, 5, 0);
+	public TimeSpan nextGiftTime = new TimeSpan (0, 10, 0);
 
 	public DateTime nextGiveGiftTime;
 
@@ -63,6 +65,8 @@ public class BuyCoinScreen : ScreenBase {
 		} else {
 			OnDontTakeGift ();
 		}
+
+		Ins = this;
 
 		PurchaseManager.OnPurchaseConsumable += OnPurchaseConsumable;
 	}
@@ -99,7 +103,7 @@ public class BuyCoinScreen : ScreenBase {
 
 			PlayerPrefs.SetString ("giftTime", nextGiveGiftTime.Ticks.ToString ());
 
-			int coinAmount = 10;
+			int coinAmount = 50;
 			User.AddCoin (coinAmount);
 
 			Vector3 fromPos = getCoinsBtn.transform.position;
@@ -112,9 +116,15 @@ public class BuyCoinScreen : ScreenBase {
 		}
 	}
 
-	bool CanTakeGift ()
+	public bool CanTakeGift ()
 	{
 		return nextGiveGiftTime.Ticks < DateTime.Now.Ticks;
+	}
+
+	public TimeSpan timeToGiveGift {
+		get {
+			return new DateTime ((nextGiveGiftTime - DateTime.Now).Ticks).TimeOfDay;
+		}
 	}
 
 	bool lastOnTakeGiftBool;
@@ -128,9 +138,7 @@ public class BuyCoinScreen : ScreenBase {
 				OnDontTakeGift ();
 			}
 
-			TimeSpan ts = new DateTime ((nextGiveGiftTime - DateTime.Now).Ticks).TimeOfDay;
-
-			timer.text = string.Format ("{0}", ts).Split ('.') [0];
+			timer.text = string.Format ("{0}", timeToGiveGift).Split ('.') [0];
 		} else if (lastOnTakeGiftBool) {
 			lastOnTakeGiftBool = false;
 			OnCanTakeGift ();

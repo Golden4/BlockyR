@@ -21,11 +21,13 @@ public class BiomeController : MonoBehaviour {
 
 	[System.Serializable]
 	public class BiomeInfo {
+		public string biomeID;
 		public GameObject[] obstacles;
 	}
 }
 
-public enum Biome {
+public enum Biome
+{
 	Forest = 0,
 	Desert = 1,
 	Snowy = 2,

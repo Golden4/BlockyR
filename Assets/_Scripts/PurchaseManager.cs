@@ -139,7 +139,7 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 
 	public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs args)
 	{
-		if (C_PRODUCTS.Length > 0 && String.Equals (args.purchasedProduct.definition.id, C_PRODUCTS [currentProductIndex], StringComparison.Ordinal))
+		if (C_PRODUCTS.Length > 0 && currentProductIndex < C_PRODUCTS.Length && String.Equals (args.purchasedProduct.definition.id, C_PRODUCTS [currentProductIndex], StringComparison.Ordinal))
 			OnSuccessC (args);
 		else if (NC_PRODUCTS.Length > 0 && String.Equals (args.purchasedProduct.definition.id, NC_PRODUCTS [currentProductIndex], StringComparison.Ordinal))
 			OnSuccessNC (args);

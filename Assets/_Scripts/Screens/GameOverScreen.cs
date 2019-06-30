@@ -5,29 +5,45 @@ using UnityEngine.UI;
 
 public class GameOverScreen : ScreenBase {
 
-	[SerializeField] Transform continueAdPanel;
 	[SerializeField] Transform openBoxPanel;
-
-	[SerializeField] Button continueAdBtn;
 	[SerializeField] Button openBoxBtn;
+	[SerializeField] Transform giftPanel;
+	[SerializeField] Button giftBtn;
+	[SerializeField] Text giftimerText;
+
+	public Text newRecordText;
+	public Text newRecordCountText;
 	public Slider coinSlider;
 	public Text needCoinText;
-	bool givedSecondChance = false;
+	public static int playerDieCount = 0;
 
 	public override void Init ()
 	{
 		base.Init ();
-		continueAdBtn.onClick.RemoveAllListeners ();
-		continueAdBtn.onClick.AddListener (RespawnPlayer);
 		openBoxBtn.onClick.RemoveAllListeners ();
 		openBoxBtn.onClick.AddListener (OpenBoxBtn);
+		giftBtn.onClick.RemoveAllListeners ();
+		giftBtn.onClick.AddListener (GiftBtn);
 	}
-
-
 
 	public override void OnActivate ()
 	{
 		base.OnActivate ();
+		playerDieCount++;
+
+		UIScreen.Ins.SetTopScore ();
+
+		if (UIScreen.Ins.newRecord) {
+			newRecordText.gameObject.SetActive (true);
+			newRecordText.GetComponent <GUIAnim> ().MoveIn (GUIAnimSystem.eGUIMove.Self);
+
+		} else {
+			newRecordText.gameObject.SetActive (false);
+		}
+
+		newRecordCountText.text = UIScreen.Ins.score.ToString ();
+		newRecordCountText.GetComponent <GUIAnim> ().MoveIn (GUIAnimSystem.eGUIMove.Self);
+
 
 		if (!User.GetInfo.AllCharactersBought ()) {
 			openBoxPanel.gameObject.SetActive (true);
@@ -44,15 +60,20 @@ public class GameOverScreen : ScreenBase {
 			openBoxPanel.gameObject.SetActive (false);
 		}
 
-		if (!givedSecondChance) {
-			continueAdPanel.gameObject.SetActive (true);
-			continueAdBtn.gameObject.SetActive (true);
-			GUIAnimSystem.Instance.MoveIn (transform, true);
-			continueAdBtn.GetComponent <ButtonIcon> ().EnableBtn (AdController.Ins.interstitialLoaded);
+		giftPanel.gameObject.SetActive (true);
+		if (BuyCoinScreen.Ins.CanTakeGift ()) {
+			giftBtn.gameObject.SetActive (true);
+			giftimerText.gameObject.SetActive (false);
+			giftPanel.transform.GetChild (0).GetComponent <Text> ().text = "Get Gift";
 		} else {
-			continueAdPanel.gameObject.SetActive (false);
+			giftBtn.gameObject.SetActive (false);
+			giftimerText.gameObject.SetActive (true);
+			print (BuyCoinScreen.Ins.timeToGiveGift);
+			//string time = string.Format ("{0}", BuyCoinScreen.Ins.timeToGiveGift).Split ('.') [0];
+			string timeR = (BuyCoinScreen.Ins.timeToGiveGift.Minutes + 1) + "m";
+			giftimerText.text = timeR;
+			giftPanel.transform.GetChild (0).GetComponent <Text> ().text = "Gift through";
 		}
-
 
 	}
 
@@ -71,29 +92,15 @@ public class GameOverScreen : ScreenBase {
 		SceneController.RestartLevel ();
 	}
 
-	public void RetryGame ()
-	{
-		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.UI);
-
-		Player.Ins.Retry ();
-	}
-
-	void RespawnPlayer ()
-	{
-		continueAdBtn.GetComponent <ButtonIcon> ().EnableBtn (false);
-
-		if (AdController.Ins.interstitialLoaded) {
-			givedSecondChance = true;
-			RetryGame ();
-
-			if (AdController.Ins != null)
-				AdController.Ins.ShowInterstitialAD ();
-		}
-	}
-
 	public void OpenBoxBtn ()
 	{
 		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Prize);
 	}
+
+	public void GiftBtn ()
+	{
+		ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.BuyCoin);
+	}
+
 
 }

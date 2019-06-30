@@ -47,7 +47,9 @@ public class Chunk : MonoBehaviour {
 
 	void GenerateMap ()
 	{
-		biomesMap = NoiseMap.BiomesMap (size, size, chunkCoords.x * size, chunkCoords.y * size, 4);
+		int[] biomesList = Database.Get.playersData [User.GetInfo.curPlayerIndex].biomesList;
+
+		biomesMap = NoiseMap.BiomesMap (size, size, chunkCoords.x * size, chunkCoords.y * size, biomesList);
 		blocksMap = NoiseMap.BlocksMap (size, size, chunkCoords.x * size, chunkCoords.y * size, ref biomesMap);
 		//objectsMap = NoiseMap.ObjectsMap (size, size, chunkCoords.y * size, chunkCoords.x * size);
 
@@ -58,6 +60,7 @@ public class Chunk : MonoBehaviour {
 		}
 
 		int snowBlockCount = 0;
+		int darkBlockCount = 0;
 
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
@@ -65,6 +68,17 @@ public class Chunk : MonoBehaviour {
 					snowBlockCount++;
 					if (snowBlockCount > 20) {
 						GameObject go = (GameObject)Resources.Load ("Particles/Snow");
+						GameObject snow = Instantiate (go);
+						snow.transform.SetParent (transform, false);
+						snow.transform.localPosition = new Vector3 (2.5f, 7, 2.5f);
+						return;
+					}
+				}
+
+				if (biomesMap [x, y] == 3) {
+					darkBlockCount++;
+					if (darkBlockCount > 20) {
+						GameObject go = (GameObject)Resources.Load ("Particles/Rain");
 						GameObject snow = Instantiate (go);
 						snow.transform.SetParent (transform, false);
 						snow.transform.localPosition = new Vector3 (2.5f, 7, 2.5f);

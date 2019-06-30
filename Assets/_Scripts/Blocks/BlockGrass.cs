@@ -19,7 +19,7 @@ public class BlockGrass : Block {
 	public override void OnGenerateBlockMesh ()
 	{
 		if (worldCoords.x > 5) {
-			if (Random.Range (0, 400) == 0) {
+			if (Random.Range (0, 250) == 0) {
 				Vector3 pos = new Vector3 (worldCoords.x, .5f, worldCoords.y);
 				data.AddObject (GameAssets.i.asCoin.CreateOnWorld (chunk.transform, pos, Vector3.zero));
 

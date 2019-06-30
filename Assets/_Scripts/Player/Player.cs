@@ -290,9 +290,11 @@ public class Player : MonoBehaviour {
 
 				Die (dieInfo);
 			}
-		} else if (curBlock.biome == Biome.Snowy) {
-			AudioManager.PlaySoundFromLibrary ("SnowJump");
-		} else {
+
+			if (curBlock.biome == Biome.Snowy && curBlock.GetType () == typeof(BlockGrass)) {
+				AudioManager.PlaySoundFromLibrary ("SnowJump");
+			}
+		} else if (curBalk.GetType () != typeof(BalkCrocodile)) {
 			AudioManager.PlaySoundFromLibrary ("WoodJump");
 		}
 	}
@@ -418,7 +420,7 @@ public class Player : MonoBehaviour {
 			gameObject.SetActive (false);*/
 		
 		if (!retry)
-			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.GameOver);
+			ScreenController.Ins.ActivateScreen (ScreenController.GameScreen.Continue);
 
 		StartCoroutine (FadeMat ());
 

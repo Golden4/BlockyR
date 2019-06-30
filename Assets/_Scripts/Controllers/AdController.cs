@@ -10,8 +10,11 @@ using System;
 
 public class AdController : MonoBehaviour {
 	 
+	public bool testMode = true;
+
 	#if UNITY_ANDROID
 	string adInterstitialID = "ca-app-pub-8878808814241755/6374843101";
+	string adInterstitialAllID = "ca-app-pub-8878808814241755/2444615260";
 	string adBannerID = "ca-app-pub-8878808814241755/1477739641";
 	string adRewardedID = "ca-app-pub-8878808814241755/4399540162";
 	string appID = "ca-app-pub-8878808814241755~7293420529";
@@ -25,10 +28,12 @@ public class AdController : MonoBehaviour {
 
 	public BannerView bannerView;
 	public InterstitialAd interstitial;
+	public InterstitialAd interstitialAll;
 	public RewardedAd rewardedAd;
 
 	public bool bannerViewLoaded;
 	public bool interstitialLoaded;
+	public bool interstitialAllLoaded;
 	public bool rewardedAdLoaded;
 	public bool needGiveReward;
 
@@ -52,18 +57,32 @@ public class AdController : MonoBehaviour {
 		MobileAds.Initialize (appID);
 		SceneController.OnRestartLevel += RequestAds;
 		RequestAds ();
+		//	RequestBanner ();
 	}
 
 	void RequestAds ()
 	{
 		RequestInterstitial ();
 		RequestRewardedAd ();
+		RequestInterstitialAll ();
+
+		if (GameOverScreen.playerDieCount == 2) {
+			GameOverScreen.playerDieCount = 0;
+			ShowInterstitialAllAD ();
+		}
 	}
 
 	public void ShowInterstitialAD ()
 	{
 		if (interstitial.IsLoaded ()) {
 			interstitial.Show ();
+		}
+	}
+
+	public void ShowInterstitialAllAD ()
+	{
+		if (interstitialAll.IsLoaded ()) {
+			interstitialAll.Show ();
 		}
 	}
 
@@ -94,8 +113,13 @@ public class AdController : MonoBehaviour {
 		bannerView.OnAdLeavingApplication += HandleBannerOnAdLeavingApplication;
 
 		// Create an empty ad request.
-		AdRequest request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		AdRequest request;
 
+		if (testMode)
+			request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		else
+			request = new AdRequest.Builder ().Build ();
+		
 		// Load the banner with the request.
 		bannerView.LoadAd (request);
 	}
@@ -130,7 +154,7 @@ public class AdController : MonoBehaviour {
 	{
 		// Initialize an InterstitialAd.
 		this.interstitial = new InterstitialAd (adInterstitialID);
-
+		interstitialLoaded = false;
 		// Called when an ad request has successfully loaded.
 		this.interstitial.OnAdLoaded += HandleOnAdLoaded;
 		// Called when an ad request failed to load.
@@ -143,7 +167,13 @@ public class AdController : MonoBehaviour {
 		this.interstitial.OnAdLeavingApplication += HandleOnAdLeavingApplication;
 
 		// Create an empty ad request.
-		AdRequest request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		AdRequest request;
+
+		if (testMode)
+			request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		else
+			request = new AdRequest.Builder ().Build ();
+		
 		// Load the interstitial with the request.
 		this.interstitial.LoadAd (request);
 	}
@@ -165,10 +195,62 @@ public class AdController : MonoBehaviour {
 
 	public void HandleOnAdClosed (object sender, EventArgs args)
 	{
-		MonoBehaviour.print ("HandleAdClosed event received");
+		interstitialLoaded = false;
 	}
 
 	public void HandleOnAdLeavingApplication (object sender, EventArgs args)
+	{
+		MonoBehaviour.print ("HandleAdLeavingApplication event received");
+	}
+
+	private void RequestInterstitialAll ()
+	{
+		// Initialize an InterstitialAd.
+		this.interstitialAll = new InterstitialAd (adInterstitialAllID);
+		interstitialAllLoaded = false;
+		// Called when an ad request has successfully loaded.
+		this.interstitialAll.OnAdLoaded += HandleOnAdAllLoaded;
+		// Called when an ad request failed to load.
+		this.interstitialAll.OnAdFailedToLoad += HandleOnAdAllFailedToLoad;
+		// Called when an ad is shown.
+		this.interstitialAll.OnAdOpening += HandleOnAdAllOpened;
+		// Called when the ad is closed.
+		this.interstitialAll.OnAdClosed += HandleOnAdAllClosed;
+		// Called when the ad click caused the user to leave the application.
+		this.interstitialAll.OnAdLeavingApplication += HandleOnAdAllLeavingApplication;
+		// Create an empty ad request.
+		AdRequest request;
+
+		if (testMode)
+			request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		else
+			request = new AdRequest.Builder ().Build ();
+
+		// Load the interstitial with the request.
+		this.interstitialAll.LoadAd (request);
+	}
+
+	public void HandleOnAdAllLoaded (object sender, EventArgs args)
+	{
+		interstitialAllLoaded = true;
+	}
+
+	public void HandleOnAdAllFailedToLoad (object sender, AdFailedToLoadEventArgs args)
+	{
+		interstitialAllLoaded = false;
+	}
+
+	public void HandleOnAdAllOpened (object sender, EventArgs args)
+	{
+		MonoBehaviour.print ("HandleAdOpened event received");
+	}
+
+	public void HandleOnAdAllClosed (object sender, EventArgs args)
+	{
+		MonoBehaviour.print ("HandleAdClosed event received");
+	}
+
+	public void HandleOnAdAllLeavingApplication (object sender, EventArgs args)
 	{
 		MonoBehaviour.print ("HandleAdLeavingApplication event received");
 	}
@@ -177,7 +259,7 @@ public class AdController : MonoBehaviour {
 	{
 
 		this.rewardedAd = new RewardedAd (adRewardedID);
-
+		rewardedAdLoaded = false;
 		// Called when an ad request has successfully loaded.
 		this.rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
 		// Called when an ad request failed to load.
@@ -192,7 +274,12 @@ public class AdController : MonoBehaviour {
 		this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
 
 		// Create an empty ad request.
-		AdRequest request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		AdRequest request;
+
+		if (testMode)
+			request = new AdRequest.Builder ().AddTestDevice (AdRequest.TestDeviceSimulator).AddTestDevice (SystemInfo.deviceUniqueIdentifier.ToUpper ()).Build ();
+		else
+			request = new AdRequest.Builder ().Build ();
 		// Load the rewarded ad with the request.
 		this.rewardedAd.LoadAd (request);
 	}

@@ -23,6 +23,7 @@ public class Saw : MonoBehaviour {
 		randomValue = Random.Range (0, 100f);
 		this.chunkCoords = chunkCoords;
 		Chunk.OnDestroyChunk += Chunk_OnDestroyChunk;
+
 	}
 
 	void Chunk_OnDestroyChunk (Vector2I obj)
@@ -36,6 +37,7 @@ public class Saw : MonoBehaviour {
 	void OnDestroy ()
 	{
 		Chunk.OnDestroyChunk -= Chunk_OnDestroyChunk;
+		Player.OnPlayerRetry -= OnPlayerRetry;
 	}
 
 
@@ -52,12 +54,19 @@ public class Saw : MonoBehaviour {
 		transform.position = Vector3.Lerp (startPosToMove, endPosToMove, moveValue);
 	}
 
+	void OnPlayerRetry ()
+	{
+		Destroy (gameObject);
+	}
+
 
 
 	void OnTriggerEnter (Collider col)
 	{
 		if (col.CompareTag ("Player")) {
+			Player.OnPlayerRetry += OnPlayerRetry;
 			col.GetComponent <Player> ().Die (DieInfo.Trap);
+
 		}
 	}
 

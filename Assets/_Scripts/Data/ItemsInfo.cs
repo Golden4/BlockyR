@@ -11,6 +11,7 @@ public class ItemsInfo : ScriptableObject {
 		public string name;
 		public string purchaseID;
 		public string price;
+		public int[] biomesList = { 0 };
 		public Player playerPrefab;
 	}
 

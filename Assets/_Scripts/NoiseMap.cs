@@ -24,7 +24,7 @@ public class NoiseMap : MonoBehaviour {
 		offset.y = Random.Range (-999999, 999999);
 	}
 
-	public static int[,] BiomesMap (int width, int height, int xOffset, int yOffset, int biomeCount = 3)
+	public static int[,] BiomesMap (int width, int height, int xOffset, int yOffset, int[] biomeList)
 	{
 		int[,] map = new int[width, height];
 
@@ -35,7 +35,8 @@ public class NoiseMap : MonoBehaviour {
 
 				int biomeType = -1;
 
-				for (int k = 0; k < biomeCount; k++) {
+				for (int z = 0; z < biomeList.Length; z++) {
+					int k = biomeList [z];
 					float noiseValue = Mathf.PerlinNoise ((float)(i + xOffset) / width * Ins.scale + k * 10000 + Ins.offset.x, (float)(j + yOffset) / height * Ins.scale + k * 10000 + Ins.offset.y);
 
 					if (noiseValue > Ins.noiseHeight && !colorAssigned) {
@@ -45,11 +46,11 @@ public class NoiseMap : MonoBehaviour {
 
 					}
 
-					if (biomeType == -1 && !colorAssigned && k == biomeCount - 1) {
-						biomeType = biomeCount - 1;
+					if (biomeType == -1 && !colorAssigned && z == biomeList.Length - 1) {
+						biomeType = biomeList [z];
 					}
 
-					if (k == biomeCount - 1)
+					if (z == biomeList.Length - 1)
 						map [i, j] = biomeType;
 				}
 

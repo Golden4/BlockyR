@@ -48,7 +48,7 @@ public class MenuScreen : ScreenBase {
 			int coinAmount = 10;
 			User.AddCoin (coinAmount);
 
-			Vector3 fromPos = MenuScreen.Ins.freeCoinsBtn.transform.position;
+			Vector3 fromPos = freeCoinsBtn.transform.position;
 			Vector3 toPos = CoinUI.Ins.coinImage.transform.position;
 
 			Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
