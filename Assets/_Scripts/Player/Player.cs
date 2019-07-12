@@ -77,6 +77,7 @@ public class Player : MonoBehaviour {
 		
 		if (dirApply) {
 			dirApply = false;
+			print ("Dasda");
 			Move (curDir);
 			curDir = Direction.Top;
 		}

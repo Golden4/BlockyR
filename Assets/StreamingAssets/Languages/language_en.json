@@ -17,6 +17,10 @@
       "value": "Tap to open"
     },
     {
+      "key": "tap_to_continue",
+      "value": "Tap to continue"
+    },
+    {
       "key": "no",
       "value": "No"
     },
@@ -118,7 +122,7 @@
     },
     {
       "key": "rabbit_desc",
-      "value": "Ability: Double Jump"
+      "value": "No Ability"
     },
     {
       "key": "frog",

@@ -24,7 +24,9 @@ public class MenuScreen : ScreenBase {
 
 	void Start ()
 	{
+
 		SceneController.Init ();
+        startGameBtn.gameObject.SetActive(true);
 		ShowGameTitle (true, true);
 		//if (AdController.Ins.RewardedADLoaded ()) {
 
@@ -45,7 +47,7 @@ public class MenuScreen : ScreenBase {
 		if (AdController.Ins.needGiveReward) {
 			AdController.Ins.needGiveReward = false;
 
-			int coinAmount = 10;
+			int coinAmount = 15;
 			User.AddCoin (coinAmount);
 
 			Vector3 fromPos = freeCoinsBtn.transform.position;
@@ -54,6 +56,14 @@ public class MenuScreen : ScreenBase {
 			Utility.CoinsAnimate (CoinUI.Ins, CoinUI.Ins.coinImage.gameObject, CoinUI.Ins.transform, coinAmount, fromPos, toPos, .5f, CoinUI.Ins.curve, () => {
 				AudioManager.PlaySoundFromLibrary ("Coin");
 			});
+		}
+
+		if (!AdController.Ins.rewardedAdLoaded) {
+			if (freeCoinsBtn.gameObject.activeInHierarchy)
+				freeCoinsBtn.gameObject.SetActive (false);
+		} else {
+			if (!freeCoinsBtn.gameObject.activeInHierarchy)
+				freeCoinsBtn.gameObject.SetActive (true);
 		}
 	}
 

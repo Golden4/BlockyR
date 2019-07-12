@@ -28,9 +28,23 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 
 	private void Awake ()
 	{
-		InitializePurchasing ();
-		Ins = this;
-	}
+
+		//if (Ins == null)
+			Ins = this;
+        //else if (Ins != this) {
+        //	Destroy (gameObject);
+        //	return;
+        //}
+
+        TryInit();
+        //DontDestroyOnLoad (gameObject);
+        //SceneController.OnRestartLevel += TryInit;
+    }
+
+	//void OnDestroy ()
+	//{
+	//	SceneController.OnRestartLevel -= TryInit;
+	//}
 
 	/// <summary>
 	/// Проверить, куплен ли товар.
@@ -44,6 +58,13 @@ public class PurchaseManager : MonoBehaviour, IStoreListener {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	void TryInit ()
+	{
+		if (!IsInitialized ()) {
+			InitializePurchasing ();
 		}
 	}
 

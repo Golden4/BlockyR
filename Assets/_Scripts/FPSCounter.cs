@@ -9,6 +9,11 @@ public class FPSCounter : MonoBehaviour {
 
 	void Start ()
 	{
+		if (!Debug.isDebugBuild) {
+			Destroy (gameObject);
+			return;
+		}
+
 		text = GetComponent <Text> ();
 	}
 

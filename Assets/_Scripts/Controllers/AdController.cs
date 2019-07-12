@@ -18,9 +18,8 @@ public class AdController : MonoBehaviour {
 	string adBannerID = "ca-app-pub-8878808814241755/1477739641";
 	string adRewardedID = "ca-app-pub-8878808814241755/4399540162";
 	string appID = "ca-app-pub-8878808814241755~7293420529";
-	
-	
-#else
+
+	#else
 	string adInterstitialID = "unexpected_platform";
 	string adBannerID = "unexpected_platform";
 	string adRewardedID = "unexpected_platform";
@@ -48,6 +47,7 @@ public class AdController : MonoBehaviour {
 			Destroy (gameObject);
 			return;
 		}
+		testMode = Debug.isDebugBuild;
 
 		DontDestroyOnLoad (gameObject);
 	}
@@ -191,7 +191,7 @@ public class AdController : MonoBehaviour {
 
 	public void HandleOnAdOpened (object sender, EventArgs args)
 	{
-		MonoBehaviour.print ("HandleAdOpened event received");
+		interstitialLoaded = false;
 	}
 
 	public void HandleOnAdClosed (object sender, EventArgs args)
@@ -243,6 +243,7 @@ public class AdController : MonoBehaviour {
 
 	public void HandleOnAdAllOpened (object sender, EventArgs args)
 	{
+		interstitialAllLoaded = false;
 		MonoBehaviour.print ("HandleAdOpened event received");
 	}
 
@@ -297,7 +298,7 @@ public class AdController : MonoBehaviour {
 
 	public void HandleRewardedAdOpening (object sender, EventArgs args)
 	{
-		MonoBehaviour.print ("HandleRewardedAdOpening event received");
+		rewardedAdLoaded = false;
 	}
 
 	public void HandleRewardedAdFailedToShow (object sender, AdErrorEventArgs args)
@@ -318,7 +319,6 @@ public class AdController : MonoBehaviour {
 		/*string type = args.Type;
 		double amount = args.Amount;*/
 		needGiveReward = true;
-		rewardedAdLoaded = false;
 
 		/*MonoBehaviour.print (
 			"HandleRewardedAdRewarded event received for "
